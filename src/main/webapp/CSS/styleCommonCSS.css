@@ -1,0 +1,133 @@
+/*______ global css ______*/
+
+
+
+/* theme */
+:root {
+    --font-family: 'Roboto', sans-serif;
+    --primary: #e74c3c;
+    --primary-dark: #c0392b;
+    --dark: #2c3e50;
+    --danger: #e74c3c;
+    --confirmation: #27ae60;
+    --background-light: #ecf0f1;
+    --text-color: #444;
+    --text-color-light: #fff;
+    --color-grey-tab: #95a5a6;
+    --box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    --border: 1px solid #eee;
+}
+
+/* reset */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-family: var(--font-family);
+    background:  url(./Pictures/Connection2.png);
+    background-size : cover;
+}
+
+h1,
+p {
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+#header{
+    background-color: #1F85DE;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 10px;
+}
+#menu{
+    background-color: #1F85DE ;
+    color: #ffffff;
+    font-size: 14px;
+    width: 20%;
+    min-width: 120px;
+    max-width: 300px;
+}
+#body{
+    background-color: #fff2cc;
+    color: #000000;
+    font-size: 14px;
+}
+#content{
+    padding: 10px;
+}
+#footer{
+    background-color: #1F85DE;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+    position:absolute;
+    bottom:0;  /* on le colle en bas */
+    width:100%;
+    height:50px;   /* Hauteur du pied de page */
+}
+
+/*______ header css ______*/
+
+#LogoSpace{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.card{
+    margin-top: 10px;
+    text-align: left;
+
+}
+
+
+#headerLanguageButton{
+    margin-top: 10px;
+}
+
+
+/*______ menu css ______*/
+
+#menu a{
+    text-decoration: none;
+    color: #ffffff;
+}
+#menu a:hover{
+    margin-left: 3px;
+    background-color: #1F85DE;
+    color: #ffffff;
+}
+
+/*---containers---*/
+.content{
+    max-width: 100rem;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-flow: row;
+    align-self: center;
+    align-items: center;
+    padding: 2rem 0;
+}

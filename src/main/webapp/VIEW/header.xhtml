@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<!-- ______ ______ -->
+
+<div class="containerFlex">
+
+    <!-- execute methode in loading page. -->
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
+    </f:metadata>
+
+    <div id="LogoSpace">
+
+
+            <h:form id="headerLanguageButtonContainer">
+                <p:menuButton value="#{I18N['header.language']}" class="headerLanguageButton ui-button-primary" iconPos="right">
+
+                    <p:menuitem value="#{I18N['header.language.fr']}" action="#{i18nBean.changeLanguage('fr','headerLanguageButtonContainer')}"/>
+                    <p:menuitem value="#{I18N['header.language.en']}" action="#{i18nBean.changeLanguage('en','headerLanguageButtonContainer')}"/>
+
+                </p:menuButton>
+            </h:form>
+
+            <h1>
+                <h:outputText value="#{I18N['logo.title']}" />
+            </h1>
+
+    </div>
+
+
+
+        <div class="card">
+            <h:form>
+                <p:growl id="messages"/>
+
+                <p:menubar>
+                    <p:submenu label="#{I18N['menu.data.users']}" icon="pi pi-fw pi-user">
+                        <p:submenu label="#{I18N['menu.own.data.users']}" icon="pi pi-fw pi-user">
+                            <p:menuitem value="#{I18N['menu.own.data.users.modify']}" icon="pi pi-fw  pi-user-edit" action="/view/updateOwnData.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.own.data.users.consult']}" icon="pi pi-fw pi-user" action="/view/ConsultOwnData.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="#{I18N['menu.data.membre']}" icon="pi pi-fw pi-user">
+                            <p:menuitem value="#{I18N['menu.data.member.add']}" icon="pi pi-fw pi-user-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.member.modify']}" icon="pi pi-fw pi-pencil"/>
+                            <p:menuitem value="#{I18N['menu.data.member.consult']}" icon="pi pi-fw pi-user"/>
+                        </p:submenu>
+                        <p:submenu label="#{I18N['menu.data.instructor']}" icon="pi pi-fw pi-user">
+                            <p:menuitem value="#{I18N['menu.data.instructor.add']}" icon="pi pi-fw pi-user-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.instructor.modify']}" icon="pi pi-fw pi-pencil"/>
+                            <p:menuitem value="#{I18N['menu.data.instructor.consult']}" icon="pi pi-fw pi-user"/>
+                        </p:submenu>
+                        <p:divider />
+                        <p:submenu label="#{I18N['menu.data.user.certificate']}" icon="pi pi-fw pi-star">
+                            <p:menuitem value="#{I18N['menu.own.certificate.users']}" icon="pi pi-fw pi-star"/>
+                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.own.data.users.modify']}" icon="pi pi-fw pi-star"/>
+                        </p:submenu>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
+                    <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar">
+                        <p:submenu label="#{I18N['menu.data.events']}" icon="pi pi-fw pi-calendar">
+                            <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi-calendar-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.events.modify']}" icon="pi pi-fw pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.events.consult']}" icon="pi pi-fw pi-calendar"/>
+                        </p:submenu>
+                        <p:divider />
+                        <p:menuitem value="#{I18N['menu.data.events.participate']}" icon="pi pi-fw pi-calendar-plus"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
+                    <p:submenu label="#{I18N['menu.divingSite']}" icon="pi pi-fw pi-globe">
+                        <p:submenu label="#{I18N['menu.divingSite.settings']}" icon="pi pi-fw pi-cog">
+                            <p:menuitem value="#{I18N['menu.divingSite.settings.add']}" icon="pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.divingSite.settings.modify']}" icon="pi pi-fw pi-cog"/>
+                            <p:menuitem value="#{I18N['menu.divingSite.settings.consult']}" icon="pi pi-fw pi-search"/>
+                        </p:submenu>
+                        <p:divider />
+                        <p:menuitem value="#{I18N['menu.data.events.participate']}" icon="pi pi-fw pi-calendar-plus"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
+
+                    <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
+
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"/>
+                        </div>
+                        <p:button value="Logout"  action="#{connectionBean.logOut}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </div>
+
+
+</div>
+
+
+</html>
