@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "addresses", schema = "chasa", catalog = "")
+@Table(name = "addresses", schema = "chasa")
 @NamedQueries({
                 @NamedQuery(name = "Adresses.findAll",query = "SELECT a FROM AddressesEntity a ORDER BY a.street ASC"),
                 @NamedQuery(name = "Adresses.findById",query = "SELECT a FROM AddressesEntity a WHERE a.idAddress = :idAddress"),
                 @NamedQuery(name = "Addresses.findAllByStreet",query = "SELECT a FROM AddressesEntity a wHERE a.street = :street"),
                 @NamedQuery(name = "Adresses.findAllByNumber",query = "SELECT a FROM AddressesEntity a WHERE a.number = :number"),
                 @NamedQuery(name = "Adresses.findAllByBox",query = "SELECT a FROM AddressesEntity a WHERE a.box = :box"),
-                @NamedQuery(name = "Adresses.findAllByCityId",query = "SELECT a FROM AddressesEntity a WHERE a.idCity = :idCity")
+                @NamedQuery(name = "Adresses.findAllByCityId",query = "SELECT a FROM AddressesEntity a WHERE a.citiesByIdCity = :idCity")
               })
 public class AddressesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,7 @@ public class AddressesEntity {
     @Basic
     @Column(name = "box", nullable = true, length = 255)
     private String box;
-    @Basic
-    @Column(name = "id_city", nullable = false)
-    private int idCity;
+
     @ManyToOne
     @JoinColumn(name = "id_city", referencedColumnName = "id_city", nullable = false)
     private CitiesEntity citiesByIdCity;
@@ -77,12 +75,12 @@ public class AddressesEntity {
         this.box = box;
     }
 
-    public int getIdCity() {
-        return idCity;
+    public CitiesEntity getIdCity() {
+        return citiesByIdCity;
     }
 
-    public void setIdCity(int idCity) {
-        this.idCity = idCity;
+    public void setIdCity(CitiesEntity citiesByIdCity) {
+        this.citiesByIdCity = citiesByIdCity;
     }
 
     @Override
@@ -94,7 +92,7 @@ public class AddressesEntity {
 
         if (idAddress != that.idAddress) return false;
         if (number != that.number) return false;
-        if (idCity != that.idCity) return false;
+        if (citiesByIdCity != that.citiesByIdCity) return false;
         if (street != null ? !street.equals(that.street) : that.street != null) return false;
         if (box != null ? !box.equals(that.box) : that.box != null) return false;
 
@@ -107,7 +105,6 @@ public class AddressesEntity {
         result = 31 * result + (street != null ? street.hashCode() : 0);
         result = 31 * result + number;
         result = 31 * result + (box != null ? box.hashCode() : 0);
-        result = 31 * result + idCity;
         return result;
     }
 

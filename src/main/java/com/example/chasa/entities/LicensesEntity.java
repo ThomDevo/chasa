@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "licenses", schema = "chasa", catalog = "")
+@Table(name = "licenses", schema = "chasa")
 public class LicensesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -15,9 +15,9 @@ public class LicensesEntity {
     @Column(name = "license_label", nullable = false, length = 255)
     private String licenseLabel;
     @OneToMany(mappedBy = "licensesByIdLicense")
-    private Collection<EventsEntity> eventsByIdLicense;
+    private List<EventsEntity> eventsByIdLicense;
     @OneToMany(mappedBy = "licensesByIdLicense")
-    private Collection<LicenseUsersEntity> licenseUsersByIdLicense;
+    private List<LicenseUsersEntity> licenseUsersByIdLicense;
 
     public int getIdLicense() {
         return idLicense;
@@ -63,19 +63,11 @@ public class LicensesEntity {
         this.eventsByIdLicense = eventsByIdLicense;
     }
 
-    public void setEventsByIdLicense(Collection<EventsEntity> eventsByIdLicense) {
-        this.eventsByIdLicense = eventsByIdLicense;
-    }
-
     public Collection<LicenseUsersEntity> getLicenseUsersByIdLicense() {
         return licenseUsersByIdLicense;
     }
 
     public void setLicenseUsersByIdLicense(List<LicenseUsersEntity> licenseUsersByIdLicense) {
-        this.licenseUsersByIdLicense = licenseUsersByIdLicense;
-    }
-
-    public void setLicenseUsersByIdLicense(Collection<LicenseUsersEntity> licenseUsersByIdLicense) {
         this.licenseUsersByIdLicense = licenseUsersByIdLicense;
     }
 }

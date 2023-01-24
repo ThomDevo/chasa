@@ -78,13 +78,10 @@ public class UsersEntity {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_adress", nullable = false)
     private AddressesEntity idAddress;
-
-
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @Column(name = "id_role", nullable = false)
     private RolesEntity idRole;
-
     @OneToMany(mappedBy = "usersByIdUser")
     private List<LicenseUsersEntity> licenseUsersByIdUser;
     @OneToMany(mappedBy = "usersByIdUser")

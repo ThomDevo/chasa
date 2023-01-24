@@ -15,7 +15,7 @@ public class CountriesEntity {
     @Column(name = "country_label", nullable = false, length = 255)
     private String countryLabel;
     @OneToMany(mappedBy = "countriesByIdCountry")
-    private Collection<CitiesEntity> citiesByIdCountry;
+    private List<CitiesEntity> citiesByIdCountry;
 
     public int getIdCountry() {
         return idCountry;
@@ -53,7 +53,7 @@ public class CountriesEntity {
         return result;
     }
 
-    public Collection<CitiesEntity> getCitiesByIdCountry() {
+    public List<CitiesEntity> getCitiesByIdCountry() {
         return citiesByIdCountry;
     }
 
@@ -61,7 +61,4 @@ public class CountriesEntity {
         this.citiesByIdCountry = citiesByIdCountry;
     }
 
-    public void setCitiesByIdCountry(Collection<CitiesEntity> citiesByIdCountry) {
-        this.citiesByIdCountry = citiesByIdCountry;
-    }
 }

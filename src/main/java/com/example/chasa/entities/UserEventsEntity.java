@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "user_events", schema = "chasa", catalog = "")
+@Table(name = "user_events", schema = "chasa")
 public class UserEventsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -16,12 +16,6 @@ public class UserEventsEntity {
     @Basic
     @Column(name = "user_event_status", nullable = false)
     private byte userEventStatus;
-    @Basic
-    @Column(name = "id_user", nullable = false)
-    private int idUser;
-    @Basic
-    @Column(name = "id_event", nullable = false)
-    private int idEvent;
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
     private UsersEntity usersByIdUser;
@@ -53,20 +47,20 @@ public class UserEventsEntity {
         this.userEventStatus = userEventStatus;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public UsersEntity getIdUser() {
+        return usersByIdUser;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdUser(UsersEntity usersByIdUser) {
+        this.usersByIdUser = usersByIdUser;
     }
 
-    public int getIdEvent() {
-        return idEvent;
+    public EventsEntity getIdEvent() {
+        return eventsByIdEvent;
     }
 
-    public void setIdEvent(int idEvent) {
-        this.idEvent = idEvent;
+    public void setIdEvent(EventsEntity eventsByIdEvent) {
+        this.eventsByIdEvent = eventsByIdEvent;
     }
 
     @Override
@@ -78,8 +72,8 @@ public class UserEventsEntity {
 
         if (idUserEvent != that.idUserEvent) return false;
         if (userEventStatus != that.userEventStatus) return false;
-        if (idUser != that.idUser) return false;
-        if (idEvent != that.idEvent) return false;
+        if (usersByIdUser != that.usersByIdUser) return false;
+        if (eventsByIdEvent != that.eventsByIdEvent) return false;
         if (dateTimeEventSubscription != null ? !dateTimeEventSubscription.equals(that.dateTimeEventSubscription) : that.dateTimeEventSubscription != null)
             return false;
 
@@ -91,8 +85,6 @@ public class UserEventsEntity {
         int result = idUserEvent;
         result = 31 * result + (dateTimeEventSubscription != null ? dateTimeEventSubscription.hashCode() : 0);
         result = 31 * result + (int) userEventStatus;
-        result = 31 * result + idUser;
-        result = 31 * result + idEvent;
         return result;
     }
 

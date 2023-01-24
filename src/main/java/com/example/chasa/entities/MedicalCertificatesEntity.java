@@ -1,10 +1,12 @@
 package com.example.chasa.entities;
 
+import com.example.chasa.enums.CertificateType;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "medical_certificates", schema = "chasa", catalog = "")
+@Table(name = "medical_certificates", schema = "chasa")
 public class MedicalCertificatesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,10 +20,8 @@ public class MedicalCertificatesEntity {
     private Date expiryDate;
     @Basic
     @Column(name = "certificate_type", nullable = false)
-    private Object certificateType;
-    @Basic
-    @Column(name = "id_user", nullable = false)
-    private int idUser;
+    private CertificateType certificateType;
+
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
     private UsersEntity usersByIdUser;
@@ -50,20 +50,28 @@ public class MedicalCertificatesEntity {
         this.expiryDate = expiryDate;
     }
 
-    public Object getCertificateType() {
+    public CertificateType getCertificateType() {
         return certificateType;
     }
 
-    public void setCertificateType(Object certificateType) {
+    public void setCertificateType(CertificateType certificateType) {
         this.certificateType = certificateType;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public UsersEntity getIdUser() {
+        return usersByIdUser;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdUser(UsersEntity idUser) {
+        this.usersByIdUser = usersByIdUser;
+    }
+
+    public UsersEntity getUsersByIdUser() {
+        return usersByIdUser;
+    }
+
+    public void setUsersByIdUser(UsersEntity usersByIdUser) {
+        this.usersByIdUser = usersByIdUser;
     }
 
     @Override
@@ -74,7 +82,7 @@ public class MedicalCertificatesEntity {
         MedicalCertificatesEntity that = (MedicalCertificatesEntity) o;
 
         if (idMedicalCertificate != that.idMedicalCertificate) return false;
-        if (idUser != that.idUser) return false;
+        if (usersByIdUser != that.usersByIdUser) return false;
         if (issueDate != null ? !issueDate.equals(that.issueDate) : that.issueDate != null) return false;
         if (expiryDate != null ? !expiryDate.equals(that.expiryDate) : that.expiryDate != null) return false;
         if (certificateType != null ? !certificateType.equals(that.certificateType) : that.certificateType != null)
@@ -89,15 +97,7 @@ public class MedicalCertificatesEntity {
         result = 31 * result + (issueDate != null ? issueDate.hashCode() : 0);
         result = 31 * result + (expiryDate != null ? expiryDate.hashCode() : 0);
         result = 31 * result + (certificateType != null ? certificateType.hashCode() : 0);
-        result = 31 * result + idUser;
         return result;
     }
 
-    public UsersEntity getUsersByIdUser() {
-        return usersByIdUser;
-    }
-
-    public void setUsersByIdUser(UsersEntity usersByIdUser) {
-        this.usersByIdUser = usersByIdUser;
-    }
 }

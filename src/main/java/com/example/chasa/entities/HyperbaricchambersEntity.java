@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "hyperbaricchambers", schema = "chasa", catalog = "")
+@Table(name = "hyperbaricchambers", schema = "chasa")
 public class HyperbaricchambersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -17,11 +17,9 @@ public class HyperbaricchambersEntity {
     @Basic
     @Column(name = "hyperbaric_chamber_phone", nullable = true, length = 255)
     private String hyperbaricChamberPhone;
-    @Basic
-    @Column(name = "id_adress", nullable = false)
-    private int idAdress;
+
     @OneToMany(mappedBy = "hyperbaricchambersByIdHyperbaricChamber")
-    private Collection<DiveSitesEntity> diveSitesByIdHyperbaricChamber;
+    private List<DiveSitesEntity> diveSitesByIdHyperbaricChamber;
     @ManyToOne
     @JoinColumn(name = "id_adress", referencedColumnName = "id_address", nullable = false)
     private AddressesEntity addressesByIdAdress;
@@ -50,12 +48,12 @@ public class HyperbaricchambersEntity {
         this.hyperbaricChamberPhone = hyperbaricChamberPhone;
     }
 
-    public int getIdAdress() {
-        return idAdress;
+    public AddressesEntity getIdAdress() {
+        return addressesByIdAdress;
     }
 
-    public void setIdAdress(int idAdress) {
-        this.idAdress = idAdress;
+    public void setIdAdress(AddressesEntity addressesByIdAdress) {
+        this.addressesByIdAdress = addressesByIdAdress;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class HyperbaricchambersEntity {
         HyperbaricchambersEntity that = (HyperbaricchambersEntity) o;
 
         if (idHyperbaricChamber != that.idHyperbaricChamber) return false;
-        if (idAdress != that.idAdress) return false;
+        if (addressesByIdAdress != that.addressesByIdAdress) return false;
         if (hyperbaricChamberLabel != null ? !hyperbaricChamberLabel.equals(that.hyperbaricChamberLabel) : that.hyperbaricChamberLabel != null)
             return false;
         if (hyperbaricChamberPhone != null ? !hyperbaricChamberPhone.equals(that.hyperbaricChamberPhone) : that.hyperbaricChamberPhone != null)
@@ -80,7 +78,6 @@ public class HyperbaricchambersEntity {
         int result = idHyperbaricChamber;
         result = 31 * result + (hyperbaricChamberLabel != null ? hyperbaricChamberLabel.hashCode() : 0);
         result = 31 * result + (hyperbaricChamberPhone != null ? hyperbaricChamberPhone.hashCode() : 0);
-        result = 31 * result + idAdress;
         return result;
     }
 
@@ -89,10 +86,6 @@ public class HyperbaricchambersEntity {
     }
 
     public void setDiveSitesByIdHyperbaricChamber(List<DiveSitesEntity> diveSitesByIdHyperbaricChamber) {
-        this.diveSitesByIdHyperbaricChamber = diveSitesByIdHyperbaricChamber;
-    }
-
-    public void setDiveSitesByIdHyperbaricChamber(Collection<DiveSitesEntity> diveSitesByIdHyperbaricChamber) {
         this.diveSitesByIdHyperbaricChamber = diveSitesByIdHyperbaricChamber;
     }
 

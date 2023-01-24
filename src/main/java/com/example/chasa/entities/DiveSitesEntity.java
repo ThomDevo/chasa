@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "dive_sites", schema = "chasa", catalog = "")
+@Table(name = "dive_sites", schema = "chasa")
 public class DiveSitesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -14,14 +14,8 @@ public class DiveSitesEntity {
     @Basic
     @Column(name = "dive_site_label", nullable = false, length = 255)
     private String diveSiteLabel;
-    @Basic
-    @Column(name = "id_hyperbaric_chamber", nullable = false)
-    private int idHyperbaricChamber;
-    @Basic
-    @Column(name = "id_address", nullable = false)
-    private int idAddress;
     @OneToMany(mappedBy = "diveSitesByIdDiveSite")
-    private Collection<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdDiveSite;
+    private List<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdDiveSite;
     @ManyToOne
     @JoinColumn(name = "id_hyperbaric_chamber", referencedColumnName = "id_hyperbaric_chamber", nullable = false)
     private HyperbaricchambersEntity hyperbaricchambersByIdHyperbaricChamber;
@@ -29,7 +23,7 @@ public class DiveSitesEntity {
     @JoinColumn(name = "id_address", referencedColumnName = "id_address", nullable = false)
     private AddressesEntity addressesByIdAddress;
     @OneToMany(mappedBy = "diveSitesByIdDiveSite")
-    private Collection<EventsEntity> eventsByIdDiveSite;
+    private List<EventsEntity> eventsByIdDiveSite;
 
     public int getIdDiveSite() {
         return idDiveSite;
@@ -47,20 +41,20 @@ public class DiveSitesEntity {
         this.diveSiteLabel = diveSiteLabel;
     }
 
-    public int getIdHyperbaricChamber() {
-        return idHyperbaricChamber;
+    public HyperbaricchambersEntity getIdHyperbaricChamber() {
+        return hyperbaricchambersByIdHyperbaricChamber;
     }
 
-    public void setIdHyperbaricChamber(int idHyperbaricChamber) {
-        this.idHyperbaricChamber = idHyperbaricChamber;
+    public void setIdHyperbaricChamber(HyperbaricchambersEntity hyperbaricchambersByIdHyperbaricChamber) {
+        this.hyperbaricchambersByIdHyperbaricChamber = hyperbaricchambersByIdHyperbaricChamber;
     }
 
-    public int getIdAddress() {
-        return idAddress;
+    public AddressesEntity getIdAddress() {
+        return addressesByIdAddress;
     }
 
-    public void setIdAddress(int idAddress) {
-        this.idAddress = idAddress;
+    public void setIdAddress(AddressesEntity addressesByIdAddress) {
+        this.addressesByIdAddress = addressesByIdAddress;
     }
 
     @Override
@@ -71,8 +65,8 @@ public class DiveSitesEntity {
         DiveSitesEntity that = (DiveSitesEntity) o;
 
         if (idDiveSite != that.idDiveSite) return false;
-        if (idHyperbaricChamber != that.idHyperbaricChamber) return false;
-        if (idAddress != that.idAddress) return false;
+        if (hyperbaricchambersByIdHyperbaricChamber != that.hyperbaricchambersByIdHyperbaricChamber) return false;
+        if (addressesByIdAddress != that.addressesByIdAddress) return false;
         if (diveSiteLabel != null ? !diveSiteLabel.equals(that.diveSiteLabel) : that.diveSiteLabel != null)
             return false;
 
@@ -83,12 +77,10 @@ public class DiveSitesEntity {
     public int hashCode() {
         int result = idDiveSite;
         result = 31 * result + (diveSiteLabel != null ? diveSiteLabel.hashCode() : 0);
-        result = 31 * result + idHyperbaricChamber;
-        result = 31 * result + idAddress;
         return result;
     }
 
-    public Collection<DiveSiteCharacteristicsEntity> getDiveSiteCharacteristicsByIdDiveSite() {
+    public List<DiveSiteCharacteristicsEntity> getDiveSiteCharacteristicsByIdDiveSite() {
         return diveSiteCharacteristicsByIdDiveSite;
     }
 
@@ -96,9 +88,6 @@ public class DiveSitesEntity {
         this.diveSiteCharacteristicsByIdDiveSite = diveSiteCharacteristicsByIdDiveSite;
     }
 
-    public void setDiveSiteCharacteristicsByIdDiveSite(Collection<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdDiveSite) {
-        this.diveSiteCharacteristicsByIdDiveSite = diveSiteCharacteristicsByIdDiveSite;
-    }
 
     public HyperbaricchambersEntity getHyperbaricchambersByIdHyperbaricChamber() {
         return hyperbaricchambersByIdHyperbaricChamber;
@@ -116,7 +105,7 @@ public class DiveSitesEntity {
         this.addressesByIdAddress = addressesByIdAddress;
     }
 
-    public Collection<EventsEntity> getEventsByIdDiveSite() {
+    public List<EventsEntity> getEventsByIdDiveSite() {
         return eventsByIdDiveSite;
     }
 
@@ -124,7 +113,4 @@ public class DiveSitesEntity {
         this.eventsByIdDiveSite = eventsByIdDiveSite;
     }
 
-    public void setEventsByIdDiveSite(Collection<EventsEntity> eventsByIdDiveSite) {
-        this.eventsByIdDiveSite = eventsByIdDiveSite;
-    }
 }

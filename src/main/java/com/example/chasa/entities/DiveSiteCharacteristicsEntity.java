@@ -12,12 +12,6 @@ public class DiveSiteCharacteristicsEntity {
     @Basic
     @Column(name = "value", nullable = false, length = 255)
     private String value;
-    @Basic
-    @Column(name = "id_dive_site", nullable = false)
-    private int idDiveSite;
-    @Basic
-    @Column(name = "id_characteristic", nullable = false)
-    private int idCharacteristic;
     @ManyToOne
     @JoinColumn(name = "id_dive_site", referencedColumnName = "id_dive_site", nullable = false)
     private DiveSitesEntity diveSitesByIdDiveSite;
@@ -41,20 +35,20 @@ public class DiveSiteCharacteristicsEntity {
         this.value = value;
     }
 
-    public int getIdDiveSite() {
-        return idDiveSite;
+    public DiveSitesEntity getIdDiveSite() {
+        return diveSitesByIdDiveSite;
     }
 
-    public void setIdDiveSite(int idDiveSite) {
-        this.idDiveSite = idDiveSite;
+    public void setIdDiveSite(DiveSitesEntity diveSitesByIdDiveSite) {
+        this.diveSitesByIdDiveSite = diveSitesByIdDiveSite;
     }
 
-    public int getIdCharacteristic() {
-        return idCharacteristic;
+    public CharacteristicsEntity getIdCharacteristic() {
+        return characteristicsByIdCharacteristic;
     }
 
-    public void setIdCharacteristic(int idCharacteristic) {
-        this.idCharacteristic = idCharacteristic;
+    public void setIdCharacteristic(CharacteristicsEntity characteristicsByIdCharacteristic) {
+        this.characteristicsByIdCharacteristic = characteristicsByIdCharacteristic;
     }
 
     @Override
@@ -65,8 +59,8 @@ public class DiveSiteCharacteristicsEntity {
         DiveSiteCharacteristicsEntity that = (DiveSiteCharacteristicsEntity) o;
 
         if (idDiveSiteCharacterisitc != that.idDiveSiteCharacterisitc) return false;
-        if (idDiveSite != that.idDiveSite) return false;
-        if (idCharacteristic != that.idCharacteristic) return false;
+        if (diveSitesByIdDiveSite != that.diveSitesByIdDiveSite) return false;
+        if (characteristicsByIdCharacteristic != that.characteristicsByIdCharacteristic) return false;
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
 
         return true;
@@ -76,8 +70,6 @@ public class DiveSiteCharacteristicsEntity {
     public int hashCode() {
         int result = idDiveSiteCharacterisitc;
         result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + idDiveSite;
-        result = 31 * result + idCharacteristic;
         return result;
     }
 

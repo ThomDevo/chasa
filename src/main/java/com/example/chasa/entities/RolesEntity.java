@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "roles", schema = "chasa", catalog = "")
+@Table(name = "roles", schema = "chasa")
 public class RolesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -15,9 +15,9 @@ public class RolesEntity {
     @Column(name = "role_label", nullable = false, length = 255)
     private String roleLabel;
     @OneToMany(mappedBy = "rolesByIdRole")
-    private Collection<RolePermissionEntity> rolePermissionsByIdRole;
+    private List<RolePermissionEntity> rolePermissionsByIdRole;
     @OneToMany(mappedBy = "rolesByIdRole")
-    private Collection<UsersEntity> usersByIdRole;
+    private List<UsersEntity> usersByIdRole;
 
     public int getIdRole() {
         return idRole;
@@ -55,7 +55,7 @@ public class RolesEntity {
         return result;
     }
 
-    public Collection<RolePermissionEntity> getRolePermissionsByIdRole() {
+    public List<RolePermissionEntity> getRolePermissionsByIdRole() {
         return rolePermissionsByIdRole;
     }
 
@@ -63,19 +63,11 @@ public class RolesEntity {
         this.rolePermissionsByIdRole = rolePermissionsByIdRole;
     }
 
-    public void setRolePermissionsByIdRole(Collection<RolePermissionEntity> rolePermissionsByIdRole) {
-        this.rolePermissionsByIdRole = rolePermissionsByIdRole;
-    }
-
-    public Collection<UsersEntity> getUsersByIdRole() {
+    public List<UsersEntity> getUsersByIdRole() {
         return usersByIdRole;
     }
 
     public void setUsersByIdRole(List<UsersEntity> usersByIdRole) {
-        this.usersByIdRole = usersByIdRole;
-    }
-
-    public void setUsersByIdRole(Collection<UsersEntity> usersByIdRole) {
         this.usersByIdRole = usersByIdRole;
     }
 }

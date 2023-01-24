@@ -15,7 +15,7 @@ public class EventCategoriesEntity {
     @Column(name = "event_category_label", nullable = false, length = 255)
     private String eventCategoryLabel;
     @OneToMany(mappedBy = "eventCategoriesByIdEventCategory")
-    private Collection<EventsEntity> eventsByIdEventCategory;
+    private List<EventsEntity> eventsByIdEventCategory;
 
     public int getIdEventCategory() {
         return idEventCategory;
@@ -62,7 +62,4 @@ public class EventCategoriesEntity {
         this.eventsByIdEventCategory = eventsByIdEventCategory;
     }
 
-    public void setEventsByIdEventCategory(Collection<EventsEntity> eventsByIdEventCategory) {
-        this.eventsByIdEventCategory = eventsByIdEventCategory;
-    }
 }

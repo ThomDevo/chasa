@@ -15,7 +15,7 @@ public class CharacteristicsEntity {
     @Column(name = "characteristic_label", nullable = false, length = 255)
     private String characteristicLabel;
     @OneToMany(mappedBy = "characteristicsByIdCharacteristic")
-    private Collection<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdCharacteristic;
+    private List<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdCharacteristic;
 
     public int getIdCharacteristic() {
         return idCharacteristic;
@@ -54,7 +54,7 @@ public class CharacteristicsEntity {
         return result;
     }
 
-    public Collection<DiveSiteCharacteristicsEntity> getDiveSiteCharacteristicsByIdCharacteristic() {
+    public List<DiveSiteCharacteristicsEntity> getDiveSiteCharacteristicsByIdCharacteristic() {
         return diveSiteCharacteristicsByIdCharacteristic;
     }
 
@@ -62,7 +62,4 @@ public class CharacteristicsEntity {
         this.diveSiteCharacteristicsByIdCharacteristic = diveSiteCharacteristicsByIdCharacteristic;
     }
 
-    public void setDiveSiteCharacteristicsByIdCharacteristic(Collection<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdCharacteristic) {
-        this.diveSiteCharacteristicsByIdCharacteristic = diveSiteCharacteristicsByIdCharacteristic;
-    }
 }

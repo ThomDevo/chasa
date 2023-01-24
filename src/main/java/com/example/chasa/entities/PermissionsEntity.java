@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "permissions", schema = "chasa", catalog = "")
+@Table(name = "permissions", schema = "chasa")
 public class PermissionsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,7 +18,7 @@ public class PermissionsEntity {
     @Column(name = "permission_description", nullable = true, length = 255)
     private String permissionDescription;
     @OneToMany(mappedBy = "permissionsByIdPermission")
-    private Collection<RolePermissionEntity> rolePermissionsByIdPermission;
+    private List<RolePermissionEntity> rolePermissionsByIdPermission;
 
     public int getIdPermission() {
         return idPermission;
@@ -68,7 +68,7 @@ public class PermissionsEntity {
         return result;
     }
 
-    public Collection<RolePermissionEntity> getRolePermissionsByIdPermission() {
+    public List<RolePermissionEntity> getRolePermissionsByIdPermission() {
         return rolePermissionsByIdPermission;
     }
 
@@ -76,7 +76,4 @@ public class PermissionsEntity {
         this.rolePermissionsByIdPermission = rolePermissionsByIdPermission;
     }
 
-    public void setRolePermissionsByIdPermission(Collection<RolePermissionEntity> rolePermissionsByIdPermission) {
-        this.rolePermissionsByIdPermission = rolePermissionsByIdPermission;
-    }
 }

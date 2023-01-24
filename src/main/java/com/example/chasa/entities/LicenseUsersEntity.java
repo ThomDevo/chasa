@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "license_users", schema = "chasa", catalog = "")
+@Table(name = "license_users", schema = "chasa")
 public class LicenseUsersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -13,12 +13,6 @@ public class LicenseUsersEntity {
     @Basic
     @Column(name = "licensed_date", nullable = false)
     private Date licensedDate;
-    @Basic
-    @Column(name = "id_license", nullable = false)
-    private int idLicense;
-    @Basic
-    @Column(name = "id_user", nullable = false)
-    private int idUser;
     @ManyToOne
     @JoinColumn(name = "id_license", referencedColumnName = "id_license", nullable = false)
     private LicensesEntity licensesByIdLicense;
@@ -42,20 +36,20 @@ public class LicenseUsersEntity {
         this.licensedDate = licensedDate;
     }
 
-    public int getIdLicense() {
-        return idLicense;
+    public LicensesEntity getIdLicense() {
+        return licensesByIdLicense;
     }
 
-    public void setIdLicense(int idLicense) {
-        this.idLicense = idLicense;
+    public void setIdLicense(LicensesEntity licensesByIdLicense) {
+        this.licensesByIdLicense = licensesByIdLicense;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public UsersEntity getIdUser() {
+        return usersByIdUser;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdUser(UsersEntity usersByIdUser) {
+        this.usersByIdUser = usersByIdUser;
     }
 
     @Override
@@ -66,8 +60,8 @@ public class LicenseUsersEntity {
         LicenseUsersEntity that = (LicenseUsersEntity) o;
 
         if (idLicenseUser != that.idLicenseUser) return false;
-        if (idLicense != that.idLicense) return false;
-        if (idUser != that.idUser) return false;
+        if (licensesByIdLicense != that.licensesByIdLicense) return false;
+        if (usersByIdUser != that.usersByIdUser) return false;
         if (licensedDate != null ? !licensedDate.equals(that.licensedDate) : that.licensedDate != null) return false;
 
         return true;
@@ -77,8 +71,6 @@ public class LicenseUsersEntity {
     public int hashCode() {
         int result = idLicenseUser;
         result = 31 * result + (licensedDate != null ? licensedDate.hashCode() : 0);
-        result = 31 * result + idLicense;
-        result = 31 * result + idUser;
         return result;
     }
 

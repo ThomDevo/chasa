@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "events", schema = "chasa", catalog = "")
+@Table(name = "events", schema = "chasa")
 public class EventsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -21,18 +21,6 @@ public class EventsEntity {
     @Basic
     @Column(name = "price", nullable = false, precision = 0)
     private double price;
-    @Basic
-    @Column(name = "id_address", nullable = false)
-    private int idAddress;
-    @Basic
-    @Column(name = "id_license", nullable = true)
-    private Integer idLicense;
-    @Basic
-    @Column(name = "id_dive_site", nullable = true)
-    private Integer idDiveSite;
-    @Basic
-    @Column(name = "id_event_category", nullable = false)
-    private int idEventCategory;
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id_address", nullable = false)
     private AddressesEntity addressesByIdAddress;
@@ -46,7 +34,7 @@ public class EventsEntity {
     @JoinColumn(name = "id_event_category", referencedColumnName = "id_event_category", nullable = false)
     private EventCategoriesEntity eventCategoriesByIdEventCategory;
     @OneToMany(mappedBy = "eventsByIdEvent")
-    private Collection<UserEventsEntity> userEventsByIdEvent;
+    private List<UserEventsEntity> userEventsByIdEvent;
 
     public int getIdEvent() {
         return idEvent;
@@ -80,36 +68,36 @@ public class EventsEntity {
         this.price = price;
     }
 
-    public int getIdAddress() {
-        return idAddress;
+    public AddressesEntity getIdAddress() {
+        return addressesByIdAddress;
     }
 
-    public void setIdAddress(int idAddress) {
-        this.idAddress = idAddress;
+    public void setIdAddress(AddressesEntity addressesByIdAddress) {
+        this.addressesByIdAddress = addressesByIdAddress;
     }
 
-    public Integer getIdLicense() {
-        return idLicense;
+    public LicensesEntity getIdLicense() {
+        return licensesByIdLicense;
     }
 
-    public void setIdLicense(Integer idLicense) {
-        this.idLicense = idLicense;
+    public void setIdLicense(LicensesEntity licensesByIdLicense) {
+        this.licensesByIdLicense = licensesByIdLicense;
     }
 
-    public Integer getIdDiveSite() {
-        return idDiveSite;
+    public DiveSitesEntity getIdDiveSite() {
+        return diveSitesByIdDiveSite;
     }
 
-    public void setIdDiveSite(Integer idDiveSite) {
-        this.idDiveSite = idDiveSite;
+    public void setIdDiveSite(DiveSitesEntity idDiveSite) {
+        this.diveSitesByIdDiveSite = idDiveSite;
     }
 
-    public int getIdEventCategory() {
-        return idEventCategory;
+    public EventCategoriesEntity getIdEventCategory() {
+        return eventCategoriesByIdEventCategory;
     }
 
-    public void setIdEventCategory(int idEventCategory) {
-        this.idEventCategory = idEventCategory;
+    public void setIdEventCategory(EventCategoriesEntity eventCategoriesByIdEventCategory) {
+        this.eventCategoriesByIdEventCategory = eventCategoriesByIdEventCategory;
     }
 
     @Override
@@ -122,12 +110,12 @@ public class EventsEntity {
         if (idEvent != that.idEvent) return false;
         if (maxNumPeople != that.maxNumPeople) return false;
         if (Double.compare(that.price, price) != 0) return false;
-        if (idAddress != that.idAddress) return false;
-        if (idEventCategory != that.idEventCategory) return false;
+        if (addressesByIdAddress != that.addressesByIdAddress) return false;
+        if (eventCategoriesByIdEventCategory != that.eventCategoriesByIdEventCategory) return false;
         if (dateTimeEvent != null ? !dateTimeEvent.equals(that.dateTimeEvent) : that.dateTimeEvent != null)
             return false;
-        if (idLicense != null ? !idLicense.equals(that.idLicense) : that.idLicense != null) return false;
-        if (idDiveSite != null ? !idDiveSite.equals(that.idDiveSite) : that.idDiveSite != null) return false;
+        if (licensesByIdLicense != null ? !licensesByIdLicense.equals(that.licensesByIdLicense) : that.licensesByIdLicense != null) return false;
+        if (diveSitesByIdDiveSite != null ? !diveSitesByIdDiveSite.equals(that.diveSitesByIdDiveSite) : that.diveSitesByIdDiveSite != null) return false;
 
         return true;
     }
@@ -141,10 +129,6 @@ public class EventsEntity {
         result = 31 * result + maxNumPeople;
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + idAddress;
-        result = 31 * result + (idLicense != null ? idLicense.hashCode() : 0);
-        result = 31 * result + (idDiveSite != null ? idDiveSite.hashCode() : 0);
-        result = 31 * result + idEventCategory;
         return result;
     }
 
@@ -188,7 +172,4 @@ public class EventsEntity {
         this.userEventsByIdEvent = userEventsByIdEvent;
     }
 
-    public void setUserEventsByIdEvent(Collection<UserEventsEntity> userEventsByIdEvent) {
-        this.userEventsByIdEvent = userEventsByIdEvent;
-    }
 }
