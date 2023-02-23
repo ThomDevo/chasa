@@ -38,7 +38,7 @@ public class AddressesEntity {
     private List<EventsEntity> eventsByIdAddress;
     @OneToMany(mappedBy = "addressesByIdAdress")
     private List<HyperbaricchambersEntity> hyperbaricchambersByIdAddress;
-    @OneToMany(mappedBy = "addressesByIdAdress")
+    @OneToMany(mappedBy = "addresses")
     private List<UsersEntity> usersByIdAddress;
 
     //Getters and setters

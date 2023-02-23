@@ -8,21 +8,16 @@ function submitLanguageForm(idForm){
     domForm.submit();
 }
 
-function validateConnection(){
+//function for research in table before manny character.
+function researchTable(target){
+    let valueInput = target.value;
+    if(valueInput.length < 2 && valueInput.length > 0)
+        return;
+    clickNext(target);
+}
 
-    let result = true;
-    const lifrasNumber = document.forms["connections"]["float-input"];
-    const password = document.forms["connections"]["toggle"];
-
-    if (lifrasNumber.value === "" || lifrasNumber.value == null){
-        document.getElementById("errLifrasNumberEmptySpan").style.display = "block";
-        label.style.border = "1px solid red";
-        label.style.boxShadow = "0 0 1px 2px red"
-    }else{
-        document.getElementById("errLifrasNumberEmptySpan").style.display = "none";
-        label.removeAttribute('style');
-    }
-
-    return result;
-
+//function for click element next.
+function clickNext(target, blockProcess=false){
+    if(!blockProcess)
+        target.nextSibling.click();
 }

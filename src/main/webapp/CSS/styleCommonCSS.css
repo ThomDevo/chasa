@@ -29,7 +29,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    font-size: 15px;
+    font-size: 17px;
     font-family: var(--font-family);
     background:  url(./Pictures/Connection2.png);
     background-size : cover;
@@ -54,6 +54,69 @@ a {
     text-decoration: none;
 }
 
+/* button */
+
+.btn {
+    background-color: white;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 1.6rem;
+    border: 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 0 5px;
+    box-shadow: var(--box-shadow);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--text-color-light);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: var(--text-color-light);
+}
+
+.btn-dark {
+    font-size: 1rem;
+    background-color: var(--dark);
+    color: var(--text-color-light);
+    padding: 0.1rem 1.5rem;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 1.4rem;
+}
+
+.btn-dark:hover {
+    background-color: var(--primary-dark);
+    transition: background-color 0.5s;
+}
+
+.btnMenu {
+    background-color: var(--primary);
+    font-weight: 700;
+    color: var(--text-color-light);
+    font-size: 1.6rem;
+    border: 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 150px;
+    list-style-type: none;
+}
+
+.low-opacity {
+    opacity: 0.5;
+}
+
+.hidden{
+
+    display : none !important;
+}
 
 #header{
     background-color: #1F85DE;
@@ -83,9 +146,10 @@ a {
     font-size: 14px;
     padding: 10px;
     text-align: center;
-    position:absolute;
+    position:fixed;
     bottom:0;  /* on le colle en bas */
     width:100%;
+    left: 0;
     height:50px;   /* Hauteur du pied de page */
 }
 
@@ -112,6 +176,7 @@ a {
 
 #menu a{
     text-decoration: none;
+    background-color: #1F85DE;
     color: #ffffff;
 }
 #menu a:hover{
@@ -121,8 +186,7 @@ a {
 }
 
 /*---containers---*/
-.content{
-    max-width: 100rem;
+.content {
     width: 100%;
     flex: 1;
     display: flex;
@@ -131,3 +195,145 @@ a {
     align-items: center;
     padding: 2rem 0;
 }
+.overflow {
+    overflow: hidden;
+    text-align: center;
+}
+
+/* block */
+
+.block {
+    border-radius: 3px;
+    border: var(--border);
+    background-color: white;
+    box-shadow: var(--box-shadow);
+}
+
+/* utils */
+
+.p-20 {
+    padding:20px;
+}
+
+.p-10 {
+    padding:10px;
+}
+
+/*--Form--*/
+
+.form-container {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    margin: auto;
+}
+
+.form-container h2 {
+    margin-bottom: 2rem;
+}
+
+.form-control {
+    display: flex;
+    flex-flow: column;
+    margin: 1rem 0;
+}
+
+.form-control label {
+    margin: 1rem;
+}
+
+.form-control input {
+    border: var(--border);
+    border-radius: 3px;
+    padding: 1rem 1.5rem;
+    width: 80%;
+}
+
+.form-control select {
+    border: var(--border);
+    padding: 1rem 1.5rem;
+}
+
+.form-control textarea {
+    border: var(--border);
+    padding: 1rem 1.5rem;
+    min-height: 20rem;
+}
+
+.form-actions {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+}
+.span-error-div {
+    margin-top: 2px;
+}
+
+.span-error4 {
+    text-align: left;
+    color: red;
+    font-size: 14px;
+    margin-left: 205px;
+}
+
+/*---Article ---*/
+.articles-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.article {
+    flex: 30%;
+    margin: 1rem;
+    min-height: 41rem;
+    min-width: 30rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.article:hover .img-container {
+    transform: scale(1.2);
+}
+
+.category-container h2 {
+    font-size: 1.9rem;
+    padding: 0 1rem;
+}
+
+.article h3 {
+    font-size: 1.7rem;
+    padding: 1rem 1.5rem;
+}
+
+
+.img-container {
+    height: 30rem;
+    background-size:cover ;
+    transition: transform 1s;
+
+}
+
+
+/*---Table ---*/
+
+table{
+    text-align:center;
+    margin:auto;
+    min-width: 40%; ;
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-grey-tab);
+}
+
+.hidden{
+
+    display : none !important;
+}
+.hiddenBlock{
+    visibility: hidden;
+}
+
+

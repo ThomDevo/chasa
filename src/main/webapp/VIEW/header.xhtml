@@ -29,9 +29,8 @@
                 </p:menuButton>
             </h:form>
 
-            <h1>
-                <h:outputText value="#{I18N['logo.title']}" />
-            </h1>
+                <p:linkButton outcome="/VIEW/home.xhtml" value="#{I18N['logo.title']}" style="margin-right:20px;">
+                </p:linkButton>
 
     </div>
 
@@ -44,8 +43,8 @@
                 <p:menubar>
                     <p:submenu label="#{I18N['menu.data.users']}" icon="pi pi-fw pi-user">
                         <p:submenu label="#{I18N['menu.own.data.users']}" icon="pi pi-fw pi-user">
-                            <p:menuitem value="#{I18N['menu.own.data.users.modify']}" icon="pi pi-fw  pi-user-edit" action="/view/updateOwnData.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.own.data.users.consult']}" icon="pi pi-fw pi-user" action="/view/ConsultOwnData.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.own.data.users.modify']}" icon="pi pi-fw  pi-user-edit" />
+                            <p:menuitem value="#{I18N['menu.own.data.users.consult']}" icon="pi pi-fw pi-user" action="/VIEW/ConsultOwnData.xhtml"/>
                         </p:submenu>
                         <p:submenu label="#{I18N['menu.data.membre']}" icon="pi pi-fw pi-user">
                             <p:menuitem value="#{I18N['menu.data.member.add']}" icon="pi pi-fw pi-user-plus"/>
@@ -77,22 +76,27 @@
                     <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.divingSite']}" icon="pi pi-fw pi-globe">
                         <p:submenu label="#{I18N['menu.divingSite.settings']}" icon="pi pi-fw pi-cog">
-                            <p:menuitem value="#{I18N['menu.divingSite.settings.add']}" icon="pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.divingSite.settings.add']}" icon="pi pi-fw pi-plus"/>
                             <p:menuitem value="#{I18N['menu.divingSite.settings.modify']}" icon="pi pi-fw pi-cog"/>
                             <p:menuitem value="#{I18N['menu.divingSite.settings.consult']}" icon="pi pi-fw pi-search"/>
                         </p:submenu>
                         <p:divider />
-                        <p:menuitem value="#{I18N['menu.data.events.participate']}" icon="pi pi-fw pi-calendar-plus"/>
+                        <p:submenu label="#{I18N['menu.divingSite.characteristics']}" icon="pi pi-fw pi-cog">
+                            <p:menuitem value="#{I18N['menu.divingSite.characteristics.add']}" icon="pi pi-fw pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.divingSite.characteristics.modify']}" icon="pi pi-fw pi-cog"/>
+                            <p:menuitem value="#{I18N['menu.divingSite.characteristics.consult']}" icon="pi pi-fw pi-search"/>
+                        </p:submenu>
                     </p:submenu>
                     <p:divider layout="vertical"/>
-
-                    <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
+                    <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
+                        <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
+                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.modify']}" icon="pi pi-fw pi-user-edit"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml"/>
+                        </p:submenu>
+                    </p:submenu>
 
                     <f:facet name="options">
-                        <div class="ui-input-icon-left mr-2">
-                            <i class="pi pi-fw pi-search" />
-                            <p:inputText placeholder="Search"/>
-                        </div>
                         <p:button value="Logout"  action="#{connectionBean.logOut}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
                     </f:facet>
                 </p:menubar>

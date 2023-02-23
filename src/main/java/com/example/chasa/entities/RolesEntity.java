@@ -1,8 +1,17 @@
 package com.example.chasa.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.List;
+
+@NamedQueries(value = {
+        @NamedQuery(name = "Role.SelectRoleByRoleName", query = "SELECT r from RolesEntity r where r.roleLabel = :roleLabel"),
+        @NamedQuery(name="Role.SelectRoleAll", query ="SELECT r from RolesEntity r"),
+        @NamedQuery(name="Role.SelectRoleById", query="SELECT r from RolesEntity r where r.idRole = :idRole"),
+        @NamedQuery(name="Role.isRoleExist", query="SELECT COUNT(r) FROM RolesEntity r WHERE r.roleLabel = :roleLabel"),
+        @NamedQuery(name="Role.SelectAllRoleFilter", query="SELECT r FROM RolesEntity r WHERE ((lower(r.roleLabel) LIKE CONCAT('%', :researchRole, '%'))) ORDER BY r.roleLabel ASC")
+})
 
 @Entity
 @Table(name = "roles", schema = "chasa")
@@ -12,11 +21,12 @@ public class RolesEntity {
     @Column(name = "id_role", nullable = false)
     private int idRole;
     @Basic
+    @Pattern(regexp = "^[a-zA-Z0-9]{2,255}$")
     @Column(name = "role_label", nullable = false, length = 255)
     private String roleLabel;
     @OneToMany(mappedBy = "rolesByIdRole")
     private List<RolePermissionEntity> rolePermissionsByIdRole;
-    @OneToMany(mappedBy = "rolesByIdRole")
+    @OneToMany(mappedBy = "roles")
     private List<UsersEntity> usersByIdRole;
 
     public int getIdRole() {

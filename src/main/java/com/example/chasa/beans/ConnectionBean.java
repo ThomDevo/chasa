@@ -6,6 +6,7 @@ import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.ProcessUtils;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -18,14 +19,20 @@ public class ConnectionBean implements Serializable {
     private UsersEntity userForm = new UsersEntity();
     private String messageErrorConnection ="hidden";
     private String password;
+    private UsersEntity current;
+
+    public String logOut() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/Connection.xhtml?faces-redirect=true";
+    }
 
     /**
      * Connection method
      */
     public String connection()
     {
-        String redirect;
-       /* EntityManager em = EMF.getEM();
+
+        EntityManager em = EMF.getEM();
         UsersService userService = new UsersService();
         String redirect;
 
@@ -36,7 +43,7 @@ public class ConnectionBean implements Serializable {
             this.userForm = userService.findUserByLifrasNumber(this.userForm.getLifrasNumber(), em);
             this.user = userForm;
             this.messageErrorConnection = "hidden";
-            redirect = "/VIEW/accueil";
+            redirect = "/VIEW/home";
         }
         catch(Exception e)
         {
@@ -49,8 +56,8 @@ public class ConnectionBean implements Serializable {
         finally
         {
             em.close();
-        }*/
-        redirect = "/VIEW/home";
+        }
+
         return redirect;
     }
 

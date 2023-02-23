@@ -33,9 +33,12 @@
 
                 <h4>#{I18N['connectionpage.lifrasNumber.title']}</h4>
                 <span class="ui-float-label">
-                    <p:inputText id="float-input" value="#{connectionBean.userForm.lifrasNumber}"
-                                 placeholder="#{I18N['connectionpage.lifrasNumber.placeholder']}">
-                    </p:inputText>
+                    <p:inputNumber id="float-input" value="#{connectionBean.userForm.lifrasNumber}"
+                                   placeholder="#{I18N['connectionpage.lifrasNumber.placeholder']}"
+                                   validatorMessage="#{I18N['ConnectionPage.errorMessageLogin']}">
+
+                    </p:inputNumber>
+                    <p:message id="messageLifrasNumber" for="@previous"/>
                 </span>
 
 

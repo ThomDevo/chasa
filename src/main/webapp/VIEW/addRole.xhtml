@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{I18N['rolepage.addRoletitle']}"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="content">
+            <div class="block p-20 form-container">
+                <h2>
+                    <h:outputText value="#{I18N['rolepage.addRole']}" />
+                </h2>
+                <h:form>
+                    <p:outputPanel class="form-control">
+                        <span>
+                            <p:outputLabel for="input_rolename_new" value="#{I18N['rolepage.roleLabel']}"/>
+                            <p:inputText id="input_rolename_new" class="label" value="#{rolesBean.role.roleLabel}"
+                                         placeholder="#{I18N['rolepage.roleLabel.placeholder']}"
+                                         validatorMessage="#{I18N['rolepage.roleLabel.errorMessage']}">
+                                <p:ajax update="messageRoleName" event="keyup"/>
+                            </p:inputText>
+                        </span>
+                        <p:message id="messageRoleName" for="@previous"/>
+                    </p:outputPanel>
+                    <span class="responsiveSubmit">
+                        <p:commandButton value="#{I18N['application.create.role']}"
+                                         ajax="false"
+                                         validateClient="true"
+                                         class="ui-button-success"
+                                         action="#{rolesBean.submitFormAddRole}"/>
+                    </span>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>
