@@ -61,7 +61,7 @@ public class UsersEntity {
     private String userPhone;
 
     @Basic
-    @Range(max= 99999)
+    @Range(min=1,max= 99999)
     @NotNull
     @Column(name = "lifras_number", nullable = false)
     private int lifrasNumber;
