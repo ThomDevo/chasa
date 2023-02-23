@@ -67,6 +67,11 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
 
         try{
             transaction.begin();
+            if(roleService.isRoleExist(role.getRoleLabel(), em)){
+                this.messageErrorRoleName = "";
+                redirect = "null" ;
+
+            }
             roleService.addRole(role,em);
             transaction.commit();
         }catch(Exception e){
