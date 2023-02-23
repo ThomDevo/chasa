@@ -28,6 +28,12 @@
                             </p:inputText>
                         </span>
                         <p:message id="messageRoleName" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{rolesBean.messageErrorRoleName}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorRoleName']}"/></span>
+                            </div>
+                        </div>
                     </p:outputPanel>
                     <span class="responsiveSubmit">
                         <p:commandButton value="#{I18N['application.create.role']}"
