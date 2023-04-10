@@ -39,7 +39,6 @@
         <div class="card">
             <h:form>
                 <p:growl id="messages"/>
-
                 <p:menubar>
                     <p:submenu label="#{I18N['menu.data.users']}" icon="pi pi-fw pi-user">
                         <p:submenu label="#{I18N['menu.own.data.users']}" icon="pi pi-fw pi-user">
@@ -56,11 +55,22 @@
                             <p:menuitem value="#{I18N['menu.data.instructor.modify']}" icon="pi pi-fw pi-pencil"/>
                             <p:menuitem value="#{I18N['menu.data.instructor.consult']}" icon="pi pi-fw pi-user"/>
                         </p:submenu>
-                        <p:divider />
+                        <p:divider/>
                         <p:submenu label="#{I18N['menu.data.user.certificate']}" icon="pi pi-fw pi-star">
                             <p:menuitem value="#{I18N['menu.own.certificate.users']}" icon="pi pi-fw pi-star"/>
                             <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.own.data.users.modify']}" icon="pi pi-fw pi-star"/>
+                            <p:menuitem value="#{I18N['menu.data.certificate.modify']}" icon="pi pi-fw pi-wrench"/>
+                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star"/>
+                        </p:submenu>
+                        <p:divider/>
+                        <p:submenu label="#{I18N['menu.data.user.medical']}" icon="pi pi-fw pi-heart-fill">
+                            <p:menuitem value="#{I18N['menu.data.user.medical.mine']}" icon="pi pi-fw pi-heart"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.add']}" icon="pi pi-fw pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.modify']}" icon="pi pi-fw pi-wrench"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.list']}" icon="pi pi-fw pi-heart-fill"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.add']}" icon="pi pi-fw pi-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.modify']}" icon="pi pi-fw pi-wrench"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.list']}" icon="pi pi-fw pi-heart-fill"/>
                         </p:submenu>
                     </p:submenu>
                     <p:divider layout="vertical"/>
@@ -90,14 +100,14 @@
                     <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
                         <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
-                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('MyData:MyData')}"/>
                             <p:menuitem value="#{I18N['menu.chasa.role.modify']}" icon="pi pi-fw pi-user-edit"/>
                             <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml"/>
                         </p:submenu>
                     </p:submenu>
 
                     <f:facet name="options">
-                        <p:button value="Logout"  action="#{connectionBean.logOut}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                        <p:commandButton value="Logout"  action="#{connectionBean.logOut}" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
                     </f:facet>
                 </p:menubar>
             </h:form>

@@ -15,9 +15,10 @@ public class UsersService {
      * @param em
      * @return User
      */
-    public UsersEntity findUserByLifrasNumber (int lifrasNumber, EntityManager em) {
+    public UsersEntity findUserByLifrasNumber (int lifrasNumber, String password, EntityManager em) {
         return em.createNamedQuery("User.SelectUser", UsersEntity.class)
                 .setParameter("lifrasNumber", lifrasNumber)
+                .setParameter("password", password)
                 .getSingleResult();
     }
 

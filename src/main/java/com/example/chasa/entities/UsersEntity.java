@@ -1,5 +1,6 @@
 package com.example.chasa.entities;
 
+import com.example.chasa.beans.ConnectionBean;
 import com.example.chasa.enums.Sex;
 import org.hibernate.validator.constraints.Range;
 
@@ -13,7 +14,7 @@ import java.util.Collection;
 import java.util.*;
 
 @NamedQueries(value = {
-        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber")
+        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber AND u.password = :password")
         /*@NamedQuery(name = "User.FindUserByCharacteristic", query = "SELECT u FROM UsersEntity u WHERE u.roles.roleLabel IN ('MEMBRE') AND(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),
         @NamedQuery(name = "User.FindUserByCharacteristicAdmin", query = "SELECT u FROM UsersEntity u WHERE(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),
         @NamedQuery(name = "User.FindUserByStatus", query = "SELECT u FROM UsersEntity u WHERE u.userStatus = :userStatus")*/
@@ -285,5 +286,30 @@ public class UsersEntity {
         return result;
     }
 
+    /**
+     * Method to associate the list of RolePermissions with the User
+     */
+    @Transient
+    public List<RolePermissionEntity> listOfPermissions;
 
+    @Transient
+    public List<RolePermissionEntity> getListOfPermissions() {
+        if (this.listOfPermissions == null)
+            ConnectionBean.initListPermissionRole(this);
+        return this.listOfPermissions;
+    }
+
+    /**
+     * Method to verify user access
+     * @param permissionName
+     * @return boolean
+     */
+    @Transient
+    public boolean verifyPermission(String permissionName)
+    {
+        return this.getListOfPermissions().stream()
+                .filter(pe -> pe.getIdPermission().getPermissionLabel().equals(permissionName))
+                .findFirst()
+                .orElse(null) != null;
+    }
 }
