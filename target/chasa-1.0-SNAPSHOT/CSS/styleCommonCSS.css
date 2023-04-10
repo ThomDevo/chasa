@@ -238,8 +238,14 @@ a {
     margin: 1rem 0;
 }
 
-.form-control label {
+.form-control {
     margin: 1rem;
+}
+.form-control table {
+    border: var(--border);
+    border-radius: 3px;
+    padding: 1rem 1.5rem;
+    width: 50%;
 }
 
 .form-control input {

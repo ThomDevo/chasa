@@ -25,15 +25,19 @@ public class UsersService {
     /**
      * Method to find User (MEMBRE) based on a filter and order by ASC
      * @param researchWord
-     * @param orderBy
      * @param em
      * @return List<UsersEntity>
      */
-    public List<UsersEntity> findUserByFilterAndOrderAsc(String researchWord, String orderBy, EntityManager em){
+    public List<UsersEntity> findUserByFilter(String researchWord, EntityManager em){
         return em.createNamedQuery("User.FindUserByCharacteristic", UsersEntity.class)
                 .setParameter("researchWord", researchWord.toLowerCase())
-                .setParameter("orderBy", orderBy)
                 .getResultList();
+    }
+
+    public UsersEntity findUserById(int idUser, EntityManager em) {
+        return em.createNamedQuery("User.findUserById", UsersEntity.class)
+                .setParameter("idUser", idUser)
+                .getSingleResult();
     }
 
     /**

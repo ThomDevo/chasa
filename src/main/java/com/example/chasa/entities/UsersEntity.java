@@ -14,10 +14,26 @@ import java.util.Collection;
 import java.util.*;
 
 @NamedQueries(value = {
-        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber AND u.password = :password")
-        /*@NamedQuery(name = "User.FindUserByCharacteristic", query = "SELECT u FROM UsersEntity u WHERE u.roles.roleLabel IN ('MEMBRE') AND(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),
-        @NamedQuery(name = "User.FindUserByCharacteristicAdmin", query = "SELECT u FROM UsersEntity u WHERE(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),
-        @NamedQuery(name = "User.FindUserByStatus", query = "SELECT u FROM UsersEntity u WHERE u.userStatus = :userStatus")*/
+        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber AND u.password = :password"),
+        @NamedQuery(name = "User.findUserById", query = "SELECT u FROM UsersEntity u WHERE u.idUser = :idUser"),
+        @NamedQuery(name = "User.FindUserByCharacteristic", query = "SELECT u from UsersEntity u " +
+                " where ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.email )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.roles.roleLabel) like 'MEMBRE')) or" +
+                " (lower(u.userStatus) like 'TRUE') or" +
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')) " +
+                " order by case " +
+                " when (:orderBy like 'lastName') then u.lastName " +
+                " when (:orderBy like 'firstName') then u.lastName " +
+                " when (:orderBy like 'phone') then u.userPhone " +
+                " when (:orderBy like 'mail') then u.email " +
+                " when (:orderBy like 'enable') then u.userStatus " +
+                " else u.idUser " +
+                " end asc "),
+        /*@NamedQuery(name = "User.FindUserByCharacteristicAdmin", query = "SELECT u FROM UsersEntity u WHERE(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),*/
+        @NamedQuery(name = "User.FindUserByStatus", query = "SELECT u FROM UsersEntity u WHERE u.userStatus = :userStatus")
 })
 
 @Entity
@@ -30,13 +46,13 @@ public class UsersEntity {
 
     @Basic
     @NotNull
-    @Pattern(regexp = "^[A-Z][A-z ',\\-.-éèçàâêîûôù]{2,255}$")
+    @Pattern(regexp = "^[A-Z][A-z ',\\-.-éèçàâêîûôù]{1,255}$")
     @Column(name = "last_name", nullable = false, length = 255)
     private String lastName;
 
     @Basic
     @NotNull
-    @Pattern(regexp = "^[A-Z][A-z ',\\-.-éèçàâêîûôù]{2,255}$")
+    @Pattern(regexp = "^[A-Z][A-z ',\\-.-éèçàâêîûôù]{1,255}$")
     @Column(name = "first_name", nullable = false, length = 255)
     private String firstName;
 
@@ -53,6 +69,7 @@ public class UsersEntity {
 
     @Basic
     @NotNull
+    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     @Column(name = "email", nullable = false, length = 255, unique = true)
     private String email;
 
@@ -64,7 +81,7 @@ public class UsersEntity {
     @Basic
     @Range(min=1,max= 99999)
     @NotNull
-    @Column(name = "lifras_number", nullable = false)
+    @Column(name = "lifras_number", nullable = false, unique = true)
     private int lifrasNumber;
 
     @Basic

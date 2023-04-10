@@ -1,17 +1,17 @@
 package com.example.chasa.converterCustom;
 
 import com.example.chasa.entities.RolesEntity;
-import com.example.chasa.utilities.EMF;
+import com.example.chasa.entities.UsersEntity;
 import com.example.chasa.services.RoleService;
+import com.example.chasa.services.UsersService;
+import com.example.chasa.utilities.EMF;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
-@FacesConverter("RolesConverter")
-public class RolesConverter implements Converter {
+public class UsersConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
         return null;
@@ -23,28 +23,28 @@ public class RolesConverter implements Converter {
     }
 
 
-    public static RolesEntity getAsObjectStatic(String value) {
+    public static UsersEntity getAsObjectStatic(String value) {
         if (value == null || value.equals("0") || value.equals("")) {
             return null;
         }
         EntityManager em = EMF.getEM();
-        RoleService roleService = new RoleService();
-        RolesEntity role = null;
+        UsersService usersService = new UsersService();
+        UsersEntity user = null;
         try {
-            role = roleService.findRoleById(Integer.parseInt(value), em);
+            user = usersService.findUserById(Integer.parseInt(value), em);
         } catch (Exception e) {
 
         } finally {
             em.close();
         }
-        return role;
+        return user;
     }
 
     public String getAsStringStatic(Object value){
         if(value == null){
             return "0";
         }
-        RolesEntity role = (RolesEntity) value;
-        return String.valueOf(role.getIdRole());
+        UsersEntity user = (UsersEntity) value;
+        return String.valueOf(user.getIdUser());
     }
 }
