@@ -80,4 +80,5 @@ public class RolesEntity {
     public void setUsersByIdRole(List<UsersEntity> usersByIdRole) {
         this.usersByIdRole = usersByIdRole;
     }
+
 }

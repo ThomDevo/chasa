@@ -38,6 +38,7 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
         EntityManager em = EMF.getEM();
         try{
             filterOfTable = roleService.findRoleByFilter(this.filter, em);
+            ProcessUtils.debug(this.filter);
         }catch(Exception e){
             ProcessUtils.debug(e.getMessage());
         }finally {
@@ -148,4 +149,5 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
     public void setMessageErrorRoleName(String messageErrorConnection) {
         this.messageErrorRoleName = messageErrorConnection;
     }
+
 }

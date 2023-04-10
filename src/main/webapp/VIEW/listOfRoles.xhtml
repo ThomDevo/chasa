@@ -21,7 +21,7 @@
                     <f:metadata>
                         <f:event type="preRenderView" listener="#{rolesBean.ResearchFilter()}"/>
                     </f:metadata>
-                        <p:dataTable var="r" value="#{rolesBean.researchListOfRoles()}"
+                        <p:dataTable var="r" value="#{rolesBean.entityFiltered}"
                                      resizableColumns="true"
                                      class="table"
                                      widgetVar="rTable"
@@ -35,10 +35,11 @@
                             <f:facet name="header">
                                 <p:outputPanel>
                                     <p:inputText value="#{rolesBean.filter}"
-                                                 onkeyup="PF('rTable').filter()"
-                                                 id="categoryInputResearch"
+                                                 onkeyup="researchTable(this)"
+                                                 id="RolesInputResearch"
                                                  validatorMessage="#{I18N['listPage.messageErrorResearch']}"
                                                  placeholder="#{I18N['listPage.filter']}"/>
+                                    <p:commandButton class="hidden" update="@form"/>
                                 </p:outputPanel>
                             </f:facet>
                             <p:column>
