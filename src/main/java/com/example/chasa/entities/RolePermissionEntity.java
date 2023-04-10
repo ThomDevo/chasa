@@ -4,9 +4,6 @@ import javax.persistence.*;
 
 @NamedQueries(value = {
         @NamedQuery(name = "RolePermission.SelectListPermissionByIdRole", query = "SELECT pe FROM RolePermissionEntity pe WHERE pe.rolesByIdRole.idRole = :idRole")
-        /*@NamedQuery(name = "User.FindUserByCharacteristic", query = "SELECT u FROM UsersEntity u WHERE u.roles.roleLabel IN ('MEMBRE') AND(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),
-        @NamedQuery(name = "User.FindUserByCharacteristicAdmin", query = "SELECT u FROM UsersEntity u WHERE(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),
-        @NamedQuery(name = "User.FindUserByStatus", query = "SELECT u FROM UsersEntity u WHERE u.userStatus = :userStatus")*/
 })
 
 @Entity
@@ -16,9 +13,11 @@ public class RolePermissionEntity {
     @Id
     @Column(name = "id_role_permission", nullable = false)
     private int idRolePermission;
+
     @ManyToOne
     @JoinColumn(name = "id_role", referencedColumnName = "id_role", nullable = false)
     private RolesEntity rolesByIdRole;
+
     @ManyToOne
     @JoinColumn(name = "id_permission", referencedColumnName = "id_permission", nullable = false)
     private PermissionsEntity permissionsByIdPermission;

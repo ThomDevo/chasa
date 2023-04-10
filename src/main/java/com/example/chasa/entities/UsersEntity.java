@@ -293,7 +293,7 @@ public class UsersEntity {
     public List<RolePermissionEntity> listOfPermissions;
 
     @Transient
-    public List<RolePermissionEntity> getListOfPermissions() {
+    public List<RolePermissionEntity> getListOfRolePermissions() {
         if (this.listOfPermissions == null)
             ConnectionBean.initListPermissionRole(this);
         return this.listOfPermissions;
@@ -307,7 +307,7 @@ public class UsersEntity {
     @Transient
     public boolean verifyPermission(String permissionName)
     {
-        return this.getListOfPermissions().stream()
+        return this.getListOfRolePermissions().stream()
                 .filter(pe -> pe.getIdPermission().getPermissionLabel().equals(permissionName))
                 .findFirst()
                 .orElse(null) != null;

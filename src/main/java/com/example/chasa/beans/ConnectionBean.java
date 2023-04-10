@@ -35,6 +35,7 @@ public class ConnectionBean implements Serializable {
 
         EntityManager em = EMF.getEM();
         UsersService userService = new UsersService();
+        PermissionRoleService permissionRoleService = new PermissionRoleService();
         String redirect;
 
         this.user = new UsersEntity();
@@ -42,7 +43,7 @@ public class ConnectionBean implements Serializable {
         try
         {
             this.userForm = userService.findUserByLifrasNumber(this.userForm.getLifrasNumber(), this.password, em);
-            /*this.userForm.permissions = query qui va chercher l'ensemble des permissions idem pour brevet et certificats*/
+            this.userForm.listOfPermissions = permissionRoleService.findRolePermissionByIdRole(this.userForm.getRoles().getIdRole(), em);
             this.user = userForm;
             this.messageErrorConnection = "hidden";
             redirect = "/VIEW/home";
@@ -98,7 +99,7 @@ public class ConnectionBean implements Serializable {
      */
     //ask is user log has permissions send.
     public boolean verifyPermissionUser(String permissionName){
-        if(this.user == null || this.user.getIdUser()==0)
+       if(this.user == null || this.user.getIdUser()==0)
             return false;
         return this.user.verifyPermission(permissionName);
     }
