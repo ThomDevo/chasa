@@ -1,6 +1,8 @@
 package com.example.chasa.services;
 
 import com.example.chasa.entities.RolesEntity;
+import com.example.chasa.utilities.ProcessUtils;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -81,6 +83,7 @@ public class RoleService {
     public RolesEntity addRole (RolesEntity role, EntityManager em){
         em.persist(role);
         em.flush();
+        ProcessUtils.debug(String.valueOf(role.getIdRole()));
         return role;
     }
 

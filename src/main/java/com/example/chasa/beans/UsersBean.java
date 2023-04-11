@@ -2,6 +2,7 @@ package com.example.chasa.beans;
 
 import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.*;
+import com.example.chasa.services.RoleService;
 import com.example.chasa.services.UsersService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
@@ -20,8 +21,10 @@ import javax.persistence.EntityTransaction;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Named
 @ManagedBean
@@ -58,7 +61,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         user = UsersConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
     }
 
-    public void onDateSelect(SelectEvent event) {
+    /*public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
@@ -67,12 +70,29 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         PrimeFaces.current().ajax().update("form:display");
         PrimeFaces.current().executeScript("PF('dlg').show()");
     }
-
+*/
     public String submitFormAddUser() {
         EntityManager em = EMF.getEM();
         String redirect = "/VIEW/home";
 
         return redirect;
+    }
+
+    /*---list role for select input.---*/
+    private List<RolesEntity> allRole;
+    public List<RolesEntity> getAllRole(){
+        return this.allRole;
+    }
+    public void initAllEditor(){
+        EntityManager em = EMF.getEM();
+        RoleService roleService = new RoleService();
+        try{
+            this.allRole = roleService.findRoleAll(em);
+        }catch(Exception e){
+            this.allRole = new ArrayList<>();
+        }finally{
+            em.close();
+        }
     }
 
     /*---Getters and Setters---*/
@@ -176,4 +196,5 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     public void setMessageErrorPassword(String messageErrorPassword) {
         this.messageErrorPassword = messageErrorPassword;
     }
+
 }

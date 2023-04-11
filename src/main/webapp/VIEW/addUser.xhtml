@@ -157,6 +157,48 @@
                                         value="#{I18N['messageErrorPassword']}"/></span>
                             </div>
                         </div>
+                        <span>
+                            <p:outputLabel for="inputSexUser" value="#{I18N['userPage.status']}"/>
+                            <p:selectOneMenu id="inputStatutUser"
+                                             value="#{usersBean.user.userStatus}"
+                                             required="true">
+                                <f:selectItem itemLabel="#{I18N['userPage.status']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItem itemLabel="#{I18N['userPage.Active']}"
+                                               itemValue="#{true}"/>
+                                <f:selectItem itemLabel="#{I18N['userPage.Inactive']}"
+                                               itemValue="#{false}"/>
+                            </p:selectOneMenu>
+                        </span>
+                        <span>
+                            <p:outputLabel for="inputRoleUser" value="#{I18N['userPage.role']}"/>
+                            <p:selectOneMenu id="inputRoleUser"
+                                             value="#{usersBean.user.roles}"
+                                             converter="RolesConverter"
+                                             effect="fade"
+                                             var="e"
+                                             filter="true"
+                                             filterMatchMode="startsWith"
+                                             required="true">
+                                <!-- reload list editor from db. -->
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{usersBean.initAllEditor()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['userPage.role.select']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{usersBean.allRole}"
+                                               var="role"
+                                               itemLabel="#{role.roleLabel}"
+                                               itemValue="#{role}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{I18N['userPage.role.select.name']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{e.roleLabel}"/>
+                                </p:column>
+                                <p:ajax event="change" update="inputRoleUser"/>
+                            </p:selectOneMenu>
+                        </span>
                     </p:outputPanel>
                     <span class="responsiveSubmit">
                         <p:commandButton value="#{I18N['application.create.user']}"

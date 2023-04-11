@@ -44,6 +44,7 @@ public class ConnectionBean implements Serializable {
         {
             this.userForm = userService.findUserByLifrasNumber(this.userForm.getLifrasNumber(), this.password, em);
             this.userForm.listOfPermissions = permissionRoleService.findRolePermissionByIdRole(this.userForm.getRoles().getIdRole(), em);
+            ProcessUtils.debug(String.valueOf(this.userForm.listOfPermissions.size()));
             this.user = userForm;
             this.messageErrorConnection = "hidden";
             redirect = "/VIEW/home";

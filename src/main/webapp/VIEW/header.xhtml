@@ -74,6 +74,12 @@
                         </p:submenu>
                     </p:submenu>
                     <p:divider layout="vertical"/>
+                    <p:submenu label="#{I18N['menu.address']}" icon="pi pi-fw pi-home">
+                        <p:submenu label="#{I18N['menu.address']}" icon="pi pi-fw pi-home">
+                            <p:menuitem value="#{I18N['menu.data.address.List']}" icon="pi-home" action="/VIEW/listOfAddresses.xhtml"/>
+                        </p:submenu>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar">
                         <p:submenu label="#{I18N['menu.data.events']}" icon="pi pi-fw pi-calendar">
                             <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi-calendar-plus"/>
@@ -100,7 +106,7 @@
                     <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
                         <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
-                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('MyData:MyData')}"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('MyData')}"/>
                             <p:menuitem value="#{I18N['menu.chasa.role.modify']}" icon="pi pi-fw pi-user-edit"/>
                             <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml"/>
                         </p:submenu>

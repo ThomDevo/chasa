@@ -1,30 +1,42 @@
 package com.example.chasa.entities;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "addresses", schema = "chasa")
 @NamedQueries({
-                @NamedQuery(name = "Adresses.findAll",query = "SELECT a FROM AddressesEntity a ORDER BY a.street ASC"),
-                @NamedQuery(name = "Adresses.findById",query = "SELECT a FROM AddressesEntity a WHERE a.idAddress = :idAddress"),
+                @NamedQuery(name="Addresses.isAddressExist", query="SELECT COUNT(a) FROM AddressesEntity a WHERE a.street = :street AND a.number = :number AND a.box = :box AND a.citiesByIdCity.idCity = :idCity"),
+                @NamedQuery(name="Addresses.findAddressByFilter", query="SELECT a FROM AddressesEntity a WHERE ((lower(a.street) LIKE CONCAT('%', :researchAddress, '%')) OR ((lower(a.number) LIKE CONCAT('%', :researchAddress, '%'))) OR ((lower(a.box) LIKE CONCAT('%', :researchAddress, '%'))))"),
+                @NamedQuery(name = "Addresses.findAll",query = "SELECT a FROM AddressesEntity a ORDER BY a.street ASC"),
+                @NamedQuery(name = "Addresses.findById",query = "SELECT a FROM AddressesEntity a WHERE a.idAddress = :idAddress"),
                 @NamedQuery(name = "Addresses.findAllByStreet",query = "SELECT a FROM AddressesEntity a wHERE a.street = :street"),
-                @NamedQuery(name = "Adresses.findAllByNumber",query = "SELECT a FROM AddressesEntity a WHERE a.number = :number"),
-                @NamedQuery(name = "Adresses.findAllByBox",query = "SELECT a FROM AddressesEntity a WHERE a.box = :box"),
-                @NamedQuery(name = "Adresses.findAllByCityId",query = "SELECT a FROM AddressesEntity a WHERE a.citiesByIdCity = :idCity")
+                @NamedQuery(name = "Addresses.findAllByNumber",query = "SELECT a FROM AddressesEntity a WHERE a.number = :number"),
+                @NamedQuery(name = "Addresses.findAllByBox",query = "SELECT a FROM AddressesEntity a WHERE a.box = :box"),
+                @NamedQuery(name = "Addresses.findAllByCityId",query = "SELECT a FROM AddressesEntity a WHERE a.citiesByIdCity = :idCity")
               })
 public class AddressesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_address", nullable = false)
     private int idAddress;
+
+    @Pattern(regexp = "^[A-Z][A-z ',\\-.-éèçàâêîûôù]{1,255}$")
+    @NotNull
     @Basic
     @Column(name = "street", nullable = false, length = 255)
     private String street;
+
+    @Range(min=1)
     @Basic
     @Column(name = "number", nullable = false)
     private int number;
+
     @Basic
     @Column(name = "box", nullable = true, length = 255)
     private String box;
@@ -32,6 +44,7 @@ public class AddressesEntity {
     @ManyToOne
     @JoinColumn(name = "id_city", referencedColumnName = "id_city", nullable = false)
     private CitiesEntity citiesByIdCity;
+
     @OneToMany(mappedBy = "addressesByIdAddress")
     private List<DiveSitesEntity> diveSitesByIdAddress;
     @OneToMany(mappedBy = "addressesByIdAddress")
