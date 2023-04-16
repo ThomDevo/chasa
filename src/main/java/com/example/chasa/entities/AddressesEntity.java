@@ -32,7 +32,7 @@ public class AddressesEntity {
     @Column(name = "street", nullable = false, length = 255)
     private String street;
 
-    @Range(min=1)
+    //@Range(min=1)
     @Basic
     @Column(name = "number", nullable = false)
     private int number;

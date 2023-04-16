@@ -21,17 +21,8 @@ import java.util.*;
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.email )like concat('%', :researchWord, '%')) or" +
-                " (lower(u.roles.roleLabel) like 'MEMBRE')) or" +
                 " (lower(u.userStatus) like 'TRUE') or" +
-                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')) " +
-                " order by case " +
-                " when (:orderBy like 'lastName') then u.lastName " +
-                " when (:orderBy like 'firstName') then u.lastName " +
-                " when (:orderBy like 'phone') then u.userPhone " +
-                " when (:orderBy like 'mail') then u.email " +
-                " when (:orderBy like 'enable') then u.userStatus " +
-                " else u.idUser " +
-                " end asc "),
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))"),
         /*@NamedQuery(name = "User.FindUserByCharacteristicAdmin", query = "SELECT u FROM UsersEntity u WHERE(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),*/
         @NamedQuery(name = "User.FindUserByStatus", query = "SELECT u FROM UsersEntity u WHERE u.userStatus = :userStatus")
 })

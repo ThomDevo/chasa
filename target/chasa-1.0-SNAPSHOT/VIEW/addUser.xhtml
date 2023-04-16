@@ -196,7 +196,34 @@
                                     </f:facet>
                                     <h:outputText value="#{e.roleLabel}"/>
                                 </p:column>
-                                <p:ajax event="change" update="inputRoleUser"/>
+                            </p:selectOneMenu>
+                        </span>
+                        <span>
+                            <p:outputLabel for="inputAddressUser" value="#{I18N['userPage.role']}"/>
+                            <p:selectOneMenu id="inputAddressUser"
+                                             value="#{usersBean.user.addressesByIdAdress}"
+                                             converter="AddressConverter"
+                                             effect="fade"
+                                             var="e"
+                                             filter="true"
+                                             filterMatchMode="startsWith"
+                                             required="true">
+                                <!-- reload list editor from db. -->
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{usersBean.initAllAddressUser()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['addressPage.city.select']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{usersBean.allAddress}"
+                                               var="address"
+                                               itemLabel="#{address.street} #{address.number}#{address.box} #{address.citiesByIdCity.cityLabel}"
+                                               itemValue="#{address}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{I18N['addressPage.city.select']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{e.street}"/>
+                                </p:column>
                             </p:selectOneMenu>
                         </span>
                     </p:outputPanel>

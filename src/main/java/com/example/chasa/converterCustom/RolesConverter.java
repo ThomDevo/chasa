@@ -3,6 +3,7 @@ package com.example.chasa.converterCustom;
 import com.example.chasa.entities.RolesEntity;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.services.RoleService;
+import com.example.chasa.utilities.ProcessUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,12 +15,12 @@ import javax.persistence.EntityManager;
 public class RolesConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
-        return null;
+        return getAsObjectStatic(value);
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        return null;
+        return getAsStringStatic(value);
     }
 
 
@@ -33,7 +34,7 @@ public class RolesConverter implements Converter {
         try {
             role = roleService.findRoleById(Integer.parseInt(value), em);
         } catch (Exception e) {
-
+            ProcessUtils.debug(" "+e);
         } finally {
             em.close();
         }

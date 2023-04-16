@@ -1,6 +1,7 @@
 package com.example.chasa.beans;
 
 import com.example.chasa.converterCustom.AddressConverter;
+import com.example.chasa.converterCustom.CityConverter;
 import com.example.chasa.converterCustom.RolesConverter;
 import com.example.chasa.entities.AddressesEntity;
 import com.example.chasa.entities.CitiesEntity;
@@ -26,11 +27,23 @@ import java.util.List;
 @SessionScoped
 public class AddressesBean extends FilterOfTable<AddressesEntity> implements Serializable {
 
-    private AddressesEntity address = new AddressesEntity();
+    private AddressesEntity addressCrud = new AddressesEntity();
     private AddressService addressService = new AddressService();
     private String messageErrorStreet = "hidden";
     private String messageErrorNumber = "hidden";
     private String messageErrorExist = "hidden";
+
+    public AddressesEntity getAddressCrud() {
+        return addressCrud;
+    }
+
+    public void setAddressCrud(AddressesEntity addressCrud) {
+        this.addressCrud = addressCrud;
+    }
+
+    public void setAllCities(List<CitiesEntity> allCities) {
+        this.allCities = allCities;
+    }
 
     /**
      * Method to find an address with filter
@@ -63,7 +76,7 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
      * Method to have the ID for a redirection
      */
     public void loadAddressId(){
-        address= AddressConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
+        addressCrud= AddressConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
     }
 
     /*---list Cities for select input.---*/
@@ -71,11 +84,13 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
     public List<CitiesEntity> getAllCities(){
         return this.allCities;
     }
-    public void initAllEditor(){
+
+    public void initAllCity(){
         EntityManager em = EMF.getEM();
         CityService cityService = new CityService();
         try{
             this.allCities = cityService.findAllCities(em);
+            //ProcessUtils.debug(String.valueOf(allCities.size())+" Size of the array of Addresses");
         }catch(Exception e){
             this.allCities = new ArrayList<>();
         }finally{
@@ -91,12 +106,13 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
 
         try{
             transaction.begin();
-            if(addressService.isAddressExist(address.getStreet(),address.getNumber(),address.getBox(), address.getCitiesByIdCity().getIdCity(), em)){
+            /*if(addressService.isAddressExist(address.getStreet(),address.getNumber(),address.getBox(), address.getCitiesByIdCity().getIdCity(), em)){
                 this.messageErrorExist = "";
                 redirect = "null" ;
 
-            }
-            addressService.addAddress(address,em);
+            }*/
+            //address.setCitiesByIdCity(CityConverter.getAsObjectStatic("1"));
+            addressService.addAddress(addressCrud,em);
             transaction.commit();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the connection method: "+ e);
@@ -116,11 +132,11 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
     /*---Getters and setters---*/
 
     public AddressesEntity getAddress() {
-        return address;
+        return addressCrud;
     }
 
     public void setAddress(AddressesEntity address) {
-        this.address = address;
+        this.addressCrud = address;
     }
 
     public AddressService getAddressService() {

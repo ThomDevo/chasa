@@ -2,6 +2,7 @@ package com.example.chasa.beans;
 
 import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.*;
+import com.example.chasa.services.AddressService;
 import com.example.chasa.services.RoleService;
 import com.example.chasa.services.UsersService;
 import com.example.chasa.utilities.EMF;
@@ -30,7 +31,9 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class UsersBean extends FilterOfTable<UsersEntity> implements Serializable{
-    private UsersEntity user = new UsersEntity();
+
+
+    private UsersEntity userCrud = new UsersEntity();
     private UsersService usersService = new UsersService();
     private Date date;
     private String messageErrorLastName = "hidden";
@@ -58,7 +61,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     }
 
     public void loadUserId(){
-        user = UsersConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
+        userCrud = UsersConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
     }
 
     /*public void onDateSelect(SelectEvent event) {
@@ -71,12 +74,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         PrimeFaces.current().executeScript("PF('dlg').show()");
     }
 */
-    public String submitFormAddUser() {
-        EntityManager em = EMF.getEM();
-        String redirect = "/VIEW/home";
 
-        return redirect;
-    }
 
     /*---list role for select input.---*/
     private List<RolesEntity> allRole;
@@ -95,15 +93,30 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         }
     }
 
+    private List<AddressesEntity> allAddress;
+    public List<AddressesEntity> getAllAddress(){
+        return this.allAddress;
+    }
+    public void initAllAddressUser(){
+        EntityManager em = EMF.getEM();
+        AddressService addressService = new AddressService();
+        try{
+            this.allAddress = addressService.findAll(em);
+        }catch(Exception e){
+            this.allAddress = new ArrayList<>();
+        }finally{
+            em.close();
+        }
+    }
+
+    public String submitFormAddUser() {
+        EntityManager em = EMF.getEM();
+        String redirect = "/VIEW/home";
+
+        return redirect;
+    }
+
     /*---Getters and Setters---*/
-
-    public UsersEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UsersEntity user) {
-        this.user = user;
-    }
 
     public UsersService getUsersService() {
         return usersService;
@@ -119,6 +132,22 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public UsersEntity getUserCrud() {
+        return userCrud;
+    }
+
+    public void setUserCrud(UsersEntity userCrud) {
+        this.userCrud = userCrud;
+    }
+
+    public void setAllRole(List<RolesEntity> allRole) {
+        this.allRole = allRole;
+    }
+
+    public void setAllAddress(List<AddressesEntity> allAddress) {
+        this.allAddress = allAddress;
     }
 
     /*---Method To Add error message---*/

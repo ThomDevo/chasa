@@ -224,7 +224,7 @@ a {
 .form-container {
     display: flex;
     flex-flow: column;
-    width: 80%;
+    width: 95%;
     margin: auto;
 }
 
@@ -245,7 +245,7 @@ a {
     border: var(--border);
     border-radius: 3px;
     padding: 1rem 1.5rem;
-    width: 50%;
+    width: auto;
 }
 
 .form-control input {
@@ -325,9 +325,17 @@ a {
 /*---Table ---*/
 
 table{
-    text-align:center;
     margin:auto;
     min-width: 40%; ;
+}
+
+tbody td {
+    white-space: normal;
+    }
+
+table header {
+    text-align:center;
+    margin:auto
 }
 
 tr:nth-child(even) {

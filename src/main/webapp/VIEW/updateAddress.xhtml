@@ -9,25 +9,28 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
     <ui:define name="title">
-        <h:outputText value="#{I18N['addresspage.addAddresstitle']}"/>
+        <h:outputText value="#{I18N['menu.chasa.Addresses.modify']}"/>
     </ui:define>
     <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{addressesBean.loadAddressId()}"/>
+        </f:metadata>
         <div class="content">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['addresspage.addAddresstitle']}" />
+                    <h:outputText value="#{I18N['menu.chasa.Addresses.modify']}" />
                 </h2>
                 <h:form>
                     <p:outputPanel class="form-control">
                         <span>
-                            <p:outputLabel for="inputStreet" value="#{I18N['addressPage.street']}"/>
-                            <p:inputText id="inputStreet" class="label" value="#{addressesBean.addressCrud.street}"
+                            <p:outputLabel for="inputStreetUpdate" value="#{I18N['addressPage.street']}"/>
+                            <p:inputText id="inputStreetUpdate" class="label" value="#{addressesBean.address.street}"
                                          placeholder="#{I18N['addressPage.street.placeholder']}"
                                          validatorMessage="#{I18N['addressPage.street.errorMessage']}">
-                                <p:ajax update="messageStreet" event="keyup" />
+                                <p:ajax update="messageStreetUpdate" event="keyup" />
                             </p:inputText>
                         </span>
-                        <p:message id="messageStreet" for="@previous"/>
+                        <p:message id="messageStreetUpdate" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{addressesBean.messageErrorStreet}">
                             <div><span class="ui-message-error-icon"> </span>
                                 <span class="ui-message-error-detail"><h:outputText
@@ -35,14 +38,14 @@
                             </div>
                         </div>
                         <span>
-                            <p:outputLabel for="inputNumber" value="#{I18N['addressPage.number']}"/>
-                            <p:inputNumber id="inputNumber" class="label" value="#{addressesBean.addressCrud.number}"
-                                         placeholder="#{I18N['addressPage.number.placeholder']}"
-                                         validatorMessage="#{I18N['addressPage.number.errorMessage']}">
-                                <p:ajax update="messageNumber" event="keyup"/>
+                            <p:outputLabel for="inputNumberUpdate" value="#{I18N['addressPage.number']}"/>
+                            <p:inputNumber id="inputNumberUpdate" class="label" value="#{addressesBean.address.number}"
+                                           placeholder="#{I18N['addressPage.number.placeholder']}"
+                                           validatorMessage="#{I18N['addressPage.number.errorMessage']}">
+                                <p:ajax update="messageNumberUpdate" event="keyup"/>
                             </p:inputNumber>
                         </span>
-                        <p:message id="messageNumber" for="@previous"/>
+                        <p:message id="messageNumberUpdate" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{addressesBean.messageErrorNumber}">
                             <div><span class="ui-message-error-icon"> </span>
                                 <span class="ui-message-error-detail"><h:outputText
@@ -50,16 +53,16 @@
                             </div>
                         </div>
                         <span>
-                            <p:outputLabel for="inputBox" value="#{I18N['addressPage.box']}"/>
-                            <p:inputText id="inputBox" class="label" value="#{addressesBean.addressCrud.box}"
+                            <p:outputLabel for="inputBoxUpdate" value="#{I18N['addressPage.box']}"/>
+                            <p:inputText id="inputBoxUpdate" class="label" value="#{addressesBean.address.box}"
                                            placeholder="#{I18N['addressPage.box.placeholder']}">
 
                             </p:inputText>
                         </span>
                         <span>
-                                <p:outputLabel for="inputCity" value="#{I18N['addressPage.city']}"/>
-                                <p:selectOneMenu id="inputCity"
-                                                 value="#{addressesBean.addressCrud.citiesByIdCity}"
+                                <p:outputLabel for="inputCityUpdate" value="#{I18N['addressPage.city']}"/>
+                                <p:selectOneMenu id="inputCityUpdate"
+                                                 value="#{addressesBean.address.citiesByIdCity}"
                                                  converter="CityConverter"
                                                  effect="fade"
                                                  var="c"
@@ -88,19 +91,19 @@
                                         </f:facet>
                                         <h:outputText value="#{c.cityLabel}"/>
                                     </p:column>
-                                    <p:ajax event="change" update="MessageInputCity"/>
+                                    <p:ajax event="change" update="MessageInputCityUpdate"/>
                                 </p:selectOneMenu>
                         </span>
-                        <p:message id="MessageInputCity" for="inputCity"/>
+                        <p:message id="MessageInputCityUpdate" for="inputCityUpdate"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{addressesBean.messageErrorExist}">
                             <div><span class="ui-message-error-icon"> </span>
                                 <span class="ui-message-error-detail"><h:outputText
-                                      value="#{I18N['messageErrornumber']}"/></span>
+                                        value="#{I18N['messageErrornumber']}"/></span>
                             </div>
                         </div>
                     </p:outputPanel>
                     <span class="responsiveSubmit">
-                        <p:commandButton value="#{I18N['application.create.Address']}"
+                        <p:commandButton value="#{I18N['application.update.Address']}"
                                          ajax="false"
                                          validateClient="true"
                                          class="ui-button-success"
