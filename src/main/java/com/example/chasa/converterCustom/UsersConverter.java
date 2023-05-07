@@ -9,21 +9,13 @@ import com.example.chasa.utilities.EMF;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
+@FacesConverter("UsersConverter")
 public class UsersConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
-        return null;
-    }
-
-    @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        return null;
-    }
-
-
-    public static UsersEntity getAsObjectStatic(String value) {
         if (value == null || value.equals("0") || value.equals("")) {
             return null;
         }
@@ -32,6 +24,7 @@ public class UsersConverter implements Converter {
         UsersEntity user = null;
         try {
             user = usersService.findUserById(Integer.parseInt(value), em);
+
         } catch (Exception e) {
 
         } finally {
@@ -40,11 +33,13 @@ public class UsersConverter implements Converter {
         return user;
     }
 
-    public String getAsStringStatic(Object value){
+    @Override
+    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
         if(value == null){
             return "0";
         }
         UsersEntity user = (UsersEntity) value;
         return String.valueOf(user.getIdUser());
     }
+
 }

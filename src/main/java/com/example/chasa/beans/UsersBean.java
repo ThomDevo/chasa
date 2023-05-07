@@ -1,5 +1,6 @@
 package com.example.chasa.beans;
 
+import com.example.chasa.converterCustom.RolesConverter;
 import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.*;
 import com.example.chasa.services.AddressService;
@@ -8,23 +9,23 @@ import com.example.chasa.services.UsersService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
 import com.example.chasa.utilities.ProcessUtils;
-import org.jboss.weld.context.RequestContext;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Named
@@ -43,9 +44,11 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     private String messageErrorPhoneNumber = "hidden";
     private String messageErrorLifrasNumber = "hidden";
     private String messageErrorPassword = "hidden";
+    @Inject
+    private AddressesBean addressesBean;
 
     /**
-     * Method to find a Member based on a filter
+     * Method to find a User based on a filter
      */
     public void ResearchFilter(){
 
@@ -59,29 +62,70 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
             em.close();
         }
     }
+    /**
+     * Method to find a Member based on a filter
+     */
+    public void ResearchFilterMember(){
 
-    public void loadUserId(){
-        userCrud = UsersConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
+        EntityManager em = EMF.getEM();
+        try{
+            filterOfTable = usersService.findUserByFilterAndOrderAscAdmin(this.filter, em);
+            ProcessUtils.debug(this.filter);
+        }catch(Exception e){
+            ProcessUtils.debug(e.getMessage());
+        }finally {
+            em.close();
+        }
     }
 
-    /*public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+
+    public void loadUserIdCurrent(UsersEntity userCurrent, AddressesBean address){
+        userCrud = userCurrent;
+        address.setAddressCrud(userCrud.getAddresses());
+        //ProcessUtils.debug(""+userCrud.getFirstName());
     }
-    public void click() {
-        PrimeFaces.current().ajax().update("form:display");
-        PrimeFaces.current().executeScript("PF('dlg').show()");
+
+
+    /*---List of personnes for select input---*/
+    private List<UsersEntity> allUsers;
+    public List<UsersEntity> getAllUsers(){
+        return this.allUsers;
     }
-*/
+    public void initAllUser(){
+        EntityManager em = EMF.getEM();
+        UsersService usersService = new UsersService();
+        try{
+            this.allUsers = usersService.findAll(em);
+        }catch(Exception e){
+            this.allUsers = new ArrayList<>();
+        }finally{
+            em.close();
+        }
+    }
+
+    private List<UsersEntity> allMembers;
+    public List<UsersEntity> getAllMembers(){
+        return this.allMembers;
+    }
+    public void initAllMembers(){
+        EntityManager em = EMF.getEM();
+        UsersService usersService = new UsersService();
+        try{
+            this.allMembers = usersService.findAllMembers(em);
+        }catch(Exception e){
+            this.allMembers = new ArrayList<>();
+        }finally{
+            em.close();
+        }
+    }
 
 
     /*---list role for select input.---*/
-    private List<RolesEntity> allRole;
+   private List<RolesEntity> allRole;
     public List<RolesEntity> getAllRole(){
         return this.allRole;
     }
-    public void initAllEditor(){
+    public void initAllUsers(){
         EntityManager em = EMF.getEM();
         RoleService roleService = new RoleService();
         try{
@@ -93,28 +137,171 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         }
     }
 
-    private List<AddressesEntity> allAddress;
-    public List<AddressesEntity> getAllAddress(){
-        return this.allAddress;
-    }
-    public void initAllAddressUser(){
+
+
+    public String submitFormAddUser(AddressesEntity address) {
         EntityManager em = EMF.getEM();
+        String redirect = "/VIEW/home";
+        UsersService usersService = new UsersService();
         AddressService addressService = new AddressService();
-        try{
-            this.allAddress = addressService.findAll(em);
-        }catch(Exception e){
-            this.allAddress = new ArrayList<>();
-        }finally{
-            em.close();
+        EntityTransaction transaction = em.getTransaction();
+        LocalDate now = LocalDate.now();
+        //ProcessUtils.debug("now-n "+String.valueOf(now));
+        LocalDate nowMin8Years = (now).minusYears(8);
+        //ProcessUtils.debug("n-8 "+String.valueOf(nowMin8Years));
+        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
+        String dateString = simpleDateFormat.format(userCrud.getBirthDate());
+        //ProcessUtils.debug("n-8 "+dateString);
+        int resultNow =dateString.compareTo(String.valueOf(now));
+        //ProcessUtils.debug("now "+String.valueOf(resultNow));
+        int resultMin8Years = dateString.compareTo(String.valueOf(nowMin8Years));
+        //ProcessUtils.debug("-8 "+String.valueOf(resultMin8Years));
+
+        if(resultNow > 0)
+        {
+            this.messageErrorBirthDate="";
+            redirect = "null";
+            return redirect;
+        }else if(resultMin8Years >= 0){
+            this.messageErrorBirthDate="";
+            redirect = "null";
+            return redirect;
+        }else{
+            try{
+                transaction.begin();
+                userCrud.setPassword(ProcessUtils.cryptPassword(userCrud.getPassword()));
+                ProcessUtils.debug(userCrud.getPassword());
+                addressService.addAddress(address,em);
+                userCrud.setAddresses(address);
+                usersService.addUser(userCrud, em);
+                transaction.commit();
+                confirm();
+            }catch(Exception e){
+                ProcessUtils.debug(" I'm in the catch of the connection method: submitFormAddUser() "+ e);
+                redirect = "null" ;
+            }finally {
+                if(transaction.isActive()){
+                    transaction.rollback();
+
+                }
+                em.close();
+
+            }
+            return redirect;
         }
     }
 
-    public String submitFormAddUser() {
+
+    public String submitFormUpdateUser(AddressesEntity address){
         EntityManager em = EMF.getEM();
         String redirect = "/VIEW/home";
+        UsersService usersService = new UsersService();
+        AddressService addressService = new AddressService();
+        EntityTransaction transaction = em.getTransaction();
+        LocalDate now = LocalDate.now();
+        //ProcessUtils.debug("now-n "+String.valueOf(now));
+        LocalDate nowMin8Years = (now).minusYears(8);
+        //ProcessUtils.debug("n-8 "+String.valueOf(nowMin8Years));
+        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
+        String dateString = simpleDateFormat.format(userCrud.getBirthDate());
+        //ProcessUtils.debug("n-8 "+dateString);
+        int resultNow =dateString.compareTo(String.valueOf(now));
+        //ProcessUtils.debug("now "+String.valueOf(resultNow));
+        int resultMin8Years = dateString.compareTo(String.valueOf(nowMin8Years));
+        //ProcessUtils.debug("-8 "+String.valueOf(resultMin8Years));
 
+        if(resultNow > 0)
+        {
+            this.messageErrorBirthDate="";
+            redirect = "null";
+            return redirect;
+        }else if(resultMin8Years >= 0){
+            this.messageErrorBirthDate="";
+            redirect = "null";
+            return redirect;
+        }else{
+        try{
+            transaction.begin();
+            //userCrud.setPassword(ProcessUtils.cryptPassword(userCrud.getPassword()));
+            //ProcessUtils.debug(userCrud.getPassword());
+            //addressService.updateAddress(address,em);
+            userCrud.setAddresses(userCrud.getIdAdress());
+            usersService.updateUser(userCrud, em);
+            transaction.commit();
+            confirm();
+        }catch(Exception e){
+            ProcessUtils.debug(" I'm in the catch of the connection method: submitFormUpdateUser() "+ e);
+            redirect = "null" ;
+        }finally {
+            if(transaction.isActive()){
+                transaction.rollback();
+
+            }
+            em.close();
+
+        }
         return redirect;
     }
+    }
+
+    public String submitFormAddMember(AddressesEntity address) {
+        EntityManager em = EMF.getEM();
+        String redirect = "/VIEW/home";
+        UsersService usersService = new UsersService();
+        RoleService roleService = new RoleService();
+        AddressService addressService = new AddressService();
+        EntityTransaction transaction = em.getTransaction();
+        LocalDate now = LocalDate.now();
+        //ProcessUtils.debug("now-n "+String.valueOf(now));
+        LocalDate nowMin8Years = (now).minusYears(8);
+        //ProcessUtils.debug("n-8 "+String.valueOf(nowMin8Years));
+        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
+        String dateString = simpleDateFormat.format(userCrud.getBirthDate());
+        //ProcessUtils.debug("n-8 "+dateString);
+        int resultNow =dateString.compareTo(String.valueOf(now));
+        //ProcessUtils.debug("now "+String.valueOf(resultNow));
+        int resultMin8Years = dateString.compareTo(String.valueOf(nowMin8Years));
+        //ProcessUtils.debug("-8 "+String.valueOf(resultMin8Years));
+
+        if(resultNow > 0)
+        {
+            this.messageErrorBirthDate="";
+            redirect = "null";
+            return redirect;
+        }else if(resultMin8Years >= 0){
+            this.messageErrorBirthDate="";
+            redirect = "null";
+            return redirect;
+        }else{
+            try{
+                transaction.begin();
+                userCrud.setPassword(ProcessUtils.cryptPassword(userCrud.getPassword()));
+                userCrud.setRoles(roleService.findRoleById(1,em));
+                ProcessUtils.debug(userCrud.getPassword());
+                addressService.addAddress(address,em);
+                userCrud.setAddresses(address);
+                usersService.addUser(userCrud, em);
+                transaction.commit();
+                confirm();
+            }catch(Exception e){
+                ProcessUtils.debug(" I'm in the catch of the connection method: submitFormAddUser() "+ e);
+                redirect = "null" ;
+            }finally {
+                if(transaction.isActive()){
+                    transaction.rollback();
+
+                }
+                em.close();
+
+            }
+            return redirect;
+        }
+    }
+
+
 
     /*---Getters and Setters---*/
 
@@ -142,13 +329,9 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         this.userCrud = userCrud;
     }
 
-    public void setAllRole(List<RolesEntity> allRole) {
+    /*public void setAllRole(List<RolesEntity> allRole) {
         this.allRole = allRole;
-    }
-
-    public void setAllAddress(List<AddressesEntity> allAddress) {
-        this.allAddress = allAddress;
-    }
+    }*/
 
     /*---Method To Add error message---*/
 
@@ -225,5 +408,16 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     public void setMessageErrorPassword(String messageErrorPassword) {
         this.messageErrorPassword = messageErrorPassword;
     }
+
+    public void confirm() {
+        addMessage("Confirmation","Confirmation");
+
+    }
+
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
 
 }

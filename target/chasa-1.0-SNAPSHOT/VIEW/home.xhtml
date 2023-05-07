@@ -17,12 +17,10 @@
             <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}" iconPos="right"/>
         </f:metadata>
 
-        <div class ="containers">
-            <h1>
-                <h:outputText value="Hello Worldklsdfklsdljfsklfjsklfd" />
-            </h1>
-
-
+        <div class="block p-20 form-container">
+            <h2>
+                <h:outputText value="#{I18N['welcomeonyourpage']} #{connectionBean.user.lastName} #{connectionBean.user.firstName}"  />
+            </h2>
 
         </div>
 

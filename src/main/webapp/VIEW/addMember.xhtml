@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{I18N['userPage.addMember']}"/>
+    </ui:define>
+    <f:metadata>
+    </f:metadata>
+    <ui:define name="content">
+        <div class="content">
+            <div class="block p-20 form-container">
+                <h2>
+                    <h:outputText value="#{I18N['userPage.addMember']}" />
+                </h2>
+                <h:form>
+                    <p:outputPanel class="form-control">
+                        <span>
+                            <p:outputLabel value="#{I18N['userPage.lastName']}"/>
+                            <p:inputText class="label" value="#{usersBean.userCrud.lastName}"
+                                         placeholder="#{I18N['userPage.lastName.placeholder']}"
+                                         validatorMessage="#{I18N['userPage.lastName.errorMessage']}">
+                                         <p:ajax update="messageLastName" event="keyup" process="@this"/>
+                            </p:inputText>
+                        </span>
+                        <p:message id="messageLastName" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorLastName}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorLastName']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel value="#{I18N['userPage.firstName']}"/>
+                            <p:inputText class="label" value="#{usersBean.userCrud.firstName}"
+                                         placeholder="#{I18N['userPage.firstName.placeholder']}"
+                                         validatorMessage="#{I18N['userPage.lastName.errorMessage']}">
+                                         <p:ajax update="messagefirstName" event="keyup" process="@this"/>
+                            </p:inputText>
+                        </span>
+                        <p:message id="messagefirstName" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorFirstName}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorFirstName']}"/></span>
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <p:outputLabel for="input_birthDate" value="#{I18N['userPage.birthDate']}"/>
+                            <p:datePicker id="input_birthDate" value="#{usersBean.userCrud.birthDate}" />
+                        </div>
+                        <p:message id="messageBirthDate" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorBirthDate}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorBirthName']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel for="inputSexUser" value="#{I18N['userPage.sex']}"/>
+                            <p:selectOneMenu id="inputSexUser"
+                                             value="#{usersBean.userCrud.sex}"
+                                             converter="Sexconverter"
+                                             required="true">
+                                <f:selectItem itemLabel="#{I18N['userPage.sex']}"
+                                              itemValue="#{null}"/>
+                                <!-- import all enum -->
+                                <p:importEnum type="com.example.chasa.enums.Sex"
+                                              var="enumSex"
+                                              allSuffix="getAll"/>
+                                <f:selectItems value="#{enumSex.getAll}"
+                                               var="sex"
+                                               itemLabel="#{sex.getSexUser()}"
+                                               itemValue="#{sex}"/>
+                            </p:selectOneMenu>
+                        </span>
+                        <span>
+                            <p:outputLabel value="#{I18N['userPage.email']}"/>
+                            <p:inputText class="label" value="#{usersBean.userCrud.email}"
+                                         placeholder="#{I18N['userPage.email.placeholder']}"
+                                         validatorMessage="#{I18N['userPage.email.errorMessage']}">
+                                         <p:ajax update="messageEmail" event="keyup" process="@this"/>
+                            </p:inputText>
+                        </span>
+                        <p:message id="messageEmail" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorEmail}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorEmail']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel value="#{I18N['userPage.phoneNumber']}"/>
+                            <p:inputText class="label" value="#{usersBean.userCrud.userPhone}"
+                                         placeholder="#{I18N['userPage.phoneNumber.placeholder']}"
+                                         validatorMessage="#{I18N['userPage.phoneNumber.errorMessage']}"
+                                         required="false">
+                                         <p:ajax update="messagePhoneNumber" event="keyup" process="@this"/>
+                            </p:inputText>
+                        </span>
+                        <p:message id="messagePhoneNumber" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorPhoneNumber}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorPhoneNumber']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel value="#{I18N['userPage.LifrasNumber']}"/>
+                            <p:inputText class="label" value="#{usersBean.userCrud.lifrasNumber}"
+                                         placeholder="#{I18N['userPage.lifrasNumber.placeholder']}"
+                                         validatorMessage="#{I18N['userPage.lifrasNumber.errorMessage']}"
+                                         required="true">
+                                         <p:ajax update="messageLifrasNumber" event="keyup" process="@this"/>
+                            </p:inputText>
+                        </span>
+                        <p:message id="messageLifrasNumber" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorLifrasNumber}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorLifrasNumber']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel value="#{I18N['userPage.Password']}"/>
+                            <p:password  id="password" class="label" value="#{usersBean.userCrud.password}"
+                                         match="rePassword" toggleMask="true"
+                                         placeholder="#{I18N['userPage.password.placeholder']}"
+                                         validatorMessage="#{I18N['userPage.Password.errorMessage']}"
+                                         required="true">
+                                         <f:validateRegex pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"/>
+                                         <p:ajax update="messagePassword" event="keyup" process="@this"/>
+                            </p:password >
+                        </span>
+                        <p:message id="messagePassword" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorPassword}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorPassword']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel for="rePassword" value="#{I18N['userPage.Password']}"/>
+                            <p:password  id="rePassword" class="label" value="#{usersBean.userCrud.password}"
+                                         placeholder="#{I18N['userPage.password.placeholder']}" toggleMask="true"
+                                         validatorMessage="#{I18N['messageErrorPassword']}">
+                                         <f:validateRegex pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"/>
+                                         <p:ajax update="messageRePassword messagePassword" event="keyup" process="@this"/>
+                            </p:password >
+                        </span>
+                        <p:message id="messageRePassword" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorPassword}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorPassword']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel for="inputSexUser" value="#{I18N['userPage.status']}"/>
+                            <p:selectOneMenu id="inputStatutUser"
+                                             value="#{usersBean.userCrud.userStatus}"
+                                             required="true">
+                                <f:selectItem itemLabel="#{I18N['userPage.status']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItem itemLabel="#{I18N['userPage.Active']}"
+                                              itemValue="#{true}"/>
+                                <f:selectItem itemLabel="#{I18N['userPage.Inactive']}"
+                                              itemValue="#{false}"/>
+                            </p:selectOneMenu>
+                        </span>
+                        <span>
+                            <span>
+                                <ui:include src="/VIEW/addAddress.xhtml"></ui:include>
+                            </span>
+                        </span>
+
+                    </p:outputPanel>
+
+                    <span class="responsiveSubmit">
+                        <p:commandButton value="#{I18N['application.create.Member']}"
+                                         ajax="false"
+                                         validateClient="true"
+                                         class="ui-button-success"
+                                         action="#{usersBean.submitFormAddMember(addressesBean.addressCrud)}"/>
+                        <!--addressesBean.addressCrud-->
+                    </span>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

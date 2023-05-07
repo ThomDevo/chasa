@@ -14,18 +14,11 @@ import javax.persistence.EntityManager;
 @FacesConverter("AddressConverter")
 public class AddressConverter implements Converter {
 
+
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
-        return getAsObjectStatic(value);
-    }
-
-    @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        return getAsStringStatic(value);
-    }
-
-    public static AddressesEntity getAsObjectStatic(String value) {
         if (value == null || value.equals("0") || value.equals("")) {
+            ProcessUtils.debug("Address");
             return null;
         }
         EntityManager em = EMF.getEM();
@@ -42,11 +35,14 @@ public class AddressConverter implements Converter {
         return address;
     }
 
-    public String getAsStringStatic(Object value){
+    @Override
+    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
         if(value == null){
             return "0";
         }
         AddressesEntity address = (AddressesEntity) value;
         return String.valueOf(address.getIdAddress());
     }
+
+
 }

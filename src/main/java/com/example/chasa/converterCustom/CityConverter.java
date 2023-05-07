@@ -15,19 +15,7 @@ import javax.persistence.EntityManager;
 public class CityConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
-
-        //ProcessUtils.debug(" City");
-        return getAsObjectStatic(value);
-    }
-
-    @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        //ProcessUtils.debug(" CityBis");
-        return getAsStringStatic(value);
-    }
-
-    public static CitiesEntity getAsObjectStatic(String value) {
-        ProcessUtils.debug(" "+value);
+        //ProcessUtils.debug(" GetAsObject A"+value);
         if (value == null || value.equals("0") || value.equals("")) {
             return null;
         }
@@ -42,11 +30,18 @@ public class CityConverter implements Converter {
         } finally {
             em.close();
         }
-        ProcessUtils.debug(" "+city.getIdCity());
+        //ProcessUtils.debug(" GetAsObject B"+city.getCityLabel());
+        //ProcessUtils.debug(" GetAsObject B1"+city.getIdCity());
+        //ProcessUtils.debug(" GetAsObject B2"+city.getAddressesByIdCity());
+        //ProcessUtils.debug(" GetAsObject B3"+city.getCountriesByIdCountry());
+        //ProcessUtils.debug(" GetAsObject B4"+city.getIdCountry());
+        //ProcessUtils.debug(" GetAsObject B5"+city.getPostalCode());
+        //ProcessUtils.debug(" GetAsObject B6"+city.getClass());
         return city;
     }
 
-    public String getAsStringStatic(Object value){
+    @Override
+    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
         //ProcessUtils.debug(" CityBis");
         if(value == null){
             return "0";
@@ -55,4 +50,6 @@ public class CityConverter implements Converter {
         //ProcessUtils.debug(""+city);
         return String.valueOf(city.getIdCity());
     }
+
+
 }

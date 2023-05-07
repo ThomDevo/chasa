@@ -11,6 +11,8 @@
     <ui:define name="title">
         <h:outputText value="#{I18N['userPage.addUser']}"/>
     </ui:define>
+    <f:metadata>
+    </f:metadata>
     <ui:define name="content">
         <div class="content">
             <div class="block p-20 form-container">
@@ -19,9 +21,9 @@
                 </h2>
                 <h:form>
                     <p:outputPanel class="form-control">
-                        <span>
+                        <span class="p-20">
                             <p:outputLabel value="#{I18N['userPage.lastName']}"/>
-                            <p:inputText class="label" value="#{usersBean.user.lastName}"
+                            <p:inputText class="label" value="#{usersBean.userCrud.lastName}"
                                          placeholder="#{I18N['userPage.lastName.placeholder']}"
                                          validatorMessage="#{I18N['userPage.lastName.errorMessage']}">
                                          <p:ajax update="messageLastName" event="keyup" process="@this"/>
@@ -34,9 +36,9 @@
                                         value="#{I18N['messageErrorLastName']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="p-20">
                             <p:outputLabel value="#{I18N['userPage.firstName']}"/>
-                            <p:inputText class="label" value="#{usersBean.user.firstName}"
+                            <p:inputText class="label" value="#{usersBean.userCrud.firstName}"
                                          placeholder="#{I18N['userPage.firstName.placeholder']}"
                                          validatorMessage="#{I18N['userPage.lastName.errorMessage']}">
                                          <p:ajax update="messagefirstName" event="keyup" process="@this"/>
@@ -49,12 +51,10 @@
                                         value="#{I18N['messageErrorFirstName']}"/></span>
                             </div>
                         </div>
-                        <span>
-                            <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel class="label" for="input_birthDate" value="#{I18N['userPage.birthDate']}"/>
-                            <p:calendar id="input_birthDate" value="#{usersBean.user.birthDate}" mode="popup" />
-                            </h:panelGrid>
-                        </span>
+                        <div class="field col-12 md:col-4">
+                            <p:outputLabel for="input_birthDate" value="#{I18N['userPage.birthDate']}"/>
+                            <p:datePicker id="input_birthDate" value="#{usersBean.userCrud.birthDate}" />
+                        </div>
                         <p:message id="messageBirthDate" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorBirthDate}">
                             <div><span class="ui-message-error-icon"> </span>
@@ -65,7 +65,7 @@
                         <span>
                             <p:outputLabel for="inputSexUser" value="#{I18N['userPage.sex']}"/>
                             <p:selectOneMenu id="inputSexUser"
-                                             value="#{usersBean.user.sex}"
+                                             value="#{usersBean.userCrud.sex}"
                                              converter="Sexconverter"
                                              required="true">
                                 <f:selectItem itemLabel="#{I18N['userPage.sex']}"
@@ -82,7 +82,7 @@
                         </span>
                         <span>
                             <p:outputLabel value="#{I18N['userPage.email']}"/>
-                            <p:inputText class="label" value="#{usersBean.user.email}"
+                            <p:inputText class="label" value="#{usersBean.userCrud.email}"
                                          placeholder="#{I18N['userPage.email.placeholder']}"
                                          validatorMessage="#{I18N['userPage.email.errorMessage']}">
                                          <p:ajax update="messageEmail" event="keyup" process="@this"/>
@@ -97,7 +97,7 @@
                         </div>
                         <span>
                             <p:outputLabel value="#{I18N['userPage.phoneNumber']}"/>
-                            <p:inputText class="label" value="#{usersBean.user.userPhone}"
+                            <p:inputText class="label" value="#{usersBean.userCrud.userPhone}"
                                          placeholder="#{I18N['userPage.phoneNumber.placeholder']}"
                                          validatorMessage="#{I18N['userPage.phoneNumber.errorMessage']}"
                                          required="false">
@@ -113,9 +113,10 @@
                         </div>
                         <span>
                             <p:outputLabel value="#{I18N['userPage.LifrasNumber']}"/>
-                            <p:inputText class="label" value="#{usersBean.user.lifrasNumber}"
+                            <p:inputText class="label" value="#{usersBean.userCrud.lifrasNumber}"
                                          placeholder="#{I18N['userPage.lifrasNumber.placeholder']}"
-                                         validatorMessage="#{I18N['userPage.lifrasNumber.errorMessage']}">
+                                         validatorMessage="#{I18N['userPage.lifrasNumber.errorMessage']}"
+                                         required="true">
                                          <p:ajax update="messageLifrasNumber" event="keyup" process="@this"/>
                             </p:inputText>
                         </span>
@@ -128,12 +129,14 @@
                         </div>
                         <span>
                             <p:outputLabel value="#{I18N['userPage.Password']}"/>
-                            <p:inputText class="label" value="#{usersBean.user.password}"
-                                         match="rePassword"
+                            <p:password  id="password" class="label" value="#{usersBean.userCrud.password}"
+                                         match="rePassword" toggleMask="true"
                                          placeholder="#{I18N['userPage.password.placeholder']}"
-                                         validatorMessage="#{I18N['userPage.Password.errorMessage']}">
+                                         validatorMessage="#{I18N['userPage.Password.errorMessage']}"
+                                         required="true">
+                                         <f:validateRegex pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"/>
                                          <p:ajax update="messagePassword" event="keyup" process="@this"/>
-                            </p:inputText>
+                            </p:password >
                         </span>
                         <p:message id="messagePassword" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorPassword}">
@@ -144,11 +147,12 @@
                         </div>
                         <span>
                             <p:outputLabel for="rePassword" value="#{I18N['userPage.Password']}"/>
-                            <p:inputText id="rePassword" class="label" value="#{usersBean.user.password}"
-                                         placeholder="#{I18N['userPage.password.placeholder']}"
-                                         validatorMessage="#{I18N['userPage.Password.errorMessage']}">
-                                         <p:ajax update="messageRePassword" event="keyup" process="@this"/>
-                            </p:inputText>
+                            <p:password  id="rePassword" class="label" value="#{usersBean.userCrud.password}"
+                                         placeholder="#{I18N['userPage.password.placeholder']}" toggleMask="true"
+                                         validatorMessage="#{I18N['messageErrorPassword']}">
+                                            <f:validateRegex pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"/>
+                                         <p:ajax update="messageRePassword messagePassword" event="keyup" process="@this"/>
+                            </p:password >
                         </span>
                         <p:message id="messageRePassword" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorPassword}">
@@ -160,7 +164,7 @@
                         <span>
                             <p:outputLabel for="inputSexUser" value="#{I18N['userPage.status']}"/>
                             <p:selectOneMenu id="inputStatutUser"
-                                             value="#{usersBean.user.userStatus}"
+                                             value="#{usersBean.userCrud.userStatus}"
                                              required="true">
                                 <f:selectItem itemLabel="#{I18N['userPage.status']}"
                                               itemValue="#{null}"/>
@@ -173,7 +177,7 @@
                         <span>
                             <p:outputLabel for="inputRoleUser" value="#{I18N['userPage.role']}"/>
                             <p:selectOneMenu id="inputRoleUser"
-                                             value="#{usersBean.user.roles}"
+                                             value="#{usersBean.userCrud.roles}"
                                              converter="RolesConverter"
                                              effect="fade"
                                              var="e"
@@ -182,11 +186,11 @@
                                              required="true">
                                 <!-- reload list editor from db. -->
                                 <f:metadata>
-                                    <f:event type="preRenderView" listener="#{usersBean.initAllEditor()}"/>
+                                    <f:event type="preRenderView" listener="#{rolesBean.initAllEditor()}"/>
                                 </f:metadata>
                                 <f:selectItem itemLabel="#{I18N['userPage.role.select']}"
                                               itemValue="#{null}"/>
-                                <f:selectItems value="#{usersBean.allRole}"
+                                <f:selectItems value="#{rolesBean.allRole}"
                                                var="role"
                                                itemLabel="#{role.roleLabel}"
                                                itemValue="#{role}"/>
@@ -199,40 +203,19 @@
                             </p:selectOneMenu>
                         </span>
                         <span>
-                            <p:outputLabel for="inputAddressUser" value="#{I18N['userPage.role']}"/>
-                            <p:selectOneMenu id="inputAddressUser"
-                                             value="#{usersBean.user.addressesByIdAdress}"
-                                             converter="AddressConverter"
-                                             effect="fade"
-                                             var="e"
-                                             filter="true"
-                                             filterMatchMode="startsWith"
-                                             required="true">
-                                <!-- reload list editor from db. -->
-                                <f:metadata>
-                                    <f:event type="preRenderView" listener="#{usersBean.initAllAddressUser()}"/>
-                                </f:metadata>
-                                <f:selectItem itemLabel="#{I18N['addressPage.city.select']}"
-                                              itemValue="#{null}"/>
-                                <f:selectItems value="#{usersBean.allAddress}"
-                                               var="address"
-                                               itemLabel="#{address.street} #{address.number}#{address.box} #{address.citiesByIdCity.cityLabel}"
-                                               itemValue="#{address}"/>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{I18N['addressPage.city.select']}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{e.street}"/>
-                                </p:column>
-                            </p:selectOneMenu>
+                            <span>
+                            <ui:include src="/VIEW/addAddress.xhtml"></ui:include>
+                            </span>
                         </span>
+
                     </p:outputPanel>
+
                     <span class="responsiveSubmit">
                         <p:commandButton value="#{I18N['application.create.user']}"
                                          ajax="false"
                                          validateClient="true"
                                          class="ui-button-success"
-                                         action="#{usersBean.submitFormAddUser}"/>
+                                         action="#{usersBean.submitFormAddUser(addressesBean.addressCrud)}"/>
                     </span>
                 </h:form>
             </div>

@@ -1,5 +1,6 @@
 package com.example.chasa.services;
 
+import com.example.chasa.entities.AddressesEntity;
 import com.example.chasa.entities.UsersEntity;
 
 import javax.persistence.EntityManager;
@@ -15,11 +16,26 @@ public class UsersService {
      * @param em
      * @return User
      */
-    public UsersEntity findUserByLifrasNumber (int lifrasNumber, String password, EntityManager em) {
+    public UsersEntity findUserByLifrasNumber (int lifrasNumber, EntityManager em) {
         return em.createNamedQuery("User.SelectUser", UsersEntity.class)
                 .setParameter("lifrasNumber", lifrasNumber)
-                .setParameter("password", password)
                 .getSingleResult();
+    }
+
+
+    /**
+     * Method to find all users
+     * @param em
+     * @return List of Users
+     */
+    public List<UsersEntity> findAll(EntityManager em) {
+        return em.createNamedQuery("User.SelectAll",UsersEntity.class)
+                .getResultList();
+    }
+
+    public List<UsersEntity> findAllMembers(EntityManager em) {
+        return em.createNamedQuery("User.SelectAllMembers",UsersEntity.class)
+                .getResultList();
     }
 
     /**
@@ -43,27 +59,31 @@ public class UsersService {
     /**
      * Method to find User ALL based on a filter and order by ASC
      * @param researchWord
-     * @param orderBy
      * @param em
      * @return List<UsersEntity>
      */
-    public List<UsersEntity> findUserByFilterAndOrderAscAdmin(String researchWord, String orderBy, EntityManager em){
-        return em.createNamedQuery("User.FindUserByCharacteristicAdmin", UsersEntity.class)
+    public List<UsersEntity> findUserByFilterAndOrderAscAdmin(String researchWord, EntityManager em){
+        return em.createNamedQuery("User.FindMemberByCharacteristic", UsersEntity.class)
                 .setParameter("researchWord", researchWord.toLowerCase())
-                .setParameter("orderBy", orderBy)
                 .getResultList();
     }
 
     /**
      * Method to find User ALL based on a status
-     * @param userStatus
+     * @param
      * @param em
      * @return List<UsersEntity>
      */
-    public List<UsersEntity> findUserByStatus(boolean userStatus, EntityManager em){
+    /*public List<UsersEntity> findUserByStatus(boolean userStatus, EntityManager em){
         return em.createNamedQuery("User.FindUserByStatus", UsersEntity.class)
                 .setParameter("userStatus", userStatus)
                 .getResultList();
+    }*/
+
+    public AddressesEntity findUserAddresswithIdUser(int id, EntityManager em) {
+        return em.createNamedQuery("User.findUserAddressById",AddressesEntity.class)
+                .setParameter("idUser", id)
+                .getSingleResult();
     }
 
     /**

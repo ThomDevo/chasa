@@ -3,6 +3,7 @@ package com.example.chasa.beans;
 import com.example.chasa.converterCustom.AddressConverter;
 import com.example.chasa.converterCustom.CityConverter;
 import com.example.chasa.converterCustom.RolesConverter;
+import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.AddressesEntity;
 import com.example.chasa.entities.CitiesEntity;
 import com.example.chasa.entities.RolesEntity;
@@ -33,17 +34,6 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
     private String messageErrorNumber = "hidden";
     private String messageErrorExist = "hidden";
 
-    public AddressesEntity getAddressCrud() {
-        return addressCrud;
-    }
-
-    public void setAddressCrud(AddressesEntity addressCrud) {
-        this.addressCrud = addressCrud;
-    }
-
-    public void setAllCities(List<CitiesEntity> allCities) {
-        this.allCities = allCities;
-    }
 
     /**
      * Method to find an address with filter
@@ -72,12 +62,6 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
         return listOfAddresses;
     }
 
-    /**
-     * Method to have the ID for a redirection
-     */
-    public void loadAddressId(){
-        addressCrud= AddressConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
-    }
 
     /*---list Cities for select input.---*/
     private List<CitiesEntity> allCities;
@@ -98,6 +82,28 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
         }
     }
 
+    public void resetAddress(){
+        addressCrud = null;
+    }
+
+    private List<AddressesEntity> allAddresses;
+    public List<AddressesEntity> getAllAddresses(){return allAddresses;}
+
+    public void initAllAddresses(){
+        EntityManager em = EMF.getEM();
+        AddressService addressService = new AddressService();
+        try{
+            this.allAddresses = addressService.findAll(em);
+            //ProcessUtils.debug(String.valueOf(allCities.size())+" Size of the array of Addresses");
+        }catch(Exception e){
+            this.allAddresses = new ArrayList<>();
+        }finally{
+            em.close();
+        }
+    }
+
+
+
     public String submitFormAddAddress() {
         EntityManager em = EMF.getEM();
         String redirect = "/VIEW/home";
@@ -106,16 +112,35 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
 
         try{
             transaction.begin();
-            /*if(addressService.isAddressExist(address.getStreet(),address.getNumber(),address.getBox(), address.getCitiesByIdCity().getIdCity(), em)){
-                this.messageErrorExist = "";
-                redirect = "null" ;
-
-            }*/
-            //address.setCitiesByIdCity(CityConverter.getAsObjectStatic("1"));
             addressService.addAddress(addressCrud,em);
             transaction.commit();
         }catch(Exception e){
-            ProcessUtils.debug(" I'm in the catch of the connection method: "+ e);
+            ProcessUtils.debug(" I'm in the catch of the connection method: submitFormAddAddress() "+ e);
+            redirect = "null" ;
+        }finally {
+            if(transaction.isActive()){
+                transaction.rollback();
+
+            }
+            em.close();
+
+        }
+
+        return redirect;
+    }
+
+    public String submitFormUpdateAddress() {
+        EntityManager em = EMF.getEM();
+        String redirect = "/VIEW/home";
+        AddressService addressService = new AddressService();
+        EntityTransaction transaction = em.getTransaction();
+
+        try{
+            transaction.begin();
+            addressService.updateAddress(addressCrud,em);
+            transaction.commit();
+        }catch(Exception e){
+            ProcessUtils.debug(" I'm in the catch of the connection method: submitFormUpdateAddress() "+ e);
             redirect = "null" ;
         }finally {
             if(transaction.isActive()){
@@ -130,6 +155,17 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
     }
 
     /*---Getters and setters---*/
+    public AddressesEntity getAddressCrud() {
+        return addressCrud;
+    }
+
+    public void setAddressCrud(AddressesEntity addressCrud) {
+        this.addressCrud = addressCrud;
+    }
+
+    public void setAllCities(List<CitiesEntity> allCities) {
+        this.allCities = allCities;
+    }
 
     public AddressesEntity getAddress() {
         return addressCrud;

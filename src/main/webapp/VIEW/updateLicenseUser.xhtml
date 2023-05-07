@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{I18N['licenseUser.add.user']}"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="content">
+
+            <div class="block p-20 form-container">
+                <h2>
+                    <h:outputText value="#{I18N['licenseUser.add.user']}" />
+                </h2>
+                <h:form id="addLicenseUser">
+                    <p:outputPanel class="form-control">
+
+                        <div><span>
+                            <p:outputLabel for="inputUser" value="#{I18N['select.user']}"/>
+                            <p:selectOneMenu id="inputUser"
+                                             value="#{licenseUserBean.licenseUser.usersByIdUser}"
+                                             converter="UsersConverter"
+                                             effect="fade"
+                                             var="u"
+                                             filter="true"
+                                             filterMatchMode="contains"
+                                             required="true">
+                                <!-- reload list editor from db. -->
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{usersBean.initAllUser()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['select.user']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{usersBean.allUsers}"
+                                               var="user"
+                                               itemLabel="#{user.lifrasNumber} - #{user.lastName} #{user.firstName}"
+                                               itemValue="#{user}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{I18N['licenseUser.add.user.lifrasNumber']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.lifrasNumber}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{I18N['licenseUser.add.user.LastName']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.lastName}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{I18N['licenseUser.add.user.firstName']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.firstName}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                        </span></div>
+                        <span>
+                            <p:outputLabel for="inputLicense" value="#{I18N['licenseUser.add.license']}"/>
+                            <p:selectOneMenu id="inputLicense"
+                                             value="#{licenseUserBean.licenseUser.licensesByIdLicense}"
+                                             converter="LicenseConverter"
+                                             effect="fade"
+                                             var="l"
+                                             filter="true"
+                                             filterMatchMode="contains"
+                                             required="true">
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{licenseBean.initAllLicences()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['licenseUser.select']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{licenseBean.allLicense}"
+                                               var="license"
+                                               itemLabel="#{license.licenseLabel}"
+                                               itemValue="#{license}"/>
+                                <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{I18N['licenseUser.add.license']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{l.licenseLabel}"/>
+                                    </p:column>
+                                <p:ajax event="change" update="MessageInputLicense"/>
+                            </p:selectOneMenu>
+                        </span>
+                        <p:message id="MessageInputLicense" for="inputLicense"/>
+                        <div class="field col-12 md:col-4">
+                            <p:outputLabel for="input_AdmissionDate" value="#{I18N['licenseUser.add.AdmissionDate']}"/>
+                            <p:datePicker id="input_AdmissionDate" value="#{licenseUserBean.licenseUser.licensedDate}" />
+                        </div>
+                        <p:message id="AdmissionDate" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{licenseUserBean.messageErrorAdmissionDate}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorAdmissionDate']}"/></span>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+                    <span class="responsiveSubmit">
+                        <p:commandButton value="#{I18N['application.update.licenseUser']}"
+                                         ajax="false"
+                                         validateClient="true"
+                                         class="ui-button-success"
+                                         action="#{licenseUserBean.submitFormUpdateLicenseUser()}"/>
+                    </span>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

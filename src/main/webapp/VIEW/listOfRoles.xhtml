@@ -44,7 +44,8 @@
                             </f:facet>
                             <p:column>
                                 <f:facet name="header">#{I18N['rolepage.ListOfRoles.label']}</f:facet>
-                                <h:outputText value="#{r.roleLabel}"></h:outputText>
+                                <h:outputText value="#{r.roleLabel}"
+                                              converter="ToUpperCaseConverter"></h:outputText>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>

@@ -1,4 +1,5 @@
 package com.example.chasa.enums;
+import java.util.Arrays;
 
 public enum CertificateType {
     ANNUAL ("annuel"),
@@ -24,5 +25,14 @@ public enum CertificateType {
      */
     public String getCertificateType(){
         return type;
+    }
+
+    public static CertificateType strToEnum(String type){
+        if(type==null)
+            return null;
+        return Arrays.stream(CertificateType.values())
+                .filter(s -> s.getCertificateType().toLowerCase().equals(type))
+                .findFirst()
+                .orElse(null);
     }
 }

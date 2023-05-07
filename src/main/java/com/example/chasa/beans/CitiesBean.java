@@ -41,7 +41,4 @@ public class CitiesBean extends FilterOfTable<CitiesEntity> implements Serializa
         return listOfCities;
     }
 
-    public void loadCityId(){
-        city= CityConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
-    }
 }

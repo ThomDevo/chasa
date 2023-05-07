@@ -12,6 +12,8 @@ import org.primefaces.PrimeFaces;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -49,16 +51,23 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
     }
 
 
-    public List<RolesEntity> researchListOfRoles(){
+    /*---list role for select input.---*/
+    private List<RolesEntity> allRole;
+    public List<RolesEntity> getAllRole(){
+        return this.allRole;
+    }
+    public void initAllEditor(){
         EntityManager em = EMF.getEM();
-        List<RolesEntity> listOfRoles = new ArrayList<RolesEntity>();
-        listOfRoles = roleService.findRoleAll(em);
-        return listOfRoles;
+        RoleService roleService = new RoleService();
+        try{
+            this.allRole = roleService.findRoleAll(em);
+        }catch(Exception e){
+            this.allRole = new ArrayList<>();
+        }finally{
+            em.close();
+        }
     }
 
-    public void loadRoleId(){
-        role= RolesConverter.getAsObjectStatic(String.valueOf(this.getIdRedirection()));
-    }
 
     public String submitFormAddRole() {
         EntityManager em = EMF.getEM();
@@ -67,6 +76,7 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
         EntityTransaction transaction = em.getTransaction();
 
         try{
+            role.setRoleLabel(role.getRoleLabel().substring(0,1).toUpperCase()+role.getRoleLabel().substring(1).toLowerCase());
             transaction.begin();
             if(roleService.isRoleExist(role.getRoleLabel(), em)){
                 this.messageErrorRoleName = "";
@@ -75,6 +85,7 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
             }
             roleService.addRole(role,em);
             transaction.commit();
+            confirm();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the connection method: "+ e);
             redirect = "null" ;
@@ -98,6 +109,7 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
 
 
         try{
+            role.setRoleLabel(role.getRoleLabel().substring(0,1).toUpperCase()+role.getRoleLabel().substring(1).toLowerCase());
             transaction.begin();
             if(roleService.isRoleExist(role.getRoleLabel(), em)){
                 this.messageErrorRoleName = "";
@@ -148,6 +160,14 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
     }
     public void setMessageErrorRoleName(String messageErrorConnection) {
         this.messageErrorRoleName = messageErrorConnection;
+    }
+    public void confirm() {
+        addMessage("Confirmation","Confirmation");
+    }
+
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
 }

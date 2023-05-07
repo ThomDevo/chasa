@@ -15,16 +15,6 @@ import javax.persistence.EntityManager;
 public class RolesConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
-        return getAsObjectStatic(value);
-    }
-
-    @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        return getAsStringStatic(value);
-    }
-
-
-    public static RolesEntity getAsObjectStatic(String value) {
         if (value == null || value.equals("0") || value.equals("")) {
             return null;
         }
@@ -41,11 +31,13 @@ public class RolesConverter implements Converter {
         return role;
     }
 
-    public String getAsStringStatic(Object value){
+    @Override
+    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
         if(value == null){
             return "0";
         }
         RolesEntity role = (RolesEntity) value;
         return String.valueOf(role.getIdRole());
     }
+
 }

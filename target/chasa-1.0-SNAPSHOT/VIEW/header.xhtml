@@ -42,41 +42,27 @@
                 <p:menubar>
                     <p:submenu label="#{I18N['menu.data.users']}" icon="pi pi-fw pi-user">
                         <p:submenu label="#{I18N['menu.own.data.users']}" icon="pi pi-fw pi-user">
-                            <p:menuitem value="#{I18N['menu.own.data.users.modify']}" icon="pi pi-fw  pi-user-edit" />
                             <p:menuitem value="#{I18N['menu.own.data.users.consult']}" icon="pi pi-fw pi-user" action="/VIEW/ConsultOwnData.xhtml"/>
-                        </p:submenu>
-                        <p:submenu label="#{I18N['menu.data.membre']}" icon="pi pi-fw pi-user">
-                            <p:menuitem value="#{I18N['menu.data.member.add']}" icon="pi pi-fw pi-user-plus"/>
-                            <p:menuitem value="#{I18N['menu.data.member.modify']}" icon="pi pi-fw pi-pencil"/>
-                            <p:menuitem value="#{I18N['menu.data.member.consult']}" icon="pi pi-fw pi-user"/>
-                        </p:submenu>
-                        <p:submenu label="#{I18N['menu.data.instructor']}" icon="pi pi-fw pi-user">
+                            <p:menuitem value="#{I18N['menu.data.member.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addMembers.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.member.consult']}" icon="pi pi-fw pi-user" action="/VIEW/listOfMembers.xhtml"/>
                             <p:menuitem value="#{I18N['menu.data.instructor.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addUser.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.instructor.modify']}" icon="pi pi-fw pi-pencil"/>
                             <p:menuitem value="#{I18N['menu.data.instructor.consult']}" icon="pi pi-fw pi-user" action="/VIEW/listOfUsers.xhtml"/>
                         </p:submenu>
                         <p:divider/>
                         <p:submenu label="#{I18N['menu.data.user.certificate']}" icon="pi pi-fw pi-star">
-                            <p:menuitem value="#{I18N['menu.own.certificate.users']}" icon="pi pi-fw pi-star"/>
-                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.data.certificate.modify']}" icon="pi pi-fw pi-wrench"/>
-                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star"/>
+                            <p:menuitem value="#{I18N['menu.own.certificate.users']}" icon="pi pi-fw pi-star" action="/VIEW/consultMyLicense.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addLicenseMember.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star" action="/VIEW/listofMembersLicense.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addLicenseUser.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star" action="/VIEW/listofUsersLicense.xhtml"/>
                         </p:submenu>
                         <p:divider/>
                         <p:submenu label="#{I18N['menu.data.user.medical']}" icon="pi pi-fw pi-heart-fill">
-                            <p:menuitem value="#{I18N['menu.data.user.medical.mine']}" icon="pi pi-fw pi-heart"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.add']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.modify']}" icon="pi pi-fw pi-wrench"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.list']}" icon="pi pi-fw pi-heart-fill"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.add']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.modify']}" icon="pi pi-fw pi-wrench"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.list']}" icon="pi pi-fw pi-heart-fill"/>
-                        </p:submenu>
-                    </p:submenu>
-                    <p:divider layout="vertical"/>
-                    <p:submenu label="#{I18N['menu.address']}" icon="pi pi-fw pi-home">
-                        <p:submenu label="#{I18N['menu.address']}" icon="pi pi-fw pi-home">
-                            <p:menuitem value="#{I18N['menu.data.address.List']}" icon="pi-home" action="/VIEW/listOfAddresses.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.mine']}" icon="pi pi-fw pi-heart" action="/VIEW/consultMyMedicalCertificate.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addMedicalCertificateMember.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.list']}" icon="pi pi-fw pi-heart-fill" action="/VIEW/listMedicalCertificateMember.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addMedicalCertificateUser.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.list']}" icon="pi pi-fw pi-heart-fill" action="/VIEW/listMedicalCertificateUser.xhtml"/>
                         </p:submenu>
                     </p:submenu>
                     <p:divider layout="vertical"/>

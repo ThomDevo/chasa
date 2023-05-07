@@ -1,23 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-<ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
-    <ui:define name="title">
-        <h:outputText value="#{I18N['addresspage.addAddresstitle']}"/>
-    </ui:define>
-    <ui:define name="content">
-        <div class="content">
-            <div class="block p-20 form-container">
+<ui:composition
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
                 <h2>
                     <h:outputText value="#{I18N['addresspage.addAddresstitle']}" />
                 </h2>
-                <h:form>
+
                     <p:outputPanel class="form-control">
                         <span>
                             <p:outputLabel for="inputStreet" value="#{I18N['addressPage.street']}"/>
@@ -59,7 +50,7 @@
                         <span>
                                 <p:outputLabel for="inputCity" value="#{I18N['addressPage.city']}"/>
                                 <p:selectOneMenu id="inputCity"
-                                                 value="#{addressesBean.addressCrud.citiesByIdCity}"
+                                                 value="#{addressesBean.addressCrud.idCity}"
                                                  converter="CityConverter"
                                                  effect="fade"
                                                  var="c"
@@ -92,24 +83,6 @@
                                 </p:selectOneMenu>
                         </span>
                         <p:message id="MessageInputCity" for="inputCity"/>
-                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{addressesBean.messageErrorExist}">
-                            <div><span class="ui-message-error-icon"> </span>
-                                <span class="ui-message-error-detail"><h:outputText
-                                      value="#{I18N['messageErrornumber']}"/></span>
-                            </div>
-                        </div>
                     </p:outputPanel>
-                    <span class="responsiveSubmit">
-                        <p:commandButton value="#{I18N['application.create.Address']}"
-                                         ajax="false"
-                                         validateClient="true"
-                                         class="ui-button-success"
-                                         action="#{addressesBean.submitFormAddAddress}"/>
-                    </span>
-                </h:form>
-            </div>
-        </div>
 
-    </ui:define>
 </ui:composition>
-</html>

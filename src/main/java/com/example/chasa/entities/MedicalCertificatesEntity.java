@@ -3,28 +3,67 @@ package com.example.chasa.entities;
 import com.example.chasa.enums.CertificateType;
 
 import javax.persistence.*;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.*;
+
+@NamedQueries({
+        @NamedQuery(name="MedicalCertificates.isMedicalCertificatesExist", query="SELECT COUNT(mc) FROM MedicalCertificatesEntity mc WHERE mc.issueDate = :issueDate AND mc.expiryDate = :expiryDate AND mc.certificateType = :certificateType AND mc.usersByIdUser = :usersByIdUser"),
+        @NamedQuery(name="MedicalCertificates.SelectAll", query="SELECT mc FROM MedicalCertificatesEntity mc"),
+        @NamedQuery(name="MedicalCertificates.SelectById", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.idMedicalCertificate = :idMedicalCertificate"),
+        @NamedQuery(name="MedicalCertificates.SelectAllByUser", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.usersByIdUser.idUser = :idUser ORDER BY mc.issueDate"),
+        @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristic", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
+                " where ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.email )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))" +
+                "  ORDER BY u.lifrasNumber"),
+        @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristicMember", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
+                " WHERE (lower(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR') AND"+
+                " ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.email )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))" +
+                "  ORDER BY u.lifrasNumber, mc.issueDate")
+})
 
 @Entity
 @Table(name = "medical_certificates", schema = "chasa")
 public class MedicalCertificatesEntity {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_medical_certificate", nullable = false)
     private int idMedicalCertificate;
+
+    @NotNull
     @Basic
     @Column(name = "issue_date", nullable = false)
     private Date issueDate;
+
+    @NotNull
     @Basic
     @Column(name = "expiry_date", nullable = false)
     private Date expiryDate;
+
+    @NotNull
     @Basic
     @Column(name = "certificate_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private CertificateType certificateType;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
     private UsersEntity usersByIdUser;
+
+    /*---Getters and setters---*/
 
     public int getIdMedicalCertificate() {
         return idMedicalCertificate;
@@ -82,11 +121,11 @@ public class MedicalCertificatesEntity {
         MedicalCertificatesEntity that = (MedicalCertificatesEntity) o;
 
         if (idMedicalCertificate != that.idMedicalCertificate) return false;
-        if (usersByIdUser != that.usersByIdUser) return false;
-        if (issueDate != null ? !issueDate.equals(that.issueDate) : that.issueDate != null) return false;
-        if (expiryDate != null ? !expiryDate.equals(that.expiryDate) : that.expiryDate != null) return false;
-        if (certificateType != null ? !certificateType.equals(that.certificateType) : that.certificateType != null)
-            return false;
+        //if (usersByIdUser != that.usersByIdUser) return false;
+        //if (issueDate != null ? !issueDate.equals(that.issueDate) : that.issueDate != null) return false;
+        //if (expiryDate != null ? !expiryDate.equals(that.expiryDate) : that.expiryDate != null) return false;
+        //if (certificateType != null ? !certificateType.equals(that.certificateType) : that.certificateType != null)
+            //return false;
 
         return true;
     }

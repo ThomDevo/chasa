@@ -1,5 +1,6 @@
 package com.example.chasa.entities;
 
+import com.example.chasa.utilities.ProcessUtils;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -11,14 +12,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "addresses", schema = "chasa")
 @NamedQueries({
-                @NamedQuery(name="Addresses.isAddressExist", query="SELECT COUNT(a) FROM AddressesEntity a WHERE a.street = :street AND a.number = :number AND a.box = :box AND a.citiesByIdCity.idCity = :idCity"),
+                @NamedQuery(name="Addresses.isAddressExist", query="SELECT COUNT(a) FROM AddressesEntity a WHERE a.street = :street AND a.number = :number AND a.box = :box "),
                 @NamedQuery(name="Addresses.findAddressByFilter", query="SELECT a FROM AddressesEntity a WHERE ((lower(a.street) LIKE CONCAT('%', :researchAddress, '%')) OR ((lower(a.number) LIKE CONCAT('%', :researchAddress, '%'))) OR ((lower(a.box) LIKE CONCAT('%', :researchAddress, '%'))))"),
-                @NamedQuery(name = "Addresses.findAll",query = "SELECT a FROM AddressesEntity a ORDER BY a.street ASC"),
+                @NamedQuery(name = "Addresses.findAll",query = "SELECT a FROM AddressesEntity a"),
                 @NamedQuery(name = "Addresses.findById",query = "SELECT a FROM AddressesEntity a WHERE a.idAddress = :idAddress"),
                 @NamedQuery(name = "Addresses.findAllByStreet",query = "SELECT a FROM AddressesEntity a wHERE a.street = :street"),
                 @NamedQuery(name = "Addresses.findAllByNumber",query = "SELECT a FROM AddressesEntity a WHERE a.number = :number"),
-                @NamedQuery(name = "Addresses.findAllByBox",query = "SELECT a FROM AddressesEntity a WHERE a.box = :box"),
-                @NamedQuery(name = "Addresses.findAllByCityId",query = "SELECT a FROM AddressesEntity a WHERE a.citiesByIdCity = :idCity")
+                @NamedQuery(name = "Addresses.findAllByBox",query = "SELECT a FROM AddressesEntity a WHERE a.box = :box")
               })
 public class AddressesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class AddressesEntity {
     @Column(name = "street", nullable = false, length = 255)
     private String street;
 
-    //@Range(min=1)
+    @Range(min=1)
     @Basic
     @Column(name = "number", nullable = false)
     private int number;
@@ -43,16 +43,20 @@ public class AddressesEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_city", referencedColumnName = "id_city", nullable = false)
-    private CitiesEntity citiesByIdCity;
+    private CitiesEntity idCity;
 
     @OneToMany(mappedBy = "addressesByIdAddress")
     private List<DiveSitesEntity> diveSitesByIdAddress;
+
     @OneToMany(mappedBy = "addressesByIdAddress")
     private List<EventsEntity> eventsByIdAddress;
+
     @OneToMany(mappedBy = "addressesByIdAdress")
     private List<HyperbaricchambersEntity> hyperbaricchambersByIdAddress;
+
     @OneToMany(mappedBy = "addresses")
     private List<UsersEntity> usersByIdAddress;
+
 
     //Getters and setters
 
@@ -88,12 +92,21 @@ public class AddressesEntity {
         this.box = box;
     }
 
-    public CitiesEntity getIdCity() {
-        return citiesByIdCity;
+    public CitiesEntity getIdCityX() {
+        return idCity;
     }
 
-    public void setIdCity(CitiesEntity citiesByIdCity) {
-        this.citiesByIdCity = citiesByIdCity;
+    public void setIdCityX(CitiesEntity idCity) {
+        ProcessUtils.debug("Adrien is here "+ idCity);
+        this.idCity = idCity;
+    }
+    public CitiesEntity getIdCity() {
+        return idCity;
+    }
+
+    public void setIdCity(CitiesEntity idCity) {
+        ProcessUtils.debug("Adrien is here "+ idCity);
+        this.idCity = idCity;
     }
 
     @Override
@@ -104,10 +117,10 @@ public class AddressesEntity {
         AddressesEntity that = (AddressesEntity) o;
 
         if (idAddress != that.idAddress) return false;
-        if (number != that.number) return false;
-        if (citiesByIdCity != that.citiesByIdCity) return false;
-        if (street != null ? !street.equals(that.street) : that.street != null) return false;
-        if (box != null ? !box.equals(that.box) : that.box != null) return false;
+        //if (number != that.number) return false;
+        //if (idCity != that.idCity) return false;
+        //if (street != null ? !street.equals(that.street) : that.street != null) return false;
+        //if (box != null ? !box.equals(that.box) : that.box != null) return false;
 
         return true;
     }
@@ -119,14 +132,6 @@ public class AddressesEntity {
         result = 31 * result + number;
         result = 31 * result + (box != null ? box.hashCode() : 0);
         return result;
-    }
-
-    public CitiesEntity getCitiesByIdCity() {
-        return citiesByIdCity;
-    }
-
-    public void setCitiesByIdCity(CitiesEntity citiesByIdCity) {
-        this.citiesByIdCity = citiesByIdCity;
     }
 
     public List<DiveSitesEntity> getDiveSitesByIdAddress() {

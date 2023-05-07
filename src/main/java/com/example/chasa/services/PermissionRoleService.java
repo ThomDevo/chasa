@@ -20,4 +20,14 @@ public class PermissionRoleService {
                 .setParameter("idRole", roleId)
                 .getResultList();
     }
+
+    /**
+     * Method to have all role permissions
+     * @param em
+     * @return List of role permissions
+     */
+    public List<RolePermissionEntity> findAll(EntityManager em) {
+        return em.createNamedQuery("RolePermission.SelectAll", RolePermissionEntity.class)
+                .getResultList();
+    }
 }

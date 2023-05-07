@@ -14,17 +14,29 @@ import java.util.Collection;
 import java.util.*;
 
 @NamedQueries(value = {
-        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber AND u.password = :password"),
+        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber"),
+        @NamedQuery(name = "User.SelectAll", query = "SELECT u FROM UsersEntity u"),
+        @NamedQuery(name = "User.SelectAllMembers", query = "SELECT u FROM UsersEntity u WHERE ((upper(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR'))"),
         @NamedQuery(name = "User.findUserById", query = "SELECT u FROM UsersEntity u WHERE u.idUser = :idUser"),
+        @NamedQuery(name = "User.findUserAddressById", query = "SELECT u FROM UsersEntity u JOIN AddressesEntity a ON (u.addresses.idAddress = a.idAddress) WHERE u.idUser = :idUser"),
         @NamedQuery(name = "User.FindUserByCharacteristic", query = "SELECT u from UsersEntity u " +
                 " where ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.email )like concat('%', :researchWord, '%')) or" +
-                " (lower(u.userStatus) like 'TRUE') or" +
+                " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
                 " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))"),
-        /*@NamedQuery(name = "User.FindUserByCharacteristicAdmin", query = "SELECT u FROM UsersEntity u WHERE(lower(u.lastName )like concat('%', :researchWord, '%')) OR (lower(u.firstName )like concat('%', :researchWord, '%')) OR (lower(u.email )like concat('%', :researchWord, '%')) OR (lower(u.roles )like concat('%', :researchWord, '%')) OR (u.lifrasNumber = (:researchWord)) ORDER BY CASE WHEN (:orderBy LIKE 'lastName') THEN u.lastName WHEN (:orderBy LIKE 'firstName') THEN u.firstName WHEN (:orderBy LIKE 'email') THEN u.email WHEN (:orderBy LIKE 'roles') THEN u.roles.roleLabel WHEN (:orderBy LIKE 'enable') THEN u.userStatus ELSE u.idUser END ASC"),*/
-        @NamedQuery(name = "User.FindUserByStatus", query = "SELECT u FROM UsersEntity u WHERE u.userStatus = :userStatus")
+        @NamedQuery(name = "User.FindMemberByCharacteristic", query ="SELECT u from UsersEntity u " +
+                " where ((upper(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR')) AND" +
+                "((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
+                " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
+                " (lower(u.email )like concat('%', :researchWord, '%')) or"+
+                " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))"),
+
 })
 
 @Entity
@@ -77,7 +89,7 @@ public class UsersEntity {
 
     @Basic
     @NotNull
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
+    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
@@ -95,7 +107,7 @@ public class UsersEntity {
     @OneToMany(mappedBy = "usersByIdUser")
     private List<UserEventsEntity> userEventsByIdUser;
 
-    @ManyToOne
+    @ManyToOne ( cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "id_adress", referencedColumnName = "id_address", nullable = false)
     private AddressesEntity addresses;
@@ -241,12 +253,12 @@ public class UsersEntity {
         this.userEventsByIdUser = userEventsByIdUser;
     }
 
-    public AddressesEntity getAddressesByIdAdress() {
+    public AddressesEntity getAddresses() {
         return addresses;
     }
 
-    public void setAddressesByIdAdress(AddressesEntity addressesByIdAdress) {
-        this.addresses = addressesByIdAdress;
+    public void setAddresses(AddressesEntity addresses) {
+        this.addresses = addresses;
     }
 
     public RolesEntity getRoles() {
@@ -265,17 +277,17 @@ public class UsersEntity {
         UsersEntity that = (UsersEntity) o;
 
         if (idUser != that.idUser) return false;
-        if (lifrasNumber != that.lifrasNumber) return false;
-        if (userStatus != that.userStatus) return false;
-        if (addresses != that.addresses) return false;
-        if (roles != that.roles) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (birthDate != null ? !birthDate.equals(that.birthDate) : that.birthDate != null) return false;
-        if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (userPhone != null ? !userPhone.equals(that.userPhone) : that.userPhone != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        //if (lifrasNumber != that.lifrasNumber) return false;
+        //if (userStatus != that.userStatus) return false;
+        //if (addresses != that.addresses) return false;
+        //if (roles != that.roles) return false;
+        //if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        //if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        //if (birthDate != null ? !birthDate.equals(that.birthDate) : that.birthDate != null) return false;
+        //if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
+        //if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        //if (userPhone != null ? !userPhone.equals(that.userPhone) : that.userPhone != null) return false;
+        //if (password != null ? !password.equals(that.password) : that.password != null) return false;
 
         return true;
     }
@@ -320,4 +332,18 @@ public class UsersEntity {
                 .findFirst()
                 .orElse(null) != null;
     }
+
+    @Transient
+    private List<LicenseUsersEntity> listOfLicenseUser;
+
+    @Transient
+    public List<LicenseUsersEntity> getListOfLicenseUsers() {
+        if(this.listOfLicenseUser==null)
+            listOfLicenseUser = new ArrayList<>();
+            //ConnectionBean.initListOfLicenseUsers(this);*/
+            return this.listOfLicenseUser;
+
+    }
+
+
 }

@@ -1,9 +1,13 @@
 package com.example.chasa.beans;
 
+import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.UsersEntity;
+import com.example.chasa.exception.ConnectionUserExecption;
+import com.example.chasa.services.LicensesService;
 import com.example.chasa.services.PermissionRoleService;
 import com.example.chasa.services.UsersService;
 import com.example.chasa.utilities.EMF;
+import com.example.chasa.utilities.FilterOfTable;
 import com.example.chasa.utilities.ProcessUtils;
 
 import javax.enterprise.context.SessionScoped;
@@ -15,12 +19,13 @@ import java.io.Serializable;
 
 @Named
 @SessionScoped
-public class ConnectionBean implements Serializable {
+public class ConnectionBean extends FilterOfTable<UsersEntity> implements Serializable{
     private UsersEntity user;
     private UsersEntity userForm = new UsersEntity();
     private String messageErrorConnection ="hidden";
     private String password;
     private UsersEntity current;
+
 
     public String logOut() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -42,12 +47,14 @@ public class ConnectionBean implements Serializable {
 
         try
         {
-            this.userForm = userService.findUserByLifrasNumber(this.userForm.getLifrasNumber(), this.password, em);
+            this.userForm = userService.findUserByLifrasNumber(this.userForm.getLifrasNumber(), em);
+            checkUserConnection(this.userForm, this.password);
             this.userForm.listOfPermissions = permissionRoleService.findRolePermissionByIdRole(this.userForm.getRoles().getIdRole(), em);
-            ProcessUtils.debug(String.valueOf(this.userForm.listOfPermissions.size()));
+            //ProcessUtils.debug(String.valueOf(this.userForm.listOfPermissions.size()));
             this.user = userForm;
             this.messageErrorConnection = "hidden";
             redirect = "/VIEW/home";
+            ProcessUtils.debug(String.valueOf(user.getIdUser()));
         }
         catch(Exception e)
         {
@@ -64,6 +71,9 @@ public class ConnectionBean implements Serializable {
 
         return redirect;
     }
+
+
+
 
     /**
      * Initialize list RolePermission
@@ -93,6 +103,9 @@ public class ConnectionBean implements Serializable {
 
     }
 
+
+
+
     /**
      * Method to control the permissions of the user
      * @param permissionName
@@ -108,6 +121,20 @@ public class ConnectionBean implements Serializable {
     public boolean verifyNotPermissionUser(String permissionName){
         return !(verifyPermissionUser(permissionName));
     }
+
+
+    /**
+     * User processing method
+     */
+    public void checkUserConnection (UsersEntity userRequest, String password) throws ConnectionUserExecption
+    {
+        if (! (ProcessUtils.checkPassword(password,userRequest)
+                && userRequest.getUserStatus()))
+        {
+            throw new ConnectionUserExecption();
+        }
+    }
+
 
     /**
      * Getter and setter

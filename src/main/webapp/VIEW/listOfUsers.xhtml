@@ -69,12 +69,15 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandLink class="btn btn-dark" value="#{I18N['menu.data.instructor.modify']}" action="#{usersBean.redirectPageWithId('/VIEW/updateUser',r.idUser)}"></h:commandLink>
+                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.data.instructor.modify']}" action="/VIEW/updateUser">
+                                <f:setPropertyActionListener target="#{addressesBean.addressCrud}" value="#{r.addresses}"/>
+                                <f:setPropertyActionListener target="#{usersBean.userCrud}" value="#{r}"/>
+                            </h:commandButton>
                         </p:column>
                     </p:dataTable>
                 </h:form>
                 <h:form>
-                    <p:linkButton outcome="/VIEW/addUser.xhtml" value="#{I18N['menu.data.instructor.add']}" icon="pi pi-fw pi-user-plus" style="margin-right:20px;"></p:linkButton>
+                    <p:linkButton outcome="/VIEW/addUser.xhtml" value="#{I18N['userPage.addUser']}" icon="pi pi-fw pi-user-plus" style="margin-right:20px;"></p:linkButton>
                 </h:form>
             </div>
         </div>

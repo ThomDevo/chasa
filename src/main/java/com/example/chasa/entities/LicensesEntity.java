@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@NamedQueries(value = {
+        @NamedQuery(name = "License.SelectAll", query = "SELECT l from LicensesEntity l "),
+        @NamedQuery(name = "License.SelectById", query = "SELECT l from LicensesEntity l WHERE l.idLicense = :idLicense"),
+})
+
 @Entity
 @Table(name = "licenses", schema = "chasa")
 public class LicensesEntity {
@@ -43,7 +48,7 @@ public class LicensesEntity {
         LicensesEntity that = (LicensesEntity) o;
 
         if (idLicense != that.idLicense) return false;
-        if (licenseLabel != null ? !licenseLabel.equals(that.licenseLabel) : that.licenseLabel != null) return false;
+        //if (licenseLabel != null ? !licenseLabel.equals(that.licenseLabel) : that.licenseLabel != null) return false;
 
         return true;
     }
@@ -55,7 +60,7 @@ public class LicensesEntity {
         return result;
     }
 
-    public Collection<EventsEntity> getEventsByIdLicense() {
+    public List<EventsEntity> getEventsByIdLicense() {
         return eventsByIdLicense;
     }
 
@@ -63,11 +68,13 @@ public class LicensesEntity {
         this.eventsByIdLicense = eventsByIdLicense;
     }
 
-    public Collection<LicenseUsersEntity> getLicenseUsersByIdLicense() {
+    public List<LicenseUsersEntity> getLicenseUsersByIdLicense() {
         return licenseUsersByIdLicense;
     }
 
     public void setLicenseUsersByIdLicense(List<LicenseUsersEntity> licenseUsersByIdLicense) {
         this.licenseUsersByIdLicense = licenseUsersByIdLicense;
     }
+
+
 }

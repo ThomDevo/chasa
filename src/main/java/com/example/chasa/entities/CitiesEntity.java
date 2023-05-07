@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "cities", schema = "chasa")
 @NamedQueries({
-        @NamedQuery(name = "Cities.findAll",query = "SELECT a FROM CitiesEntity a ORDER BY a.postalCode ASC"),
+        @NamedQuery(name = "Cities.findAll",query = "SELECT a FROM CitiesEntity a "),
         @NamedQuery(name = "Cities.findById",query = "SELECT a FROM CitiesEntity a WHERE a.idCity = :idCity")
 })
 public class CitiesEntity {
@@ -15,15 +15,19 @@ public class CitiesEntity {
     @Id
     @Column(name = "id_city", nullable = false)
     private int idCity;
+
     @Basic
     @Column(name = "postal_code", nullable = false)
     private int postalCode;
+
     @Basic
     @Column(name = "city_label", nullable = false, length = 255)
     private String cityLabel;
 
-    @OneToMany(mappedBy = "citiesByIdCity")
+
+    @OneToMany(mappedBy = "idCity")
     private List<AddressesEntity> addressesByIdCity;
+
     @ManyToOne
     @JoinColumn(name = "id_country", referencedColumnName = "id_country", nullable = false)
     private CountriesEntity countriesByIdCountry;
@@ -60,6 +64,7 @@ public class CitiesEntity {
         this.countriesByIdCountry = idCountry;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,9 +73,9 @@ public class CitiesEntity {
         CitiesEntity that = (CitiesEntity) o;
 
         if (idCity != that.idCity) return false;
-        if (postalCode != that.postalCode) return false;
-        if (countriesByIdCountry != that.countriesByIdCountry) return false;
-        if (cityLabel != null ? !cityLabel.equals(that.cityLabel) : that.cityLabel != null) return false;
+        //if (postalCode != that.postalCode) return false;
+        //if (countriesByIdCountry != that.countriesByIdCountry) return false;
+        //if (cityLabel != null ? !cityLabel.equals(that.cityLabel) : that.cityLabel != null) return false;
 
         return true;
     }

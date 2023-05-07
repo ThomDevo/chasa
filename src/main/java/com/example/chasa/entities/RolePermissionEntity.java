@@ -3,6 +3,7 @@ package com.example.chasa.entities;
 import javax.persistence.*;
 
 @NamedQueries(value = {
+        @NamedQuery(name = "RolePermission.SelectAll", query = "SELECT pe FROM RolePermissionEntity pe"),
         @NamedQuery(name = "RolePermission.SelectListPermissionByIdRole", query = "SELECT pe FROM RolePermissionEntity pe WHERE pe.rolesByIdRole.idRole = :idRole")
 })
 

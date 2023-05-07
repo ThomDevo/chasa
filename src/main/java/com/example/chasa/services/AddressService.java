@@ -1,6 +1,7 @@
 package com.example.chasa.services;
 
 import com.example.chasa.entities.AddressesEntity;
+import com.example.chasa.entities.CitiesEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -19,7 +20,7 @@ public class AddressService {
      * @param em
      * @return boolean
      */
-    public boolean isAddressExist(String street, int number, String box, int idCity, EntityManager em){
+    public boolean isAddressExist(String street, int number, String box, CitiesEntity idCity, EntityManager em){
         Query query = em.createNamedQuery("Addresses.isAddressExist", AddressesEntity.class);
         int count = ((Number)query.getSingleResult()).intValue();
         return count > 0;
@@ -92,18 +93,6 @@ public class AddressService {
     public List<AddressesEntity> findAllAddressByBox (String Box, EntityManager em){
         return em.createNamedQuery("Addresses.findAllByBox", AddressesEntity.class)
                 .setParameter("box", Box)
-                .getResultList();
-    }
-
-    /**
-     * Method to have all addresses based on the IdCity
-     * @param idCity
-     * @param em
-     * @return List of addresses
-     */
-    public List<AddressesEntity> findAllAddressByCityId (int idCity, EntityManager em){
-        return em.createNamedQuery("Addresses.findAllByCityId", AddressesEntity.class)
-                .setParameter("idCity", idCity)
                 .getResultList();
     }
 
