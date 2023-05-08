@@ -5,9 +5,11 @@ import com.example.chasa.entities.RolesEntity;
 import com.example.chasa.services.PermissionRoleService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
+import com.example.chasa.utilities.ProcessUtils;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -23,6 +25,8 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
     private RolePermissionEntity rolePermissionEntity = new RolePermissionEntity();
     private List<RolePermissionEntity> allRolePermissions;
     private List<RolePermissionEntity> allRolePermissionsPerRole;
+    @Inject
+    private PermissionsBean permissionsBean;
 
     /**
      * Method to have all the permissions associated with the role
@@ -49,13 +53,13 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
     /**
      * Method to have all the role permissions
      */
-    public void allRolePermissions(){
+    public void allRolePermissions(int idRole){
         EntityManager em = EMF.getEM();
         PermissionRoleService rolePermissionService = new PermissionRoleService();
         EntityTransaction transaction = em.getTransaction();
         try{
             transaction.begin();
-            this.allRolePermissions = rolePermissionService.findAll(em);
+            this.allRolePermissions = rolePermissionService.findRolePermissionByIdRole(idRole,em);
             transaction.commit();
         }catch(Exception e){
             this.allRolePermissions = new ArrayList<>();
@@ -65,6 +69,12 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
             }
             em.close();
         }
+    }
+
+    public String submitFormAddRolePermissions(){
+
+        ProcessUtils.debug("Submit form add role permissions"+ permissionsBean.getAllPermissionSelected().size());
+        return null;
     }
 
 

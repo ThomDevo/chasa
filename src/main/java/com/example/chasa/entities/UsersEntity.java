@@ -28,7 +28,7 @@ import java.util.*;
                 " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
                 " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))"),
         @NamedQuery(name = "User.FindMemberByCharacteristic", query ="SELECT u from UsersEntity u " +
-                " where ((upper(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR')) AND" +
+                " where ((upper(u.roles.roleLabel) LIKE 'MEMBRE')) AND" +
                 "((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +

@@ -21,7 +21,7 @@ import java.util.*;
         @NamedQuery(name = "LicenseUser.findUserByRole", query = "SELECT lu from LicenseUsersEntity lu JOIN UsersEntity u ON (lu.usersByIdUser.idUser = u.idUser) WHERE (lower(u.roles.roleLabel) NOT LIKE 'MEMBRE')"),
         @NamedQuery(name = "LicenseUser.findLicenseUserByUser", query = "SELECT lu from LicenseUsersEntity lu JOIN UsersEntity u ON (lu.usersByIdUser.idUser = u.idUser) WHERE u.idUser = :idUser ORDER BY lu.licensedDate"),
         @NamedQuery(name = "LicenseUser.FindLicenseUserByCharacteristicMember", query = "SELECT lu from LicenseUsersEntity lu JOIN UsersEntity u ON (lu.usersByIdUser.idUser = u.idUser)" +
-                " WHERE (lower(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR') AND"+
+                " WHERE (lower(u.roles.roleLabel) LIKE 'MEMBRE') AND"+
                 " ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +

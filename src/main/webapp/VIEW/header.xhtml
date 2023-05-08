@@ -93,8 +93,9 @@
                     <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
                         <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
                             <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('MyData')}"/>
-                            <p:menuitem value="#{I18N['menu.chasa.role.modify']}" icon="pi pi-fw pi-user-edit"/>
                             <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRolePermissions.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-wrench" action="/VIEW/listOfrolePermission.xhtml"/>
                         </p:submenu>
                     </p:submenu>
 

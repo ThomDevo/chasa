@@ -22,7 +22,7 @@ import java.util.*;
                 " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))" +
                 "  ORDER BY u.lifrasNumber"),
         @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristicMember", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
-                " WHERE (lower(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR') AND"+
+                " WHERE (lower(u.roles.roleLabel) LIKE 'MEMBRE') AND"+
                 " ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +

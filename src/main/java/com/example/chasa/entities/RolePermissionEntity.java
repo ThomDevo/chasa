@@ -1,6 +1,7 @@
 package com.example.chasa.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @NamedQueries(value = {
         @NamedQuery(name = "RolePermission.SelectAll", query = "SELECT pe FROM RolePermissionEntity pe"),
@@ -15,10 +16,12 @@ public class RolePermissionEntity {
     @Column(name = "id_role_permission", nullable = false)
     private int idRolePermission;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_role", referencedColumnName = "id_role", nullable = false)
     private RolesEntity rolesByIdRole;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_permission", referencedColumnName = "id_permission", nullable = false)
     private PermissionsEntity permissionsByIdPermission;

@@ -44,12 +44,13 @@
                             </f:facet>
                             <p:column>
                                 <f:facet name="header">#{I18N['rolepage.ListOfRoles.label']}</f:facet>
-                                <h:outputText value="#{r.roleLabel}"
-                                              converter="ToUpperCaseConverter"></h:outputText>
+                                <h:outputText value="#{r.roleLabel}"></h:outputText>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                                <h:commandLink class="btn btn-dark" value="#{I18N['menu.chasa.role.modify']}" action="#{rolesBean.redirectPageWithId('/VIEW/updateRole',r.idRole)}"></h:commandLink>
+                                <h:commandLink class="btn btn-dark" value="#{I18N['menu.chasa.role.modify']}" action="/VIEW/updateRole">
+                                    <f:setPropertyActionListener target="#{rolesBean.role}" value="#{r}"/>
+                                </h:commandLink>
                             </p:column>
                         </p:dataTable>
                 </h:form>

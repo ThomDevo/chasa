@@ -7,7 +7,8 @@ import java.util.List;
 @NamedQueries(value = {
         @NamedQuery(name = "Permission.selectPermissionAll", query = "SELECT p from PermissionsEntity p order by p.idPermission desc"),
         @NamedQuery(name = "Permission.selectPermissionById", query = "SELECT p from PermissionsEntity p where p.idPermission = :idPermission"),
-        @NamedQuery(name = "Permission.selectPermissionByLabel", query = "SELECT p from PermissionsEntity p where p.permissionLabel = :permissionLabel")
+        @NamedQuery(name = "Permission.selectPermissionByLabel", query = "SELECT p from PermissionsEntity p where p.permissionLabel = :permissionLabel"),
+
 })
 
 @Entity

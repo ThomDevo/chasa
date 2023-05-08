@@ -6,16 +6,23 @@ import com.example.chasa.services.PermissionService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
 
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Named
+@ManagedBean
+@SessionScoped
 public class PermissionsBean extends FilterOfTable<PermissionsEntity> implements Serializable {
     private PermissionService permissionService = new PermissionService();
     private PermissionsEntity permissionEntity = new PermissionsEntity();
     private List<PermissionsEntity> allPermissions;
+    private List<PermissionsEntity> allPermissionsSelected;
 
     public void initAllPermissions(){
         EntityManager em = EMF.getEM();
@@ -34,6 +41,8 @@ public class PermissionsBean extends FilterOfTable<PermissionsEntity> implements
             em.close();
         }
     }
+
+
 
 
     /*---Getters and Setters---*/
@@ -60,5 +69,14 @@ public class PermissionsBean extends FilterOfTable<PermissionsEntity> implements
 
     public void setAllPermissions(List<PermissionsEntity> allPermissions) {
         this.allPermissions = allPermissions;
+    }
+
+
+    public List<PermissionsEntity> getAllPermissionSelected() {
+        return allPermissionsSelected;
+    }
+
+    public void setAllPermissionsselected(List<PermissionsEntity> allPermissionsSelected) {
+        this.allPermissionsSelected = allPermissionsSelected;
     }
 }
