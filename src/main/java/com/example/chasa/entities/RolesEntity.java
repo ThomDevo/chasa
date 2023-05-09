@@ -8,6 +8,7 @@ import java.util.List;
 @NamedQueries(value = {
         @NamedQuery(name = "Role.SelectRoleByRoleName", query = "SELECT r from RolesEntity r where r.roleLabel = :roleLabel"),
         @NamedQuery(name="Role.SelectRoleAll", query ="SELECT r from RolesEntity r"),
+        @NamedQuery(name="Role.SelectRoleAllEmpty", query ="select r from RolesEntity r where (select count(rp) from RolePermissionEntity rp where (rp.rolesByIdRole.idRole = r.idRole) ) = 0"),
         @NamedQuery(name="Role.SelectRoleById", query="SELECT r from RolesEntity r where r.idRole = :idRole"),
         @NamedQuery(name="Role.isRoleExist", query="SELECT COUNT(r) FROM RolesEntity r WHERE r.roleLabel = :roleLabel"),
         @NamedQuery(name="Role.SelectAllRoleFilter", query="SELECT r FROM RolesEntity r WHERE ((lower(r.roleLabel) LIKE CONCAT('%', :researchRole, '%'))) ORDER BY r.roleLabel ASC")

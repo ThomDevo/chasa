@@ -56,6 +56,20 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
     public List<RolesEntity> getAllRole(){
         return this.allRole;
     }
+    private List<RolesEntity> allRoleEmptyPermission;
+
+    public void setAllRole(List<RolesEntity> allRole) {
+        this.allRole = allRole;
+    }
+
+    public List<RolesEntity> getAllRoleEmptyPermission() {
+        return allRoleEmptyPermission;
+    }
+
+    public void setAllRoleEmptyPermission(List<RolesEntity> allRoleEmptyPermission) {
+        this.allRoleEmptyPermission = allRoleEmptyPermission;
+    }
+
     public void initAllEditor(){
         EntityManager em = EMF.getEM();
         RoleService roleService = new RoleService();
@@ -63,6 +77,18 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
             this.allRole = roleService.findRoleAll(em);
         }catch(Exception e){
             this.allRole = new ArrayList<>();
+        }finally{
+            em.close();
+        }
+    }
+
+    public void initAllRoleEmptyPermissions(){
+        EntityManager em = EMF.getEM();
+        RoleService roleService = new RoleService();
+        try{
+            this.allRoleEmptyPermission = roleService.findRoleAllEmptyPermissions(em);
+        }catch(Exception e){
+            this.allRoleEmptyPermission = new ArrayList<>();
         }finally{
             em.close();
         }
@@ -118,6 +144,7 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
             }
             roleService.updateRole(role,em);
             transaction.commit();
+            confirm();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the connection method: "+ e);
             redirect = "null" ;

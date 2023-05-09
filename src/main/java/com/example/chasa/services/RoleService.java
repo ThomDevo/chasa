@@ -45,6 +45,12 @@ public class RoleService {
                 .getResultList();
     }
 
+    public List<RolesEntity> findRoleAllEmptyPermissions (EntityManager em)
+    {
+        return em.createNamedQuery("Role.SelectRoleAllEmpty", RolesEntity.class)
+                .getResultList();
+    }
+
 
     /**
      * Method to filter thz whole list of roles
@@ -57,6 +63,8 @@ public class RoleService {
                 .setParameter("researchRole", researchRole.toLowerCase())
                 .getResultList();
     }
+
+
 
 
     /**

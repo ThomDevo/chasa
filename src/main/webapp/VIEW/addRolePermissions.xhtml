@@ -12,6 +12,9 @@
         <h:outputText value="#{I18N['add.rolePermission']}"/>
     </ui:define>
     <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{permissionsBean.initAllPermissions()}"/>
+        </f:metadata>
         <div class="card">
             <div class="block p-20 form-container">
                 <h2>
@@ -22,7 +25,7 @@
                         <span>
                             <p:outputLabel for="inputRole" value="#{I18N['select.role']}"/>
                             <p:selectOneMenu id="inputRole"
-                                             value="#{rolePermissionBean.rolePermissionEntity.rolesByIdRole}"
+                                             value="#{rolesBean.role}"
                                              converter="RolesConverter"
                                              effect="fade"
                                              var="u"
@@ -31,11 +34,11 @@
                                              required="true">
                                 <!-- reload list editor from db. -->
                                 <f:metadata>
-                                    <f:event type="preRenderView" listener="#{rolesBean.initAllEditor()}"/>
+                                    <f:event type="preRenderView" listener="#{rolesBean.initAllRoleEmptyPermissions()}"/>
                                 </f:metadata>
                                 <f:selectItem itemLabel="#{I18N['select.role']}"
                                               itemValue="#{null}"/>
-                                <f:selectItems value="#{rolesBean.allRole}"
+                                <f:selectItems value="#{rolesBean.allRoleEmptyPermission}"
                                                var="role"
                                                itemLabel="#{role.roleLabel}"
                                                itemValue="#{role}"/>
@@ -51,7 +54,7 @@
                         <span>
                             <p:outputLabel for="inputPermissions" value="#{I18N['select.permission']}"/>
                             <p:selectManyMenu id="inputPermissions"
-                                             value="#{rolePermissionBean.rolePermissionEntity.permissionsByIdPermission}"
+                                             value="#{rolePermissionBean.permissionsBean.allPermissionsSelected}"
                                              converter="PermissionsConverter"
                                              effect="fade"
                                              var="v"
@@ -59,9 +62,7 @@
                                              filterMatchMode="contains"
                                              required="true">
                                 <!-- reload list editor from db. -->
-                                <f:metadata>
-                                    <f:event type="preRenderView" listener="#{permissionsBean.initAllPermissions()}"/>
-                                </f:metadata>
+
                                 <f:selectItem itemLabel="#{I18N['select.permission']}"
                                               itemValue="#{null}"/>
                                 <f:selectItems value="#{permissionsBean.allPermissions}"

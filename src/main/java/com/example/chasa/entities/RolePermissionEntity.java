@@ -4,8 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @NamedQueries(value = {
-        @NamedQuery(name = "RolePermission.SelectAll", query = "SELECT pe FROM RolePermissionEntity pe"),
-        @NamedQuery(name = "RolePermission.SelectListPermissionByIdRole", query = "SELECT pe FROM RolePermissionEntity pe WHERE pe.rolesByIdRole.idRole = :idRole")
+        @NamedQuery(name = "RolePermission.SelectAll", query = "SELECT pe FROM RolePermissionEntity pe GROUP BY pe.rolesByIdRole"),
+        @NamedQuery(name = "RolePermission.SelectListPermissionByIdRole", query = "SELECT pe FROM RolePermissionEntity pe WHERE pe.rolesByIdRole.idRole = :idRole"),
+        @NamedQuery(name = "RolePermission.SelectListPermissionByIdRoleANdByIdPermission", query = "SELECT pe FROM RolePermissionEntity pe WHERE pe.rolesByIdRole.idRole = :idRole AND pe.permissionsByIdPermission.idPermission = :idPermission")
 })
 
 @Entity

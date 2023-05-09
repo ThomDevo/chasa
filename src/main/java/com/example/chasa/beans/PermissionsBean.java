@@ -22,7 +22,7 @@ public class PermissionsBean extends FilterOfTable<PermissionsEntity> implements
     private PermissionService permissionService = new PermissionService();
     private PermissionsEntity permissionEntity = new PermissionsEntity();
     private List<PermissionsEntity> allPermissions;
-    private List<PermissionsEntity> allPermissionsSelected;
+    private List<PermissionsEntity> allPermissionsSelected ;
 
     public void initAllPermissions(){
         EntityManager em = EMF.getEM();
@@ -41,6 +41,7 @@ public class PermissionsBean extends FilterOfTable<PermissionsEntity> implements
             em.close();
         }
     }
+
 
 
 
@@ -71,12 +72,11 @@ public class PermissionsBean extends FilterOfTable<PermissionsEntity> implements
         this.allPermissions = allPermissions;
     }
 
-
-    public List<PermissionsEntity> getAllPermissionSelected() {
+    public List<PermissionsEntity> getAllPermissionsSelected() {
         return allPermissionsSelected;
     }
 
-    public void setAllPermissionsselected(List<PermissionsEntity> allPermissionsSelected) {
+    public void setAllPermissionsSelected(List<PermissionsEntity> allPermissionsSelected) {
         this.allPermissionsSelected = allPermissionsSelected;
     }
 }

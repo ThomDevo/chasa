@@ -19,9 +19,9 @@
                 </h2>
                 <h:form>
                     <f:metadata>
-                        <f:event type="preRenderView" listener="#{rolesBean.ResearchFilter()}"/>
+                        <f:event type="preRenderView" listener="#{rolePermissionBean.allRolePermissions()}"/>
                     </f:metadata>
-                    <p:dataTable var="r" value="#{rolesBean.entityFiltered}"
+                    <p:dataTable var="r" value="#{rolePermissionBean.entityFiltered}"
                                  resizableColumns="true"
                                  class="table"
                                  widgetVar="rTable"
@@ -34,7 +34,7 @@
 
                         <f:facet name="header">
                             <p:outputPanel>
-                                <p:inputText value="#{rolesBean.filter}"
+                                <p:inputText value="#{rolePermissionBean.filter}"
                                              onkeyup="researchTable(this)"
                                              id="RolesInputResearch"
                                              validatorMessage="#{I18N['listPage.messageErrorResearch']}"
@@ -44,18 +44,18 @@
                         </f:facet>
                         <p:column>
                             <f:facet name="header">#{I18N['rolepage.ListOfRoles.label']}</f:facet>
-                            <h:outputText value="#{r.roleLabel}"/>
+                            <h:outputText value="#{r.rolesByIdRole.roleLabel}"></h:outputText>
                         </p:column>
                         <p:column>
                             <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.chasa.role.modify']}" action="/VIEW/updateRolePermissions'">
+                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.chasa.role.modify']}" action="/VIEW/updateRolePermission">
                                 <f:setPropertyActionListener target="#{rolePermissionBean.rolePermissionEntity}" value="#{r}"/>
                             </h:commandButton>
                         </p:column>
                     </p:dataTable>
                 </h:form>
                 <h:form>
-                    <p:linkButton outcome="/VIEW/addRole.xhtml" value="#{I18N['rolepage.addRoletitle']}" icon="pi pi-fw pi-user-plus" style="margin-right:20px;"></p:linkButton>
+                    <p:linkButton outcome="/VIEW/addRolePermission.xhtml" value="#{I18N['add.rolePermission']}" icon="pi pi-fw pi-user-plus" style="margin-right:20px;"></p:linkButton>
                 </h:form>
             </div>
         </div>
