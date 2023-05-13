@@ -11,7 +11,7 @@ import java.util.*;
         @NamedQuery(name="MedicalCertificates.isMedicalCertificatesExist", query="SELECT COUNT(mc) FROM MedicalCertificatesEntity mc WHERE mc.issueDate = :issueDate AND mc.expiryDate = :expiryDate AND mc.certificateType = :certificateType AND mc.usersByIdUser = :usersByIdUser"),
         @NamedQuery(name="MedicalCertificates.SelectAll", query="SELECT mc FROM MedicalCertificatesEntity mc"),
         @NamedQuery(name="MedicalCertificates.SelectById", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.idMedicalCertificate = :idMedicalCertificate"),
-        @NamedQuery(name="MedicalCertificates.SelectAllByUser", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.usersByIdUser.idUser = :idUser ORDER BY mc.issueDate"),
+        @NamedQuery(name="MedicalCertificates.SelectAllByUser", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.usersByIdUser.idUser = :idUser GROUP BY mc.certificateType ORDER BY mc.expiryDate desc"),
         @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristic", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
                 " where ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
@@ -20,6 +20,7 @@ import java.util.*;
                 " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
                 " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
                 " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))" +
+                "  GROUP BY mc.usersByIdUser,mc.certificateType" +
                 "  ORDER BY u.lifrasNumber"),
         @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristicMember", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
                 " WHERE (lower(u.roles.roleLabel) LIKE 'MEMBRE') AND"+

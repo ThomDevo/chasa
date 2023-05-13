@@ -7,6 +7,7 @@ import java.util.List;
 @NamedQueries(value = {
         @NamedQuery(name = "License.SelectAll", query = "SELECT l from LicensesEntity l "),
         @NamedQuery(name = "License.SelectById", query = "SELECT l from LicensesEntity l WHERE l.idLicense = :idLicense"),
+        @NamedQuery(name = "License.SelectAllByUser", query = "SELECT l FROM LicensesEntity l WHERE ((SELECT COUNT(lu) FROM LicenseUsersEntity lu where (lu.licensesByIdLicense.idLicense = l.idLicense and lu.usersByIdUser.idUser = :idUser)) = 0 )"),
 })
 
 @Entity

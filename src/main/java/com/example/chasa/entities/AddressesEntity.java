@@ -14,7 +14,7 @@ import java.util.Objects;
 @NamedQueries({
                 @NamedQuery(name="Addresses.isAddressExist", query="SELECT COUNT(a) FROM AddressesEntity a WHERE a.street = :street AND a.number = :number AND a.box = :box "),
                 @NamedQuery(name="Addresses.findAddressByFilter", query="SELECT a FROM AddressesEntity a WHERE ((lower(a.street) LIKE CONCAT('%', :researchAddress, '%')) OR ((lower(a.number) LIKE CONCAT('%', :researchAddress, '%'))) OR ((lower(a.box) LIKE CONCAT('%', :researchAddress, '%'))))"),
-                @NamedQuery(name = "Addresses.findAll",query = "SELECT a FROM AddressesEntity a"),
+                @NamedQuery(name = "Addresses.findAll",query = "SELECT a FROM AddressesEntity a GROUP BY a.street, a.number,a.box,a.idCity"),
                 @NamedQuery(name = "Addresses.findById",query = "SELECT a FROM AddressesEntity a WHERE a.idAddress = :idAddress"),
                 @NamedQuery(name = "Addresses.findAllByStreet",query = "SELECT a FROM AddressesEntity a wHERE a.street = :street"),
                 @NamedQuery(name = "Addresses.findAllByNumber",query = "SELECT a FROM AddressesEntity a WHERE a.number = :number"),

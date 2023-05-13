@@ -1,6 +1,9 @@
 package com.example.chasa.entities;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
@@ -12,27 +15,42 @@ public class EventsEntity {
     @Id
     @Column(name = "id_event", nullable = false)
     private int idEvent;
+
+    @NotNull
     @Basic
     @Column(name = "date_time_event", nullable = false)
     private Timestamp dateTimeEvent;
+
+    @NotNull
+    @Range(min=0,max= 999)
     @Basic
     @Column(name = "max_num_people", nullable = false)
     private int maxNumPeople;
+
+
+    @Range(min=0,max= 99999)
     @Basic
     @Column(name = "price", nullable = false, precision = 0)
     private double price;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_address", referencedColumnName = "id_address", nullable = false)
     private AddressesEntity addressesByIdAddress;
+
     @ManyToOne
     @JoinColumn(name = "id_license", referencedColumnName = "id_license")
     private LicensesEntity licensesByIdLicense;
+
     @ManyToOne
     @JoinColumn(name = "id_dive_site", referencedColumnName = "id_dive_site")
     private DiveSitesEntity diveSitesByIdDiveSite;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_event_category", referencedColumnName = "id_event_category", nullable = false)
     private EventCategoriesEntity eventCategoriesByIdEventCategory;
+
     @OneToMany(mappedBy = "eventsByIdEvent")
     private List<UserEventsEntity> userEventsByIdEvent;
 

@@ -250,7 +250,6 @@ a {
     border-radius: 3px;
     padding: 1rem 1.5rem;
     width: auto;
-    overflow: auto;
 }
 
 .form-control input {
@@ -331,7 +330,8 @@ a {
 
 table{
     margin:auto;
-    min-width: 40%; ;
+    min-width: 40%;
+    table-layout: auto;
 }
 
 tbody td {
@@ -405,4 +405,8 @@ body .ui-selectonemenu .ui-selectonemenu-trigger{
 }
 .lineManyToManyWithoutButton > div:first-child{
     padding-bottom: 5px;
+}
+
+.ui-datatable-resizable table{
+    table-layout: auto;
 }

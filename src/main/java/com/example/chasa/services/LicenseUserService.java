@@ -15,15 +15,15 @@ public class LicenseUserService {
                 .getResultList();
     }
 
-    /*public boolean isLicenseUserExists(int idUser, int idLicense, EntityManager em){
+    public boolean isLicenseUserExists(int idUser, int idLicense, EntityManager em){
         Query query = em.createNamedQuery("LicenseUser.IsLicenseUserExists", LicenseUsersEntity.class)
-                        .setParameter("usersByIdUser", idUser)
+                        .setParameter("idUser", idUser)
                         .setParameter("idLicense", idLicense);
         int count = ((Number)query.getSingleResult()).intValue();
         ProcessUtils.debug(""+ count);
         return count > 0;
     }
-*/
+
     public List<LicenseUsersEntity> findUserByFilter(String researchWord, EntityManager em){
         return em.createNamedQuery("LicenseUser.FindLicenseUserByCharacteristic", LicenseUsersEntity.class)
                 .setParameter("researchWord", researchWord.toLowerCase())

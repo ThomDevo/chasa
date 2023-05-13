@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.*;
 
 @NamedQueries(value = {
-        @NamedQuery(name = "LicenseUser.SelectAll", query = "SELECT COUNT(lu) from LicenseUsersEntity lu WHERE lu.usersByIdUser.idUser = :idUser AND lu.licensesByIdLicense.idLicense = :idLicense"),
-        @NamedQuery(name = "LicenseUser.IsLicenseUserExists", query = "SELECT lu from LicenseUsersEntity lu "),
+        @NamedQuery(name = "LicenseUser.IsLicenseUserExists", query = "SELECT COUNT(lu) from LicenseUsersEntity lu WHERE (lu.usersByIdUser.idUser = :idUser AND lu.licensesByIdLicense.idLicense = :idLicense)"),
+        @NamedQuery(name = "LicenseUser.SelectAll", query = "SELECT lu from LicenseUsersEntity lu "),
         @NamedQuery(name = "LicenseUser.FindLicenseUserByCharacteristic", query = "SELECT lu from LicenseUsersEntity lu JOIN UsersEntity u ON (lu.usersByIdUser.idUser = u.idUser)" +
                 " where ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +

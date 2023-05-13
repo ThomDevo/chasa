@@ -25,6 +25,7 @@ public class ConnectionBean extends FilterOfTable<UsersEntity> implements Serial
     private String messageErrorConnection ="hidden";
     private String password;
     private UsersEntity current;
+    private boolean inForm = false;
 
 
     public String logOut() {
@@ -72,8 +73,13 @@ public class ConnectionBean extends FilterOfTable<UsersEntity> implements Serial
         return redirect;
     }
 
+    public void setInformFalse(){
+        this.inForm = false;
+    }
 
-
+    public void setInformTrue(){
+        this.inForm = true;
+    }
 
     /**
      * Initialize list RolePermission

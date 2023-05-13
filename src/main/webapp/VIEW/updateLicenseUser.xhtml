@@ -101,6 +101,12 @@
                                         value="#{I18N['messageErrorAdmissionDate']}"/></span>
                             </div>
                         </div>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{licenseUserBean.messageErrorExists}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorExists']}"/></span>
+                            </div>
+                        </div>
                     </p:outputPanel>
                     <span class="responsiveSubmit">
                         <p:commandButton value="#{I18N['application.update.licenseUser']}"

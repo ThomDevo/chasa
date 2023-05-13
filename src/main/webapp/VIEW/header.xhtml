@@ -42,60 +42,45 @@
                 <p:menubar>
                     <p:submenu label="#{I18N['menu.data.users']}" icon="pi pi-fw pi-user">
                         <p:submenu label="#{I18N['menu.own.data.users']}" icon="pi pi-fw pi-user">
-                            <p:menuitem value="#{I18N['menu.own.data.users.consult']}" icon="pi pi-fw pi-user" action="/VIEW/ConsultOwnData.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.member.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addMembers.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.member.consult']}" icon="pi pi-fw pi-user" action="/VIEW/listOfMembers.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.instructor.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addUser.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.instructor.consult']}" icon="pi pi-fw pi-user" action="/VIEW/listOfUsers.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.own.data.users.consult']}" icon="pi pi-fw pi-user" action="/VIEW/ConsultOwnData.xhtml" rendered="#{connectionBean.verifyPermissionUser('Consulter mes données')}"/>
+                            <p:menuitem value="#{I18N['menu.data.member.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addMembers.xhtml" rendered="#{connectionBean.verifyPermissionUser('Créer un membre')}"/>
+                            <p:menuitem value="#{I18N['menu.data.member.consult']}" icon="pi pi-fw pi-user" action="/VIEW/listOfMembers.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des membres')}"/>
+                            <p:menuitem value="#{I18N['menu.data.instructor.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addUser.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un nouvel utilisateur')}"/>
+                            <p:menuitem value="#{I18N['menu.data.instructor.consult']}" icon="pi pi-fw pi-user" action="/VIEW/listOfUsers.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des utilisateurs')}"/>
                         </p:submenu>
                         <p:divider/>
                         <p:submenu label="#{I18N['menu.data.user.certificate']}" icon="pi pi-fw pi-star">
-                            <p:menuitem value="#{I18N['menu.own.certificate.users']}" icon="pi pi-fw pi-star" action="/VIEW/consultMyLicense.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addLicenseMember.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star" action="/VIEW/listofMembersLicense.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addLicenseUser.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star" action="/VIEW/listofUsersLicense.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.own.certificate.users']}" icon="pi pi-fw pi-star" action="/VIEW/consultMyLicense.xhtml" rendered="#{connectionBean.verifyPermissionUser('Consulter mes données')}"/>
+                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addLicenseMember.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un brevet à un membre')}"/>
+                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star" action="/VIEW/listofMembersLicense.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des brevets des membres')}"/>
+                            <p:menuitem value="#{I18N['menu.own.data.certificate.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addLicenseUser.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un brevet pour un utilisateur')}"/>
+                            <p:menuitem value="#{I18N['menu.data.certificate.list']}" icon="pi pi-fw pi-star" action="/VIEW/listofUsersLicense.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des brevets des utilisateurs')}"/>
                         </p:submenu>
                         <p:divider/>
                         <p:submenu label="#{I18N['menu.data.user.medical']}" icon="pi pi-fw pi-heart-fill">
-                            <p:menuitem value="#{I18N['menu.data.user.medical.mine']}" icon="pi pi-fw pi-heart" action="/VIEW/consultMyMedicalCertificate.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addMedicalCertificateMember.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.list']}" icon="pi pi-fw pi-heart-fill" action="/VIEW/listMedicalCertificateMember.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addMedicalCertificateUser.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.list']}" icon="pi pi-fw pi-heart-fill" action="/VIEW/listMedicalCertificateUser.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.mine']}" icon="pi pi-fw pi-heart" action="/VIEW/consultMyMedicalCertificate.xhtml" rendered="#{connectionBean.verifyPermissionUser('Consulter mes données')}"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addMedicalCertificateMember.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un certificat médical pour un membre')}"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.membre.list']}" icon="pi pi-fw pi-heart-fill" action="/VIEW/listMedicalCertificateMember.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des certificats médicaux des membres')}"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.add']}" icon="pi pi-fw pi-plus" action="/VIEW/addMedicalCertificateUser.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un certificat médical pour un utilisateur')}"/>
+                            <p:menuitem value="#{I18N['menu.data.user.medical.instructor.list']}" icon="pi pi-fw pi-heart-fill" action="/VIEW/listMedicalCertificateUser.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher le liste des certificats médicaux des utilisateurs')}"/>
                         </p:submenu>
                     </p:submenu>
                     <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar">
                         <p:submenu label="#{I18N['menu.data.events']}" icon="pi pi-fw pi-calendar">
-                            <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi-calendar-plus"/>
+                            <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi-calendar-plus" action="/VIEW/addEvent.xhtml" rendered="#{connectionBean.verifyPermissionUser('Créer un événement')}"/>
                             <p:menuitem value="#{I18N['menu.data.events.modify']}" icon="pi pi-fw pi-plus"/>
                             <p:menuitem value="#{I18N['menu.data.events.consult']}" icon="pi pi-fw pi-calendar"/>
                         </p:submenu>
                         <p:divider />
                         <p:menuitem value="#{I18N['menu.data.events.participate']}" icon="pi pi-fw pi-calendar-plus"/>
                     </p:submenu>
-                    <p:divider layout="vertical"/>
-                    <p:submenu label="#{I18N['menu.divingSite']}" icon="pi pi-fw pi-globe">
-                        <p:submenu label="#{I18N['menu.divingSite.settings']}" icon="pi pi-fw pi-cog">
-                            <p:menuitem value="#{I18N['menu.divingSite.settings.add']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.divingSite.settings.modify']}" icon="pi pi-fw pi-cog"/>
-                            <p:menuitem value="#{I18N['menu.divingSite.settings.consult']}" icon="pi pi-fw pi-search"/>
-                        </p:submenu>
-                        <p:divider />
-                        <p:submenu label="#{I18N['menu.divingSite.characteristics']}" icon="pi pi-fw pi-cog">
-                            <p:menuitem value="#{I18N['menu.divingSite.characteristics.add']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.divingSite.characteristics.modify']}" icon="pi pi-fw pi-cog"/>
-                            <p:menuitem value="#{I18N['menu.divingSite.characteristics.consult']}" icon="pi pi-fw pi-search"/>
-                        </p:submenu>
-                    </p:submenu>
-                    <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
                         <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
-                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('MyData')}"/>
-                            <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRolePermissions.xhtml"/>
-                            <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-wrench" action="/VIEW/listOfrolePermission.xhtml"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un rôle')}"/>
+                            <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des rôles')}"/>
+                            <p:menuitem value="#{I18N['menu.chasa.rolePermission.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRolePermissions.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter une liste de permission pour un rôle')}"/>
+                            <p:menuitem value="#{I18N['menu.chasa.rolePermission.modify']}" icon="pi pi-fw pi-wrench" action="/VIEW/listOfrolePermission.xhtml" rendered="#{connectionBean.verifyPermissionUser('Liste des permissions pour un rôle')}"/>
                         </p:submenu>
                     </p:submenu>
 

@@ -4,6 +4,7 @@ import com.example.chasa.converterCustom.RolesConverter;
 import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.*;
 import com.example.chasa.services.AddressService;
+import com.example.chasa.services.LicensesService;
 import com.example.chasa.services.RoleService;
 import com.example.chasa.services.UsersService;
 import com.example.chasa.utilities.EMF;
@@ -46,6 +47,10 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     private String messageErrorPassword = "hidden";
     @Inject
     private AddressesBean addressesBean;
+    @Inject
+    private LicenseUserBean licenseUserBean;
+    @Inject
+    private LicenseBean licenseBean;
 
     /**
      * Method to find a User based on a filter
@@ -301,7 +306,21 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         }
     }
 
+    public void getFilterLicencesByUser(){
+        //ProcessUtils.debug("toto");
+        LicensesService licensesService= new LicensesService();
+        EntityManager em = EMF.getEM();
+        //this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser();
+        try{
+            licenseBean.setAllLicense(licensesService.findLicenseNotOwnByUser(this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser(), em));
+            ProcessUtils.debug("List récup et update"+ licensesService.findLicenseNotOwnByUser(this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser(), em).size());
+        }catch(Exception e){
+            ProcessUtils.debug("catche methodgetFilterLicencesByUser " + e);
 
+        }
+        //ProcessUtils.debug(""+ this.licenseUserBean.getLicenseUser().getUsersByIdUser().getFirstName());
+
+    }
 
     /*---Getters and Setters---*/
 

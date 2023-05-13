@@ -48,14 +48,11 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.chasa.role.modify']}" action="/VIEW/updateRolePermission">
+                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.chasa.rolePermission.modify']}" action="/VIEW/updateRolePermission">
                                 <f:setPropertyActionListener target="#{rolePermissionBean.rolePermissionEntity}" value="#{r}"/>
                             </h:commandButton>
                         </p:column>
                     </p:dataTable>
-                </h:form>
-                <h:form>
-                    <p:linkButton outcome="/VIEW/addRolePermission.xhtml" value="#{I18N['add.rolePermission']}" icon="pi pi-fw pi-user-plus" style="margin-right:20px;"></p:linkButton>
                 </h:form>
             </div>
         </div>

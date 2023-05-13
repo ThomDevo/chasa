@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -33,6 +34,8 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
     public List<LicenseUsersEntity> getAllLicensesByUser(){
         return this.allLicensesByUser;
     }
+    private String messageErrorExists = "hidden";
+
     /**
      * Initialize list LicenseUser
      */
@@ -94,6 +97,12 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         }
     }
 
+    public void initForm(){
+        this.licenseUser.setUsersByIdUser(new UsersEntity());
+        this.licenseUser.setLicensesByIdLicense(new LicensesEntity());
+        this.licenseUser.setLicensedDate(new Date());
+    }
+
 
     public String submitFormAddLicenseUser(){
         EntityManager em = EMF.getEM();
@@ -112,11 +121,17 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
             this.messageErrorAdmissionDate="";
             redirect = "null";
             return redirect;
-        }else{
+        } else if(licenseUserService.isLicenseUserExists(licenseUser.getUsersByIdUser().getIdUser(),licenseUser.getLicensesByIdLicense().getIdLicense(),em)){
+            this.messageErrorExists = "";
+            redirect = "null";
+            return redirect;
+        }
+        else{
         try{
             transaction.begin();
             licenseUserService.addLicenseUser(licenseUser,em);
             transaction.commit();
+            initForm();
             confirm();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the submitFormAddLicenseUser method: "+ e);
@@ -127,9 +142,9 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
                 transaction.rollback();
             }
             em.close();
-    }
-        return redirect;
-    }
+        }
+            return redirect;
+        }
     }
 
     public String submitFormUpdateLicenseUser(){
@@ -148,11 +163,17 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
             this.messageErrorAdmissionDate="";
             redirect = "null";
             return redirect;
-        }else{
+        }else if(licenseUserService.isLicenseUserExists(licenseUser.getUsersByIdUser().getIdUser(),licenseUser.getLicensesByIdLicense().getIdLicense(),em)){
+            this.messageErrorExists = "";
+            redirect = "null";
+            return redirect;
+        }
+        else{
             try{
                 transaction.begin();
                 licenseUserService.updateLicenseUser(licenseUser,em);
                 transaction.commit();
+                initForm();
                 confirm();
             }catch(Exception e){
                 ProcessUtils.debug(" I'm in the catch of the submitFormUpdateLicenseUser method: "+ e);
@@ -203,4 +224,16 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+
+    public void setAllLicensesByUser(List<LicenseUsersEntity> allLicensesByUser) {
+        this.allLicensesByUser = allLicensesByUser;
+    }
+
+    public String getMessageErrorExists() {
+        return messageErrorExists;
+    }
+
+    public void setMessageErrorExists(String messageErrorExists) {
+        this.messageErrorExists = messageErrorExists;
+    }
 }

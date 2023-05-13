@@ -7,6 +7,7 @@ import com.example.chasa.services.LicensesService;
 import com.example.chasa.services.RoleService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
+import com.example.chasa.utilities.ProcessUtils;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
@@ -25,11 +26,12 @@ public class LicenseBean extends FilterOfTable<UsersEntity> implements Serializa
     private LicensesService licenseService = new LicensesService();
 
     /*---list licenses for select input.---*/
-    private List<LicensesEntity> allLicense;
+    private List<LicensesEntity> allLicense = new ArrayList<>();
     public List<LicensesEntity> getAllLicense(){
         return this.allLicense;
     }
     public void initAllLicences(){
+        ProcessUtils.debug("A update");
         EntityManager em = EMF.getEM();
         LicensesService licenseService = new LicensesService();
         try{

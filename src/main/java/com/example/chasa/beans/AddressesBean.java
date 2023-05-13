@@ -83,7 +83,7 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
     }
 
     public void resetAddress(){
-        addressCrud = null;
+        addressCrud = new AddressesEntity();
     }
 
     private List<AddressesEntity> allAddresses;

@@ -57,6 +57,7 @@
                                     </f:facet>
                                     <h:outputText value="#{u.firstName}"/>
                                 </p:column>
+                                <p:ajax event="change" listener="#{usersBean.getFilterLicencesByUser}" update="inputLicense"/>
                             </p:selectOneMenu>
                         </span>
                         <span>
@@ -69,9 +70,6 @@
                                              filter="true"
                                              filterMatchMode="contains"
                                              required="true">
-                                <f:metadata>
-                                    <f:event type="preRenderView" listener="#{licenseBean.initAllLicences()}"/>
-                                </f:metadata>
                                 <f:selectItem itemLabel="#{I18N['licenseUser.select']}"
                                               itemValue="#{null}"/>
                                 <f:selectItems value="#{licenseBean.allLicense}"
@@ -84,10 +82,8 @@
                                         </f:facet>
                                         <h:outputText value="#{l.licenseLabel}"/>
                                     </p:column>
-                                <p:ajax event="change" update="MessageInputLicense"/>
                             </p:selectOneMenu>
                         </span>
-                        <p:message id="MessageInputLicense" for="inputLicense"/>
                         <div class="field col-12 md:col-4">
                             <p:outputLabel for="input_AdmissionDate" value="#{I18N['licenseUser.add.AdmissionDate']}"/>
                             <p:datePicker id="input_AdmissionDate" value="#{licenseUserBean.licenseUser.licensedDate}" />
@@ -97,6 +93,12 @@
                             <div><span class="ui-message-error-icon"> </span>
                                 <span class="ui-message-error-detail"><h:outputText
                                         value="#{I18N['messageErrorAdmissionDate']}"/></span>
+                            </div>
+                        </div>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{licenseUserBean.messageErrorExists}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorExists']}"/></span>
                             </div>
                         </div>
                     </p:outputPanel>

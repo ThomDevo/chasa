@@ -22,4 +22,10 @@ public class LicensesService {
                 .setParameter("idLicense",id)
                 .getSingleResult();
     };
+
+    public List<LicensesEntity> findLicenseNotOwnByUser(int idUser,EntityManager em){
+        return em.createNamedQuery("License.SelectAllByUser", LicensesEntity.class)
+                .setParameter("idUser",idUser)
+                .getResultList();
+    }
 }
