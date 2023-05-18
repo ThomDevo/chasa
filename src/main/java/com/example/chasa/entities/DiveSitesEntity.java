@@ -6,13 +6,19 @@ import java.util.List;
 
 @Entity
 @Table(name = "dive_sites", schema = "chasa")
+@NamedQueries({
+        @NamedQuery(name="DiveSites.findById", query="SELECT ds FROM DiveSitesEntity ds WHERE ds.idDiveSite = :idDiveSite"),
+        @NamedQuery(name="DiveSites.findAllById", query="SELECT ds FROM DiveSitesEntity ds JOIN DiveSiteCharacteristicsEntity dsc ON (ds.idDiveSite = dsc.diveSitesByIdDiveSite.idDiveSite) WHERE ds.idDiveSite = :idDiveSite"),
+        @NamedQuery(name="DiveSites.findAll", query="SELECT ds FROM DiveSitesEntity ds"),
+        @NamedQuery(name="DiveSites.findByLabel", query="SELECT ds FROM DiveSitesEntity ds JOIN DiveSiteCharacteristicsEntity dsc ON (ds.idDiveSite = dsc.diveSitesByIdDiveSite.idDiveSite)WHERE ((lower(ds.diveSiteLabel) LIKE CONCAT('%', :researchDiveSite,'%')))"),
+})
 public class DiveSitesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_dive_site", nullable = false)
     private int idDiveSite;
     @Basic
-    @Column(name = "dive_site_label", nullable = false, length = 255)
+    @Column(name = "dive_site_label", nullable = false, length = 200)
     private String diveSiteLabel;
     @OneToMany(mappedBy = "diveSitesByIdDiveSite")
     private List<DiveSiteCharacteristicsEntity> diveSiteCharacteristicsByIdDiveSite;
@@ -65,10 +71,10 @@ public class DiveSitesEntity {
         DiveSitesEntity that = (DiveSitesEntity) o;
 
         if (idDiveSite != that.idDiveSite) return false;
-        if (hyperbaricchambersByIdHyperbaricChamber != that.hyperbaricchambersByIdHyperbaricChamber) return false;
-        if (addressesByIdAddress != that.addressesByIdAddress) return false;
-        if (diveSiteLabel != null ? !diveSiteLabel.equals(that.diveSiteLabel) : that.diveSiteLabel != null)
-            return false;
+        //if (hyperbaricchambersByIdHyperbaricChamber != that.hyperbaricchambersByIdHyperbaricChamber) return false;
+        //if (addressesByIdAddress != that.addressesByIdAddress) return false;
+        //if (diveSiteLabel != null ? !diveSiteLabel.equals(that.diveSiteLabel) : that.diveSiteLabel != null)
+            //return false;
 
         return true;
     }

@@ -24,7 +24,7 @@ public class MedicalCertificateConverter implements Converter {
         if(value==null){
             return "0";
         }
-        CertificateType sex = (CertificateType) value;
-        return String.valueOf(sex.getCertificateType());
+        CertificateType certificateType = (CertificateType) value;
+        return String.valueOf(certificateType.getCertificateType());
     }
 }

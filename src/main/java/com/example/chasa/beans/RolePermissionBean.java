@@ -19,6 +19,7 @@ import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Named
@@ -76,9 +77,8 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
             }
             em.close();
         }
-
-
     }
+
 
     public String submitFormAddRolePermissions(){
 
@@ -94,17 +94,17 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
             transaction.begin();
             for(int i=0;i< permissionsBean.getAllPermissionsSelected().size();i++){
                 rolePermissionEntity = new RolePermissionEntity();
-                ProcessUtils.debug("A "+ rolesBean.getRole());
+                //ProcessUtils.debug("A "+ rolesBean.getRole());
                 rolePermissionEntity.setRolesByIdRole(rolesBean.getRole());
-                ProcessUtils.debug("B "+rolePermissionEntity.getRolesByIdRole());
+                //ProcessUtils.debug("B "+rolePermissionEntity.getRolesByIdRole());
                 rolePermissionEntity.setPermissionsByIdPermission(permissionsBean.getAllPermissionsSelected().get(i));
-                ProcessUtils.debug("C " + rolePermissionEntity.getPermissionsByIdPermission());
+                //ProcessUtils.debug("C " + rolePermissionEntity.getPermissionsByIdPermission());
                 rolePermissionService.addRolePermission(rolePermissionEntity,em);
-                ProcessUtils.debug("D ");
+                //ProcessUtils.debug("D ");
             }
 
             transaction.commit();
-            confirm();
+
         }catch(Exception e){
             ProcessUtils.debug("Catch "+e);
             redirect = "null" ;
@@ -114,6 +114,7 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
             }
             em.close();
         }
+        confirmAddRolePermissions();
         return redirect;
     }
 
@@ -129,7 +130,7 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
         boolean findMatch;
 
         try{
-            ProcessUtils.debug("Begin ");
+            //ProcessUtils.debug("Begin ");
             transaction.begin();
             for(int i =0 ; i< permissionsBean.getAllPermissionsSelected().size(); i++){
                 findMatch = false;
@@ -165,7 +166,6 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
             }
 
             transaction.commit();
-            confirm();
         }catch(Exception e){
             ProcessUtils.debug("Catch "+e);
             redirect = "null" ;
@@ -175,10 +175,31 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
             }
             em.close();
         }
+        confirmUpdateRolePermissions();
         return redirect;
     }
 
 
+    public void confirmAddRolePermissions(){} {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        String pageTitle = bundle.getString("listOfPermissionsof");
+        String pageTitle2 = bundle.getString("add");
+        addMessage(pageTitle+" "+ pageTitle2,"Confirmation");
+    }
+
+    public void confirmUpdateRolePermissions(){} {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        String pageTitle = bundle.getString("listOfPermissionsof");
+        String pageTitle2 = bundle.getString("update");
+        addMessage(pageTitle+" "+ pageTitle2,"Confirmation");
+    }
+
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 
 
     /*---Getters and setters---*/
@@ -223,12 +244,5 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
         this.permissionsBean = permissionsBean;
     }
 
-    public void confirm() {
-        addMessage("Confirmation","Confirmation");
-    }
 
-    public void addMessage(String summary, String detail) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

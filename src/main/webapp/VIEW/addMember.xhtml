@@ -53,7 +53,7 @@
                         </div>
                         <div class="field col-12 md:col-4">
                             <p:outputLabel for="input_birthDate" value="#{I18N['userPage.birthDate']}"/>
-                            <p:datePicker id="input_birthDate" value="#{usersBean.userCrud.birthDate}" />
+                            <p:datePicker id="input_birthDate" value="#{usersBean.userCrud.birthDate}" monthNavigator="true" yearNavigator="true" yearRange="1945:2100" />
                         </div>
                         <p:message id="messageBirthDate" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorBirthDate}">

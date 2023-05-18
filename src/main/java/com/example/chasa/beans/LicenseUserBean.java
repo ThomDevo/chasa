@@ -4,6 +4,7 @@ import com.example.chasa.entities.LicensesEntity;
 import com.example.chasa.entities.UsersEntity;
 import com.example.chasa.services.LicenseUserService;
 import com.example.chasa.services.LicensesService;
+import com.example.chasa.services.UserEventsService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
 import com.example.chasa.utilities.ProcessUtils;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Named
 @ManagedBean
@@ -110,7 +112,7 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         LicenseUserService licenseUserService = new LicenseUserService();
         EntityTransaction transaction = em.getTransaction();
         LocalDate now = LocalDate.now();
-        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        String isoDatePattern = "yyyy-MM-dd HH:mm:ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
         String dateString = simpleDateFormat.format(licenseUser.getLicensedDate());
         int resultNow =dateString.compareTo(String.valueOf(now));
@@ -128,11 +130,12 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         }
         else{
         try{
+            this.messageErrorAdmissionDate = "hidden";
             transaction.begin();
             licenseUserService.addLicenseUser(licenseUser,em);
             transaction.commit();
+            confirmAdd();
             initForm();
-            confirm();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the submitFormAddLicenseUser method: "+ e);
             redirect = "null";
@@ -153,7 +156,7 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         LicenseUserService licenseUserService = new LicenseUserService();
         EntityTransaction transaction = em.getTransaction();
         LocalDate now = LocalDate.now();
-        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        String isoDatePattern = "yyyy-MM-dd HH:mm:ss ";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
         String dateString = simpleDateFormat.format(licenseUser.getLicensedDate());
         int resultNow =dateString.compareTo(String.valueOf(now));
@@ -163,18 +166,14 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
             this.messageErrorAdmissionDate="";
             redirect = "null";
             return redirect;
-        }else if(licenseUserService.isLicenseUserExists(licenseUser.getUsersByIdUser().getIdUser(),licenseUser.getLicensesByIdLicense().getIdLicense(),em)){
-            this.messageErrorExists = "";
-            redirect = "null";
-            return redirect;
-        }
-        else{
+        }else{
             try{
+                this.messageErrorAdmissionDate = "hidden";
                 transaction.begin();
                 licenseUserService.updateLicenseUser(licenseUser,em);
                 transaction.commit();
+                confirmUpdate();
                 initForm();
-                confirm();
             }catch(Exception e){
                 ProcessUtils.debug(" I'm in the catch of the submitFormUpdateLicenseUser method: "+ e);
                 redirect = "null";
@@ -189,7 +188,26 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         }
     }
 
-
+    public String submitFormDeleteLicenseUser(){
+        EntityManager em = EMF.getEM();
+        String redirect = "/VIEW/home";
+        LicenseUserService licenseUserService = new LicenseUserService();
+        EntityTransaction transaction = em.getTransaction();
+        try{
+            transaction.begin();
+            licenseUserService.deleteLicenseUser(licenseUser,em);
+            transaction.commit();
+            confirmDelete();
+        }catch(Exception e){
+            redirect = "null";
+        }finally{
+            if(transaction.isActive()){
+                transaction.rollback();
+            }
+            em.close();
+        }
+        return redirect;
+    }
 
 
     public LicenseUserService getLicenseUserService() {
@@ -216,9 +234,35 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
     public void setMessageErrorAdmissionDate(String messageErrorAdmissionDate) {
         this.messageErrorAdmissionDate = messageErrorAdmissionDate;
     }
-        public void confirm() {
-            addMessage("Confirmation","Confirmation");
+        public void confirmAdd() {
+            ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale());
+            //ProcessUtils.debug(""+ bundle);
+            String pageTitle = bundle.getString("license");
+            String pageTitle2 = bundle.getString("of");
+            String pageTitle3 = bundle.getString("add");
+            addMessage(pageTitle+" "+ licenseUser.getLicensesByIdLicense().getLicenseLabel().toUpperCase()+ " "+ pageTitle2 + " "+ licenseUser.getUsersByIdUser().getLastName() + licenseUser.getUsersByIdUser().getFirstName()+ " "+ pageTitle3 ,"Confirmation");
         }
+
+    public void confirmUpdate() {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("license");
+        String pageTitle2 = bundle.getString("of");
+        String pageTitle3 = bundle.getString("update");
+        addMessage(pageTitle+" "+ licenseUser.getLicensesByIdLicense().getLicenseLabel().toUpperCase()+ " "+ pageTitle2 + " "+ licenseUser.getUsersByIdUser().getLastName() + licenseUser.getUsersByIdUser().getFirstName()+ " "+ pageTitle3 ,"Confirmation");
+    }
+
+    public void confirmDelete() {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("license");
+        String pageTitle2 = bundle.getString("of");
+        String pageTitle3 = bundle.getString("delete");
+        addMessage(pageTitle+" "+ licenseUser.getLicensesByIdLicense().getLicenseLabel()+ " "+ pageTitle2 + " "+ licenseUser.getUsersByIdUser().getLastName() + licenseUser.getUsersByIdUser().getFirstName()+ " "+ pageTitle3 ,"Confirmation");
+    }
 
         public void addMessage(String summary, String detail) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);

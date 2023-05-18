@@ -68,14 +68,15 @@
                     <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar">
                         <p:submenu label="#{I18N['menu.data.events']}" icon="pi pi-fw pi-calendar">
-                            <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi-calendar-plus" action="/VIEW/addEvent.xhtml" rendered="#{connectionBean.verifyPermissionUser('Créer un événement')}"/>
-                            <p:menuitem value="#{I18N['menu.data.events.modify']}" icon="pi pi-fw pi-plus"/>
-                            <p:menuitem value="#{I18N['menu.data.events.consult']}" icon="pi pi-fw pi-calendar"/>
+                            <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi pi-fw pi-calendar-plus" action="/VIEW/addEvent.xhtml" rendered="#{connectionBean.verifyPermissionUser('Créer un événement')}"/>
+                            <p:menuitem value="#{I18N['menu.data.events.modify']}" icon="pi pi-fw pi-calendar" action="/VIEW/listOfEvents.xhtml" rendered="#{connectionBean.verifyPermissionUser('Modifier un événement')}"/>
                         </p:submenu>
                         <p:divider />
-                        <p:menuitem value="#{I18N['menu.data.events.participate']}" icon="pi pi-fw pi-calendar-plus"/>
+                        <p:menuitem value="#{I18N['menu.data.events.participate']}" icon="pi pi-fw pi-calendar-plus" action="/VIEW/listOfMyPotentialEvent.xhtml" rendered="#{connectionBean.verifyPermissionUser('Consulter mes données')}"/>
+                        <p:menuitem value="#{I18N['menu.data.events.myParticipation']}" icon="pi pi-fw pi-calendar" action="/VIEW/myPlanning.xhtml" rendered="#{connectionBean.verifyPermissionUser('Consulter mes données')}"/>
+                        <p:menuitem value="#{I18N['event.countUser']}" icon="pi pi-fw pi-calendar" action="/VIEW/listOfUserEvents.xhtml" rendered="#{connectionBean.verifyPermissionUser('Consulter la liste des participants par évènement')}"/>
                     </p:submenu>
-                    <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
+                    <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench" >
                         <p:submenu label="#{I18N['menu.chasa']}" icon="pi pi-fw pi-wrench">
                             <p:menuitem value="#{I18N['menu.chasa.role.add']}" icon="pi pi-fw pi-user-plus" action="/VIEW/addRole.xhtml" rendered="#{connectionBean.verifyPermissionUser('Ajouter un rôle')}"/>
                             <p:menuitem value="#{I18N['menu.chasa.role.consult']}" icon="pi pi-fw pi-users" action="/VIEW/listOfRoles.xhtml" rendered="#{connectionBean.verifyPermissionUser('Afficher la liste des rôles')}"/>

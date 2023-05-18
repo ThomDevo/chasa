@@ -3,9 +3,9 @@ package com.example.chasa.enums;
 import java.util.Arrays;
 
 public enum Sex {
-    HOMME ("homme"),
-    FEMME("femme"),
-    INDETERMINE("indéterminé");
+    HOMME ("Homme"),
+    FEMME("Femme"),
+    INDETERMINE("Indéterminé");
 
     /**
      * Field

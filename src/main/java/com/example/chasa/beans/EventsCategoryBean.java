@@ -17,7 +17,7 @@ import java.util.List;
 @Named
 @ManagedBean
 @SessionScoped
-public class EventsCategoryBean extends FilterOfTable<AddressesEntity> implements Serializable {
+public class EventsCategoryBean extends FilterOfTable<EventCategoriesEntity> implements Serializable {
 
     private EventCategoriesEntity eventsCategory = new EventCategoriesEntity();
     private EventCategoriesService eventCategoryService = new EventCategoriesService();

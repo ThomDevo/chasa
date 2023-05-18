@@ -28,6 +28,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Named
 @ManagedBean
@@ -181,7 +182,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
                 userCrud.setAddresses(address);
                 usersService.addUser(userCrud, em);
                 transaction.commit();
-                confirm();
+                confirmAddUser();
             }catch(Exception e){
                 ProcessUtils.debug(" I'm in the catch of the connection method: submitFormAddUser() "+ e);
                 redirect = "null" ;
@@ -235,7 +236,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
             userCrud.setAddresses(userCrud.getIdAdress());
             usersService.updateUser(userCrud, em);
             transaction.commit();
-            confirm();
+            confirmUpdate();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the connection method: submitFormUpdateUser() "+ e);
             redirect = "null" ;
@@ -290,7 +291,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
                 userCrud.setAddresses(address);
                 usersService.addUser(userCrud, em);
                 transaction.commit();
-                confirm();
+                confirmAddUser();
             }catch(Exception e){
                 ProcessUtils.debug(" I'm in the catch of the connection method: submitFormAddUser() "+ e);
                 redirect = "null" ;
@@ -320,6 +321,30 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         }
         //ProcessUtils.debug(""+ this.licenseUserBean.getLicenseUser().getUsersByIdUser().getFirstName());
 
+    }
+
+
+    public void confirmAddUser() {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("Person");
+        String pageTitle3 = bundle.getString("add");
+        addMessage(pageTitle +" "+userCrud.getLastName()+" "+userCrud.getFirstName()+" "+pageTitle3,"Confirmation");
+    }
+
+    public void confirmUpdate() {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("Person");
+        String pageTitle3 = bundle.getString("update");
+        addMessage(pageTitle +" "+userCrud.getLastName()+" "+userCrud.getFirstName()+" "+pageTitle3,"Confirmation");
+    }
+
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     /*---Getters and Setters---*/
@@ -428,15 +453,6 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         this.messageErrorPassword = messageErrorPassword;
     }
 
-    public void confirm() {
-        addMessage("Confirmation","Confirmation");
-
-    }
-
-    public void addMessage(String summary, String detail) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 
 
 }

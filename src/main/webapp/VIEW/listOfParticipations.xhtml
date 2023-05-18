@@ -9,20 +9,24 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
     <ui:define name="title">
-        <h:outputText value="#{I18N['menu.license.Member.consult']}"/>
+        <h:outputText value="#{I18N['event.countUser']}"/>
     </ui:define>
     <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{userEventsBean.findNumberOfParticipants()}"/>
+        </f:metadata>
         <div class="card">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['menu.license.Member.consult']}" />
+                    <h:outputText value="#{I18N['event.countUser']} heoo #{userEventsBean.numberOfParticipants}" />
                 </h2>
                 <h:form>
                     <f:metadata>
-                        <f:event type="preRenderView" listener="#{licenseUserBean.ResearchFilterMember()}"/>
+                        <f:event type="preRenderView" listener="#{userEventsBean.ResearchListOfUsersFilter()}"/>
                     </f:metadata>
-                    <p:dataTable var="r" value="#{licenseUserBean.entityFiltered}"
+                    <p:dataTable var="r" value="#{userEventsBean.entityFiltered}"
                                  resizableColumns="true"
+                                 class="table"
                                  widgetVar="rTable"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -33,52 +37,37 @@
 
                         <f:facet name="header">
                             <p:outputPanel>
-                                <p:inputText value="#{licenseUserBean.filter}"
+                                <p:inputText value="#{userEventsBean.filter}"
                                              onkeyup="researchTable(this)"
-                                             id="UserInputResearch"
+                                             id="RolesEventResearch"
                                              validatorMessage="#{I18N['listPage.messageErrorResearch']}"
                                              placeholder="#{I18N['listPage.filter']}"/>
                                 <p:commandButton class="hidden" update="@form"/>
                             </p:outputPanel>
                         </f:facet>
                         <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfUSers.lifrasNumber']}</f:facet>
-                            <h:outputText value="#{r.usersByIdUser.lifrasNumber}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfUSers.Name']}</f:facet>
-                            <h:outputText value="#{r.usersByIdUser.lastName}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfUSers.firstName']}</f:facet>
-                            <h:outputText value="#{r.usersByIdUser.firstName}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['ListOfUSers.licenseUser']}</f:facet>
-                            <h:outputText value="#{r.licensesByIdLicense.licenseLabel}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['ListOfUSers.licenseDate']}</f:facet>
-                            <h:outputText value="#{r.licensedDate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            <f:facet name="header">#{I18N['date.subscription']}</f:facet>
+                            <h:outputText value="#{r.dateTimeEventSubscription}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                             </h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.licenseUser.modify']}" action="/VIEW/updateLicenseMember">
-                                <f:setPropertyActionListener target="#{licenseUserBean.licenseUser}" value="#{r}"/>
-                            </h:commandButton>
+                            <f:facet name="header">#{I18N['lastName']}</f:facet>
+                            <h:outputText value="#{r.usersByIdUser.lastName}"></h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.licenseMember.delete']}" action="#{licenseUserBean.submitFormDeleteLicenseUser()}">
-                                <f:setPropertyActionListener target="#{licenseUserBean.licenseUser}" value="#{r}"/>
-                            </h:commandButton>
+                            <f:facet name="header">#{I18N['firstName']}</f:facet>
+                            <h:outputText value="#{r.usersByIdUser.firstName}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['lifrasNumber']}</f:facet>
+                            <h:outputText value="#{r.usersByIdUser.lifrasNumber}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['phoneNumber']}</f:facet>
+                            <h:outputText value="#{r.usersByIdUser.userPhone}"></h:outputText>
                         </p:column>
                     </p:dataTable>
-                </h:form>
-                <h:form>
-                    <p:linkButton outcome="/VIEW/addLicenseMember.xhtml" value="#{I18N['licenseMember.add.license']}" icon="pi pi-fw pi-plus" style="margin-right:20px;"></p:linkButton>
                 </h:form>
             </div>
         </div>

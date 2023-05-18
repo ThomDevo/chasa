@@ -20,6 +20,7 @@ import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Named
 @ManagedBean
@@ -94,7 +95,6 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
         }
     }
 
-
     public String submitFormAddRole() {
         EntityManager em = EMF.getEM();
         String redirect = "/VIEW/home";
@@ -111,7 +111,8 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
             }
             roleService.addRole(role,em);
             transaction.commit();
-            confirm();
+            confirmAddRole();
+            initFormRole();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the connection method: "+ e);
             redirect = "null" ;
@@ -144,7 +145,8 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
             }
             roleService.updateRole(role,em);
             transaction.commit();
-            confirm();
+            confirmUpdateRole();
+            initFormRole();
         }catch(Exception e){
             ProcessUtils.debug(" I'm in the catch of the connection method: "+ e);
             redirect = "null" ;
@@ -158,6 +160,10 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
         }
 
         return redirect;
+    }
+
+    public void initFormRole(){
+        this.role.setRoleLabel("");
     }
 
     /*---Getters and setters---*/
@@ -188,8 +194,22 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
     public void setMessageErrorRoleName(String messageErrorConnection) {
         this.messageErrorRoleName = messageErrorConnection;
     }
-    public void confirm() {
-        addMessage("Confirmation","Confirmation");
+    public void confirmAddRole() {
+
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("TheRole");
+        String pageTitle3 = bundle.getString("add");
+        addMessage(pageTitle +" "+role.getRoleLabel()+" "+pageTitle3,"Confirmation");
+    }
+    public void confirmUpdateRole() {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("TheRole");
+        String pageTitle3 = bundle.getString("update");
+        addMessage(pageTitle +" "+role.getRoleLabel()+" "+pageTitle3,"Confirmation");
     }
 
     public void addMessage(String summary, String detail) {

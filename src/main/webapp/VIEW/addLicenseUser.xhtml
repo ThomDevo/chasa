@@ -88,7 +88,7 @@
                         </span>
                         <div class="field col-12 md:col-4">
                             <p:outputLabel for="input_AdmissionDate" value="#{I18N['licenseUser.add.AdmissionDate']}"/>
-                            <p:datePicker id="input_AdmissionDate" value="#{licenseUserBean.licenseUser.licensedDate}" />
+                            <p:datePicker id="input_AdmissionDate" value="#{licenseUserBean.licenseUser.licensedDate}" monthNavigator="true" yearNavigator="true" yearRange="1945:2100"/>
                         </div>
                         <p:message id="AdmissionDate" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{licenseUserBean.messageErrorAdmissionDate}">

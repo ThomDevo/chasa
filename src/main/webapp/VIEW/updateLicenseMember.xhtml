@@ -9,13 +9,13 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
     <ui:define name="title">
-        <h:outputText value="#{I18N['licenseUser.add.user']}"/>
+        <h:outputText value="#{I18N['licenseUser.update.member']}"/>
     </ui:define>
     <ui:define name="content">
         <div class="content">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['licenseUser.add.user']}" />
+                    <h:outputText value="#{I18N['licenseUser.update.member']}" />
                 </h2>
                 <h:form id="addLicenseUser">
                     <p:outputPanel class="form-control">
@@ -28,7 +28,8 @@
                                              var="u"
                                              filter="true"
                                              filterMatchMode="contains"
-                                             required="true">
+                                             required="true"
+                                             disabled="true">
                                 <!-- reload list editor from db. -->
                                 <f:metadata>
                                     <f:event type="preRenderView" listener="#{usersBean.initAllMembers()}"/>
@@ -68,7 +69,8 @@
                                              var="l"
                                              filter="true"
                                              filterMatchMode="contains"
-                                             required="true">
+                                             required="true"
+                                             disabled="true">
                                 <f:metadata>
                                     <f:event type="preRenderView" listener="#{licenseBean.initAllLicences()}"/>
                                 </f:metadata>
@@ -90,7 +92,7 @@
                         <p:message id="MessageInputLicense" for="inputLicense"/>
                         <div class="field col-12 md:col-4">
                             <p:outputLabel for="input_AdmissionDate" value="#{I18N['licenseUser.add.AdmissionDate']}"/>
-                            <p:datePicker id="input_AdmissionDate" value="#{licenseUserBean.licenseUser.licensedDate}" />
+                            <p:datePicker id="input_AdmissionDate" value="#{licenseUserBean.licenseUser.licensedDate}" monthNavigator="true" yearNavigator="true" yearRange="1945:2100" />
                         </div>
                         <p:message id="AdmissionDate" for="@previous"/>
                         <div class="ui-message ui-message-error ui-widget ui-corner-all #{licenseUserBean.messageErrorAdmissionDate}">

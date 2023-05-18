@@ -4,12 +4,17 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "events", schema = "chasa")
+@NamedQueries(value = {
+        @NamedQuery(name = "Event.SelectAllFutureEvents", query = "SELECT e from EventsEntity e WHERE e.dateTimeEvent > CURRENT_TIMESTAMP AND (e.addressesByIdAddress.street LIKE CONCAT('%', :researchEvent,'%') OR e.eventCategoriesByIdEventCategory.eventCategoryLabel LIKE CONCAT('%', :researchEvent,'%') OR lower(e.addressesByIdAddress.street) LIKE CONCAT('%', :researchEvent,'%') OR lower(e.addressesByIdAddress.idCity.cityLabel) LIKE CONCAT('%', :researchEvent,'%') OR lower(e.eventCategoriesByIdEventCategory.eventCategoryLabel) LIKE CONCAT('%', :researchEvent,'%')) ORDER BY e.dateTimeEvent DESC "),
+        @NamedQuery(name = "Event.SelectAllPotentialsFutureEvents", query = "SELECT e from EventsEntity e WHERE e.dateTimeEvent > CURRENT_TIMESTAMP AND ((SELECT COUNT(ue) FROM UserEventsEntity ue WHERE (ue.eventsByIdEvent.idEvent = e.idEvent AND ue.usersByIdUser.idUser = :idUser)) = 0) AND (e.addressesByIdAddress.street LIKE CONCAT('%', :researchEvent,'%') OR e.eventCategoriesByIdEventCategory.eventCategoryLabel LIKE CONCAT('%', :researchEvent,'%') OR lower(e.addressesByIdAddress.street) LIKE CONCAT('%', :researchEvent,'%') OR lower(e.addressesByIdAddress.idCity.cityLabel) LIKE CONCAT('%', :researchEvent,'%') OR lower(e.eventCategoriesByIdEventCategory.eventCategoryLabel) LIKE CONCAT('%', :researchEvent,'%')) ORDER BY e.dateTimeEvent DESC "),
+        @NamedQuery(name = "Event.SelectEventById", query="SELECT e from EventsEntity e where e.idEvent = :idEvent"),
+})
 public class EventsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -19,7 +24,7 @@ public class EventsEntity {
     @NotNull
     @Basic
     @Column(name = "date_time_event", nullable = false)
-    private Timestamp dateTimeEvent;
+    private Date dateTimeEvent;
 
     @NotNull
     @Range(min=0,max= 999)
@@ -62,11 +67,11 @@ public class EventsEntity {
         this.idEvent = idEvent;
     }
 
-    public Timestamp getDateTimeEvent() {
+    public Date getDateTimeEvent() {
         return dateTimeEvent;
     }
 
-    public void setDateTimeEvent(Timestamp dateTimeEvent) {
+    public void setDateTimeEvent(Date dateTimeEvent) {
         this.dateTimeEvent = dateTimeEvent;
     }
 
@@ -126,14 +131,14 @@ public class EventsEntity {
         EventsEntity that = (EventsEntity) o;
 
         if (idEvent != that.idEvent) return false;
-        if (maxNumPeople != that.maxNumPeople) return false;
-        if (Double.compare(that.price, price) != 0) return false;
-        if (addressesByIdAddress != that.addressesByIdAddress) return false;
-        if (eventCategoriesByIdEventCategory != that.eventCategoriesByIdEventCategory) return false;
-        if (dateTimeEvent != null ? !dateTimeEvent.equals(that.dateTimeEvent) : that.dateTimeEvent != null)
-            return false;
-        if (licensesByIdLicense != null ? !licensesByIdLicense.equals(that.licensesByIdLicense) : that.licensesByIdLicense != null) return false;
-        if (diveSitesByIdDiveSite != null ? !diveSitesByIdDiveSite.equals(that.diveSitesByIdDiveSite) : that.diveSitesByIdDiveSite != null) return false;
+        //if (maxNumPeople != that.maxNumPeople) return false;
+        //if (Double.compare(that.price, price) != 0) return false;
+        //if (addressesByIdAddress != that.addressesByIdAddress) return false;
+        //if (eventCategoriesByIdEventCategory != that.eventCategoriesByIdEventCategory) return false;
+        //if (dateTimeEvent != null ? !dateTimeEvent.equals(that.dateTimeEvent) : that.dateTimeEvent != null)
+           // return false;
+        //if (licensesByIdLicense != null ? !licensesByIdLicense.equals(that.licensesByIdLicense) : that.licensesByIdLicense != null) return false;
+        //if (diveSitesByIdDiveSite != null ? !diveSitesByIdDiveSite.equals(that.diveSitesByIdDiveSite) : that.diveSitesByIdDiveSite != null) return false;
 
         return true;
     }
@@ -182,7 +187,7 @@ public class EventsEntity {
         this.eventCategoriesByIdEventCategory = eventCategoriesByIdEventCategory;
     }
 
-    public Collection<UserEventsEntity> getUserEventsByIdEvent() {
+    public List<UserEventsEntity> getUserEventsByIdEvent() {
         return userEventsByIdEvent;
     }
 

@@ -72,6 +72,12 @@
                                 <f:setPropertyActionListener target="#{licenseUserBean.licenseUser}" value="#{r}"/>
                             </h:commandButton>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
+                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.licenseUser.delete']}" action="#{licenseUserBean.submitFormDeleteLicenseUser()}">
+                                <f:setPropertyActionListener target="#{licenseUserBean.licenseUser}" value="#{r}"/>
+                            </h:commandButton>
+                        </p:column>
                     </p:dataTable>
                 </h:form>
                 <h:form>

@@ -1,7 +1,6 @@
 package com.example.chasa.services;
 
 import com.example.chasa.entities.LicenseUsersEntity;
-import com.example.chasa.entities.UsersEntity;
 import com.example.chasa.utilities.ProcessUtils;
 
 import javax.persistence.EntityManager;
@@ -57,5 +56,12 @@ public class LicenseUserService {
     public LicenseUsersEntity updateLicenseUser(LicenseUsersEntity licenseUser, EntityManager em){
         em.merge(licenseUser);
         return licenseUser;
+    }
+
+    public void  deleteLicenseUser(LicenseUsersEntity licenseUser, EntityManager em){
+        if(!em.contains(licenseUser))
+            licenseUser = em.merge(licenseUser);
+        em.remove(licenseUser);
+        em.flush();
     }
 }

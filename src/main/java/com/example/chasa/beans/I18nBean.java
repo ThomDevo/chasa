@@ -2,6 +2,7 @@ package com.example.chasa.beans;
 
 import org.primefaces.PrimeFaces;
 
+import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 @Named
+@ManagedBean
 @SessionScoped
 public class I18nBean implements Serializable {
 

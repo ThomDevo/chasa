@@ -3,6 +3,7 @@ package com.example.chasa.beans;
 import com.example.chasa.entities.LicenseUsersEntity;
 import com.example.chasa.entities.MedicalCertificatesEntity;
 import com.example.chasa.entities.UsersEntity;
+import com.example.chasa.enums.CertificateType;
 import com.example.chasa.services.MedicalCertificateService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
@@ -19,7 +20,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Named
 @ManagedBean
@@ -84,6 +87,13 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
         }
     }
 
+    public void initFormMedicalCertificates(){
+        this.medicalCertificates.setIssueDate(new Date());
+        this.medicalCertificates.setExpiryDate(new Date());
+        this.medicalCertificates.setCertificateType(CertificateType.valueOf("ANNUAL"));
+        this.medicalCertificates.setUsersByIdUser(new UsersEntity());
+    }
+
     /**
      * Method to add a medical certificate for a user
      * @return Medical certificate
@@ -94,7 +104,7 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
         MedicalCertificateService medicalCertificatesService = new MedicalCertificateService();
         EntityTransaction transaction = em.getTransaction();
         LocalDate now = LocalDate.now();
-        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        String isoDatePattern = "yyyy-MM-dd HH:mm:ss ";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
         String issueDate = simpleDateFormat.format(medicalCertificates.getIssueDate());
         String ExpiryDate = simpleDateFormat.format(medicalCertificates.getExpiryDate());
@@ -122,10 +132,14 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
             return redirect;
         }else{
             try{
+                this.messageErrorIssueDate="hidden";
+                this.messageErrorExpiryDatePast="hidden";
+                this.messageErrorExpiryDate="hidden";
                 transaction.begin();
                 medicalCertificatesService.addMedicalCertificates(medicalCertificates,em);
                 transaction.commit();
-                confirm();
+                confirmAddMedicalCertificates();
+                initFormMedicalCertificates();
             }catch(Exception e){
                 redirect = null;
             }finally{
@@ -177,10 +191,14 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
             return redirect;
         }else{
             try{
+                this.messageErrorIssueDate="hidden";
+                this.messageErrorExpiryDatePast="hidden";
+                this.messageErrorExpiryDate="hidden";
                 transaction.begin();
                 medicalCertificatesService.updateMedicalCertificates(medicalCertificates,em);
                 transaction.commit();
-                confirm();
+                confirmUpdateMedicalCertificates();
+                initFormMedicalCertificates();
             }catch(Exception e){
                 redirect = null;
             }finally{
@@ -197,8 +215,27 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
     /**
      * Method to message of confirmation of add or update
      */
-    public void confirm() {
-        addMessage("Confirmation","Confirmation");
+    public void confirmAddMedicalCertificates() {
+        String isoDatePattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
+        String dateEvent = simpleDateFormat.format(medicalCertificates.getIssueDate());
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        String pageTitle = bundle.getString("certificateMedical");
+        String pageTitle2 = bundle.getString("andDate");
+        String pageTitle3 = bundle.getString("add");
+        addMessage(pageTitle +" "+medicalCertificates.getCertificateType().getCertificateType()+" "+ pageTitle2+" "+dateEvent+" "+pageTitle3,"Confirmation");
+    }
+    public void confirmUpdateMedicalCertificates() {
+        String isoDatePattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
+        String dateEvent = simpleDateFormat.format(medicalCertificates.getIssueDate());
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        String pageTitle = bundle.getString("certificateMedical");
+        String pageTitle2 = bundle.getString("andDate");
+        String pageTitle3 = bundle.getString("update");
+        addMessage(pageTitle +" "+medicalCertificates.getCertificateType().getCertificateType()+" "+ pageTitle2+" "+dateEvent+" "+pageTitle3,"Confirmation");
     }
 
     public void addMessage(String summary, String detail) {

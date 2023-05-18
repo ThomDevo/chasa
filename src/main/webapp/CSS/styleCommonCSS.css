@@ -410,3 +410,8 @@ body .ui-selectonemenu .ui-selectonemenu-trigger{
 .ui-datatable-resizable table{
     table-layout: auto;
 }
+
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield{
+    font-weight: normal;
+    width: 350px;
+}

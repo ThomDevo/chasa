@@ -9,13 +9,13 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
     <ui:define name="title">
-        <h:outputText value="#{I18N['menu.data.events.add']}"/>
+        <h:outputText value="#{I18N['event.modify']}"/>
     </ui:define>
     <ui:define name="content">
         <div class="content">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['menu.data.events.add']}" />
+                    <h:outputText value="#{I18N['event.modify']}" />
                 </h2>
                 <h:form id="addEvent">
                     <p:outputPanel class="form-control">
@@ -162,12 +162,12 @@
                             </p:selectOneMenu>
                         </span>
                     </p:outputPanel>
-                <span class="responsiveSubmit">
-                        <p:commandButton value="#{I18N['menu.data.events.add']}"
+                    <span class="responsiveSubmit">
+                        <p:commandButton value="#{I18N['menu.data.events.modify']}"
                                          ajax="false"
                                          validateClient="true"
                                          class="ui-button-success"
-                                         action="#{eventsBean.submitFormAddEvents()}"/>
+                                         action="#{eventsBean.submitFormUpdateEvents()}"/>
                     </span>
                 </h:form>
             </div>

@@ -9,20 +9,21 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
     <ui:define name="title">
-        <h:outputText value="#{I18N['menu.license.Member.consult']}"/>
+        <h:outputText value="#{I18N['listOfEvents']}"/>
     </ui:define>
     <ui:define name="content">
         <div class="card">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['menu.license.Member.consult']}" />
+                    <h:outputText value="#{I18N['listOfEvents']}" />
                 </h2>
                 <h:form>
                     <f:metadata>
-                        <f:event type="preRenderView" listener="#{licenseUserBean.ResearchFilterMember()}"/>
+                        <f:event type="preRenderView" listener="#{userEventsBean.ResearchMyFilter()}"/>
                     </f:metadata>
-                    <p:dataTable var="r" value="#{licenseUserBean.entityFiltered}"
+                    <p:dataTable var="r" value="#{userEventsBean.entityFiltered}"
                                  resizableColumns="true"
+                                 class="table"
                                  widgetVar="rTable"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -33,52 +34,47 @@
 
                         <f:facet name="header">
                             <p:outputPanel>
-                                <p:inputText value="#{licenseUserBean.filter}"
+                                <p:inputText value="#{userEventsBean.filter}"
                                              onkeyup="researchTable(this)"
-                                             id="UserInputResearch"
+                                             id="RolesEventResearch"
                                              validatorMessage="#{I18N['listPage.messageErrorResearch']}"
                                              placeholder="#{I18N['listPage.filter']}"/>
                                 <p:commandButton class="hidden" update="@form"/>
                             </p:outputPanel>
                         </f:facet>
                         <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfUSers.lifrasNumber']}</f:facet>
-                            <h:outputText value="#{r.usersByIdUser.lifrasNumber}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfUSers.Name']}</f:facet>
-                            <h:outputText value="#{r.usersByIdUser.lastName}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfUSers.firstName']}</f:facet>
-                            <h:outputText value="#{r.usersByIdUser.firstName}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['ListOfUSers.licenseUser']}</f:facet>
-                            <h:outputText value="#{r.licensesByIdLicense.licenseLabel}"></h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">#{I18N['ListOfUSers.licenseDate']}</f:facet>
-                            <h:outputText value="#{r.licensedDate}">
+                            <f:facet name="header">#{I18N['date.event']}</f:facet>
+                            <h:outputText value="#{r.eventsByIdEvent.dateTimeEvent}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.licenseUser.modify']}" action="/VIEW/updateLicenseMember">
-                                <f:setPropertyActionListener target="#{licenseUserBean.licenseUser}" value="#{r}"/>
-                            </h:commandButton>
+                            <f:facet name="header">#{I18N['price.event']}</f:facet>
+                            <h:outputText value="#{r.eventsByIdEvent.price}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['gatheringAddress.event']}</f:facet>
+                            <h:outputText value="#{r.eventsByIdEvent.addressesByIdAddress.street} #{r.eventsByIdEvent.addressesByIdAddress.number} #{r.eventsByIdEvent.addressesByIdAddress.idCity.cityLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['License.event']}</f:facet>
+                            <h:outputText value="#{r.eventsByIdEvent.licensesByIdLicense.licenseLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['diveSite.event']}</f:facet>
+                            <h:outputText value="#{r.eventsByIdEvent.diveSitesByIdDiveSite.diveSiteLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['category.event']}</f:facet>
+                            <h:outputText value="#{r.eventsByIdEvent.eventCategoriesByIdEventCategory.eventCategoryLabel}"></h:outputText>
                         </p:column>
                         <p:column>
                             <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.licenseMember.delete']}" action="#{licenseUserBean.submitFormDeleteLicenseUser()}">
-                                <f:setPropertyActionListener target="#{licenseUserBean.licenseUser}" value="#{r}"/>
-                            </h:commandButton>
+                            <h:commandLink class="btn btn-dark" value="#{I18N['event.countUser']}" action="/VIEW/listOfParticipations">
+                                <f:setPropertyActionListener target="#{userEventsBean.userEvents}" value="#{r}"/>
+                            </h:commandLink>
                         </p:column>
                     </p:dataTable>
-                </h:form>
-                <h:form>
-                    <p:linkButton outcome="/VIEW/addLicenseMember.xhtml" value="#{I18N['licenseMember.add.license']}" icon="pi pi-fw pi-plus" style="margin-right:20px;"></p:linkButton>
                 </h:form>
             </div>
         </div>
