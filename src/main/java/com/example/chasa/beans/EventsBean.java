@@ -1,10 +1,13 @@
 package com.example.chasa.beans;
 
 import com.example.chasa.entities.*;
+import com.example.chasa.mail.Mail;
+import com.example.chasa.mail.MailSender;
 import com.example.chasa.services.EventsService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
 import com.example.chasa.utilities.ProcessUtils;
+import com.itextpdf.text.Document;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
@@ -98,10 +101,17 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String redirect = "/VIEW/home";
         EventsService eventsService = new EventsService();
         EntityTransaction transaction = em.getTransaction();
+        Mail email = new Mail();
+        Document doc = new Document();
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
         LocalDate now = LocalDate.now();
-        String isoDatePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        String isoDatePattern = "dd/MM/yyyy";
+        String isoTimePattern = "HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(isoDatePattern);
         String dateEvent = simpleDateFormat.format(events.getDateTimeEvent());
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(isoTimePattern);
+        String dateTime = simpleTimeFormat.format(events.getDateTimeEvent());
         int resultNow = dateEvent.compareTo(String.valueOf(now));
         ProcessUtils.debug("Ctrl date "+ resultNow);
 
@@ -116,7 +126,6 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 eventsService.updateEvent(events,em);
                 transaction.commit();
                 confirmUpdate();
-                initFormEvent();
 
             }catch(Exception e){
                 redirect = "null";
@@ -127,6 +136,22 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 }
                 em.close();
             }
+            String membre = bundle.getString("membre");
+            String at = bundle.getString("at");
+            String subject = bundle.getString("subject");
+            email.setFrom("teamchasa@outlook.com");
+            email.setMsgBody(membre+" "+ events.getEventCategoriesByIdEventCategory().getEventCategoryLabel()+" "+dateEvent+" "+at+" "+dateTime);
+            email.setSubject(subject+" "+ events.getEventCategoriesByIdEventCategory().getEventCategoryLabel()+" "+ dateEvent+" "+at+" "+dateTime );
+            email.setNick("Chasa");
+            email.setReplyTo("teamchasa@outlook.com");
+            email.getListTo().add("thomas.devogelaere@promsocatc.net");
+            email.setEncodeUTF8(true);
+            try {
+                MailSender.sendMail(email);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            initFormEvent();
             return  redirect;
         }
     }

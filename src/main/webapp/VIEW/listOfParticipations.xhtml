@@ -12,13 +12,10 @@
         <h:outputText value="#{I18N['event.countUser']}"/>
     </ui:define>
     <ui:define name="content">
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{userEventsBean.findNumberOfParticipants()}"/>
-        </f:metadata>
         <div class="card">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['event.countUser']} heoo #{userEventsBean.numberOfParticipants}" />
+                    <h:outputText value="#{I18N['event.countUser']} - #{I18N['event.NumberOfUsers']} #{userEventsBean.numberOfParticipants}" />
                 </h2>
                 <h:form>
                     <f:metadata>

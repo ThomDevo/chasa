@@ -5,7 +5,6 @@ import com.example.chasa.services.UserEventsService;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
 import com.example.chasa.utilities.ProcessUtils;
-
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -27,28 +26,17 @@ public class UserEventsBean extends FilterOfTable<UserEventsEntity> implements S
 
     private UserEventsEntity userEvents = new UserEventsEntity();
     private UserEventsService userEventsService = new UserEventsService();
-    private UserEventsEntity numberOfParticipants;
+    private int numberOfParticipants;
     @Inject
     private ConnectionBean connectionBean;
 
-    public void findNumberOfParticipants(){
-        EntityManager em = EMF.getEM();
-        try{
-            this.numberOfParticipants = userEventsService.findNumberOfParticipants(userEvents.getEventsByIdEvent().getIdEvent(),em);
-            ProcessUtils.debug(""+ numberOfParticipants);
-        }catch(Exception e){
-
-        }finally{
-            em.close();
-        }
-    }
 
     public void ResearchFilter(){
 
         EntityManager em = EMF.getEM();
         try{
             filterOfTable = userEventsService.findAllFutureEvents(this.filter, em);
-            ProcessUtils.debug(this.filter);
+            ProcessUtils.debug(""+filterOfTable.size());
         }catch(Exception e){
             ProcessUtils.debug(e.getMessage());
         }finally {
@@ -76,7 +64,8 @@ public class UserEventsBean extends FilterOfTable<UserEventsEntity> implements S
         try{
             filterOfTable = userEventsService.findAllParticipants(this.filter,userEvents.getEventsByIdEvent().getIdEvent(), em);
             ProcessUtils.debug(this.filter);
-
+            ProcessUtils.debug(""+filterOfTable.size());
+            numberOfParticipants = filterOfTable.size();
         }catch(Exception e){
             ProcessUtils.debug(e.getMessage());
         }finally {
@@ -178,11 +167,11 @@ public class UserEventsBean extends FilterOfTable<UserEventsEntity> implements S
         this.userEventsService = userEventsService;
     }
 
-    public UserEventsEntity getNumberOfParticipants() {
+    public int getNumberOfParticipants() {
         return numberOfParticipants;
     }
 
-    public void setNumberOfParticipants(UserEventsEntity numberOfParticipants) {
+    public void setNumberOfParticipants(int numberOfParticipants) {
         this.numberOfParticipants = numberOfParticipants;
     }
 
