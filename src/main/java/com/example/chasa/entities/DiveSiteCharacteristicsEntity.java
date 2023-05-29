@@ -3,7 +3,10 @@ package com.example.chasa.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dive_site_characteristics", schema = "chasa", catalog = "")
+@Table(name = "dive_site_characteristics", schema = "chasa")
+@NamedQueries({
+        @NamedQuery(name = "DiveSiteCharacteristics.findByIdDiveSite",query = "SELECT dvc FROM DiveSiteCharacteristicsEntity dvc WHERE dvc.diveSitesByIdDiveSite.idDiveSite = :diveSitesByIdDiveSite")
+})
 public class DiveSiteCharacteristicsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

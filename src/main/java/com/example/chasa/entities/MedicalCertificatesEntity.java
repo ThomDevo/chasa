@@ -13,25 +13,26 @@ import java.util.*;
         @NamedQuery(name="MedicalCertificates.SelectById", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.idMedicalCertificate = :idMedicalCertificate"),
         @NamedQuery(name="MedicalCertificates.SelectAllByUser", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.usersByIdUser.idUser = :idUser GROUP BY mc.certificateType ORDER BY mc.expiryDate desc"),
         @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristic", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
-                " where ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
+                " where mc.expiryDate = (SELECT MAX(mc2.expiryDate) FROM MedicalCertificatesEntity mc2 WHERE mc.usersByIdUser.idUser = mc2.usersByIdUser.idUser and mc.certificateType = mc2.certificateType) AND" +
+                "(((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.email )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
                 " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
-                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))" +
-                "  GROUP BY mc.usersByIdUser,mc.certificateType" +
-                "  ORDER BY u.lifrasNumber"),
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%'))))" +
+                "  ORDER BY u.lifrasNumber, mc.certificateType"),
         @NamedQuery(name = "MedicalCertificates.FindMedicalCertificatesByCharacteristicMember", query = "SELECT mc from MedicalCertificatesEntity mc JOIN UsersEntity u ON (mc.usersByIdUser.idUser = u.idUser)" +
-                " WHERE (lower(u.roles.roleLabel) LIKE 'MEMBRE') AND"+
+                " WHERE mc.expiryDate = (SELECT MAX(mc2.expiryDate) FROM MedicalCertificatesEntity mc2 WHERE mc.usersByIdUser.idUser = mc2.usersByIdUser.idUser and mc.certificateType = mc2.certificateType) AND" +
+                "((lower(u.roles.roleLabel) LIKE 'MEMBRE') AND"+
                 " ((lower(u.lastName )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.firstName )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.userPhone )like concat('%', :researchWord, '%')) or " +
                 " (lower(u.email )like concat('%', :researchWord, '%')) or" +
                 " (lower(u.roles.roleLabel) like concat('%', :researchWord, '%')) or" +
                 " (lower(u.birthDate) like concat('%', :researchWord, '%')) or" +
-                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%')))" +
-                "  ORDER BY u.lifrasNumber, mc.issueDate")
+                " (lower(u.lifrasNumber) like concat('%', :researchWord, '%'))))" +
+                "  ORDER BY u.lifrasNumber, mc.certificateType")
 })
 
 @Entity

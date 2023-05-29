@@ -1,5 +1,7 @@
 package com.example.chasa.entities;
 
+import com.example.chasa.beans.DiveSitesBean;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
         @NamedQuery(name="DiveSites.findById", query="SELECT ds FROM DiveSitesEntity ds WHERE ds.idDiveSite = :idDiveSite"),
         @NamedQuery(name="DiveSites.findAllById", query="SELECT ds FROM DiveSitesEntity ds JOIN DiveSiteCharacteristicsEntity dsc ON (ds.idDiveSite = dsc.diveSitesByIdDiveSite.idDiveSite) WHERE ds.idDiveSite = :idDiveSite"),
         @NamedQuery(name="DiveSites.findAll", query="SELECT ds FROM DiveSitesEntity ds"),
-        @NamedQuery(name="DiveSites.findByLabel", query="SELECT ds FROM DiveSitesEntity ds JOIN DiveSiteCharacteristicsEntity dsc ON (ds.idDiveSite = dsc.diveSitesByIdDiveSite.idDiveSite)WHERE ((lower(ds.diveSiteLabel) LIKE CONCAT('%', :researchDiveSite,'%')))"),
+        @NamedQuery(name="DiveSites.findByLabel", query="SELECT ds FROM DiveSitesEntity ds WHERE ((lower(ds.diveSiteLabel) LIKE CONCAT('%', :researchDiveSite,'%')))"),
 })
 public class DiveSitesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +79,16 @@ public class DiveSitesEntity {
             //return false;
 
         return true;
+    }
+
+    @Transient
+    public List<DiveSiteCharacteristicsEntity> listOfDiveSiteCharacteristics;
+
+    @Transient
+    public List<DiveSiteCharacteristicsEntity> getListOfDiveSiteCharacteristics(){
+        if(this.listOfDiveSiteCharacteristics == null)
+            DiveSitesBean.initListOfDiveSiteCharacteristics(this);
+        return this.listOfDiveSiteCharacteristics;
     }
 
     @Override

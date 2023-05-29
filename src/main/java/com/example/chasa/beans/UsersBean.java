@@ -314,7 +314,7 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         //this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser();
         try{
             licenseBean.setAllLicense(licensesService.findLicenseNotOwnByUser(this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser(), em));
-            ProcessUtils.debug("List récup et update"+ licensesService.findLicenseNotOwnByUser(this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser(), em).size());
+            //ProcessUtils.debug("List récup et update"+ licensesService.findLicenseNotOwnByUser(this.licenseUserBean.getLicenseUser().getUsersByIdUser().getIdUser(), em).size());
         }catch(Exception e){
             ProcessUtils.debug("catche methodgetFilterLicencesByUser " + e);
 

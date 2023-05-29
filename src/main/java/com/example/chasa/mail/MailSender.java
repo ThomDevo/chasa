@@ -7,8 +7,8 @@ import javax.mail.internet.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-
 public class MailSender {
     private static final Logger log	= Logger.getLogger(MailSender.class);
     public static boolean sendMail(Mail mail) throws MessagingException {
@@ -71,19 +71,19 @@ public class MailSender {
             messageBodyPartMsg.setText(mail.getMsgBody(),"UTF-8");
 
             // Part two is attachment
-            /*MimeBodyPart messageBodyPartPDF = new MimeBodyPart();
+            MimeBodyPart messageBodyPartPDF = new MimeBodyPart();
             String filename = mail.getFilename();
             log.info(filename);
-            FileDataSource source =  new FileDataSource("C:\\Users\\devog\\IdeaProjects\\chasa\\src\\main\\webapp\\PDF\\"+filename);
+            DataSource source = new FileDataSource("C:\\Users\\devog\\IdeaProjects\\chasa\\src\\main\\webapp\\PDF\\"+filename);
             log.info(source.toString());
             messageBodyPartPDF.setDataHandler(new DataHandler(source));
-            messageBodyPartPDF.setFileName(filename);*/
+            messageBodyPartPDF.setFileName(filename);
             //messageBodyPartPDF.attachFile("C:\\Users\\debet\\IdeaProjects\\LocaCar\\src\\main\\webapp\\css\\PDF\\Reservation_.pdf");
 
             // Create a multipart message
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPartMsg);
-            //multipart.addBodyPart(messageBodyPartPDF);
+            multipart.addBodyPart(messageBodyPartPDF);
 
 
 
@@ -101,9 +101,9 @@ public class MailSender {
             }
 
             msg.setReplyTo(new Address[]{new InternetAddress(mail.getReplyTo())});
-            //msg.setSubject(mail.getSubject());
-            //msg.setText(mail.getMsgBody());
-            // Send the complete message parts
+            msg.setSubject(mail.getSubject());
+            msg.setText(mail.getMsgBody());
+            //Send the complete message parts
             msg.setContent(multipart );
             Transport.send(msg);
 
