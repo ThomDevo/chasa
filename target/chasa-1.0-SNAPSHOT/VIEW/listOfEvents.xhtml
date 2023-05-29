@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{I18N['listOfEvents']}"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="card">
+            <div class="block p-20 form-container">
+                <h2>
+                    <h:outputText value="#{I18N['listOfEvents']}" />
+                </h2>
+                <h:form>
+                    <f:metadata>
+                        <f:event type="preRenderView" listener="#{eventsBean.ResearchFilter()}"/>
+                    </f:metadata>
+                    <p:dataTable var="r" value="#{eventsBean.entityFiltered}"
+                                 resizableColumns="true"
+                                 class="table"
+                                 widgetVar="rTable"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} sur {totalRecords} elements"
+                                 rowsPerPageTemplate="1,5,10,20"
+                                 rows="5">
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <p:inputText value="#{eventsBean.filter}"
+                                             onkeyup="researchTable(this)"
+                                             id="RolesEventResearch"
+                                             validatorMessage="#{I18N['listPage.messageErrorResearch']}"
+                                             placeholder="#{I18N['listPage.filter']}"/>
+                                <p:commandButton class="hidden" update="@form"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">#{I18N['date.event']}</f:facet>
+                            <h:outputText value="#{r.dateTimeEvent}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['maxNumPeople.event']}</f:facet>
+                            <h:outputText value="#{r.maxNumPeople}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['price.event']}</f:facet>
+                            <h:outputText value="#{r.price}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['gatheringAddress.event']}</f:facet>
+                            <h:outputText value="#{r.addressesByIdAddress.street} #{r.addressesByIdAddress.number} #{r.addressesByIdAddress.idCity.cityLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['License.event']}</f:facet>
+                            <h:outputText value="#{r.licensesByIdLicense.licenseLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['diveSite.event']}</f:facet>
+                            <h:outputText value="#{r.diveSitesByIdDiveSite.diveSiteLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['category.event']}</f:facet>
+                            <h:outputText value="#{r.eventCategoriesByIdEventCategory.eventCategoryLabel}"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
+                            <h:commandLink class="btn btn-dark" value="#{I18N['event.modify']}" action="/VIEW/updateEvent">
+                                <f:setPropertyActionListener target="#{eventsBean.events}" value="#{r}"/>
+                            </h:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form>
+                    <p:linkButton outcome="/VIEW/addEvent.xhtml" value="#{I18N['menu.data.events.add']}" icon="pi pi-fw pi-calendar-plus" style="margin-right:20px;"></p:linkButton>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>
