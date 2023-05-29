@@ -1,0 +1,88 @@
+<ui:composition
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+                <h2>
+                    <h:outputText value="#{I18N['addresspage.addAddresstitle']}" />
+                </h2>
+
+                    <p:outputPanel class="form-control">
+                        <span>
+                            <p:outputLabel for="inputStreet" value="#{I18N['addressPage.street']}"/>
+                            <p:inputText id="inputStreet" class="label" value="#{addressesBean.addressCrud.street}"
+                                         placeholder="#{I18N['addressPage.street.placeholder']}"
+                                         validatorMessage="#{I18N['addressPage.street.errorMessage']}">
+                                <p:ajax update="messageStreet" event="keyup" />
+                            </p:inputText>
+                        </span>
+                        <p:message id="messageStreet" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{addressesBean.messageErrorStreet}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorStreet']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel for="inputNumber" value="#{I18N['addressPage.number']}"/>
+                            <p:inputNumber id="inputNumber" class="label" value="#{addressesBean.addressCrud.number}"
+                                         placeholder="#{I18N['addressPage.number.placeholder']}"
+                                         validatorMessage="#{I18N['addressPage.number.errorMessage']}">
+                                <p:ajax update="messageNumber" event="keyup"/>
+                            </p:inputNumber>
+                        </span>
+                        <p:message id="messageNumber" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{addressesBean.messageErrorNumber}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrornumber']}"/></span>
+                            </div>
+                        </div>
+                        <span>
+                            <p:outputLabel for="inputBox" value="#{I18N['addressPage.box']}"/>
+                            <p:inputText id="inputBox" class="label" value="#{addressesBean.addressCrud.box}"
+                                           placeholder="#{I18N['addressPage.box.placeholder']}">
+
+                            </p:inputText>
+                        </span>
+                        <span>
+                                <p:outputLabel for="inputCity" value="#{I18N['addressPage.city']}"/>
+                                <p:selectOneMenu id="inputCity"
+                                                 value="#{addressesBean.addressCrud.idCity}"
+                                                 converter="CityConverter"
+                                                 effect="fade"
+                                                 var="c"
+                                                 filter="true"
+                                                 filterMatchMode="contains"
+                                                 required="true">
+
+                                    <f:metadata>
+                                        <f:event type="preRenderView" listener="#{addressesBean.initAllCity()}"/>
+                                    </f:metadata>
+                                    <f:selectItem itemLabel="#{I18N['addressPage.city.select']}"
+                                                  itemValue="#{null}"/>
+                                    <f:selectItems value="#{addressesBean.allCities}"
+                                                   var="city"
+                                                   itemLabel="#{city.postalCode} - #{city.cityLabel}"
+                                                   itemValue="#{city}"/>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{I18N['addressPage.city.postalCode']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{c.postalCode}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{I18N['addressPage.city.select']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{c.cityLabel}"/>
+                                    </p:column>
+                                    <p:ajax event="change" update="MessageInputCity"/>
+                                </p:selectOneMenu>
+                        </span>
+                        <p:message id="MessageInputCity" for="inputCity"/>
+                    </p:outputPanel>
+
+</ui:composition>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
+    <ui:define name="title">
+        <h:outputText value="#{I18N['event.modify']}"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="content">
+            <div class="block p-20 form-container">
+                <h2>
+                    <h:outputText value="#{I18N['event.modify']}" />
+                </h2>
+                <h:form id="addEvent">
+                    <p:outputPanel class="form-control">
+                        <span class="field col-12 md:col-4 p-20-0">
+                            <p:outputLabel for="inputEventCategory" value="#{I18N['select.category']}"/>
+                            <p:selectOneMenu id="inputEventCategory"
+                                             value="#{eventsBean.events.eventCategoriesByIdEventCategory}"
+                                             converter="EventCategoriesConverter"
+                                             effect="fade"
+                                             var="u"
+                                             filter="true"
+                                             filterMatchMode="contains"
+                                             required="true">
+                                <!-- reload list editor from db. -->
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{eventsCategoryBean.initAllEventsCategory()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['select.category']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{eventsCategoryBean.allEventCategories}"
+                                               var="eventsCategory"
+                                               itemLabel="#{eventsCategory.eventCategoryLabel}"
+                                               itemValue="#{eventsCategory}"/>
+                                <p:column>
+                                    <h:outputText value="#{u.eventCategoryLabel}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                        </span>
+                        <div class="field col-12 md:col-4 p-20-0">
+                            <p:outputLabel for="input_dateTimeEvent" value="#{I18N['Events.dateTime']}"/>
+                            <p:datePicker id="input_dateTimeEvent" value="#{eventsBean.events.dateTimeEvent}" showTime="true" monthNavigator="true" yearNavigator="true" yearRange="1945:2100" required="true"/>
+                        </div>
+                        <p:message id="dateTimeEvent" for="@previous"/>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{eventsBean.messageErrorDateTimeEvent}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorDateTimeEvent']}"/></span>
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-4 p-20-0">
+                            <p:outputLabel for="input_maxPersons" value="#{I18N['Events.maxPersons']}"/>
+                            <p:inputNumber id="input_maxPersons" value="#{eventsBean.events.maxNumPeople}" minValue="0" decimalPlaces="0" required="true"/>
+                        </div>
+                        <p:message id="maxPersons" for="@previous"/>
+                        <div class="field col-12 md:col-4 p-20-0">
+                            <p:outputLabel for="input_Price" value="#{I18N['Events.Price']}" />
+                            <p:inputNumber id="input_Price" value="#{eventsBean.events.price}" minValue="0.00" required="true"/>
+                        </div>
+                        <p:message id="Price" for="@previous"/>
+                        <span >
+                            <p:outputLabel for="inputAddress" value="#{I18N['select.address']}"/>
+                            <p:selectOneMenu id="inputAddress"
+                                             value="#{eventsBean.events.addressesByIdAddress}"
+                                             converter="AddressConverter"
+                                             effect="fade"
+                                             var="u"
+                                             filter="true"
+                                             filterMatchMode="contains"
+                                             required="true">
+                                <!-- reload list editor from db. -->
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{addressesBean.initAllAddresses()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['select.address']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{addressesBean.allAddresses}"
+                                               var="addresses"
+                                               itemLabel="#{addresses.street} #{addresses.number} #{addresses.box} #{addresses.idCity.cityLabel}"
+                                               itemValue="#{addresses}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                            <h:outputText value="#{I18N['addressPage.street']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.street}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                            <h:outputText value="#{I18N['addressPage.number']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.number}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                            <h:outputText value="#{I18N['addressPage.box']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.box}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                            <h:outputText value="#{I18N['addressPage.city']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.idCity.cityLabel}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                        </span>
+                        <span class="field col-12 md:col-4 p-20-0">
+                            <p:outputLabel for="inputLicense" value="#{I18N['select.license']}"/>
+                            <p:selectOneMenu id="inputLicense"
+                                             value="#{eventsBean.events.licensesByIdLicense}"
+                                             converter="LicenseConverter"
+                                             effect="fade"
+                                             var="u"
+                                             filter="true"
+                                             filterMatchMode="contains">
+                                <!-- reload list editor from db. -->
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{licenseBean.initAllLicences()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['select.license']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{licenseBean.allLicense}"
+                                               var="license"
+                                               itemLabel="#{license.licenseLabel}"
+                                               itemValue="#{license}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                            <h:outputText value="#{I18N['licenseUser.select']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{u.licenseLabel}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                        </span>
+                        <span class="field col-12 md:col-4 p-20-0">
+                            <p:outputLabel for="inputDiveSites" value="#{I18N['select.diveSites']}"/>
+                            <p:selectOneMenu id="inputDiveSites"
+                                             value="#{eventsBean.events.diveSitesByIdDiveSite}"
+                                             converter="DiveSiteConverter"
+                                             effect="fade"
+                                             var="u"
+                                             filter="true"
+                                             filterMatchMode="contains">
+                                <f:metadata>
+                                    <f:event type="preRenderView" listener="#{diveSitesBean.initAllDiveSites()}"/>
+                                </f:metadata>
+                                <f:selectItem itemLabel="#{I18N['select.diveSites']}"
+                                              itemValue="#{null}"/>
+                                <f:selectItems value="#{diveSitesBean.allDiveSites}"
+                                               var="diveSites"
+                                               itemLabel="#{diveSites.diveSiteLabel} #{diveSites.addressesByIdAddress.street} #{diveSites.addressesByIdAddress.number} #{diveSites.addressesByIdAddress.idCity.cityLabel}"
+                                               itemValue="#{diveSites}"/>
+                                <p:column>
+                                    <h:outputText value="#{u.diveSiteLabel}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                        </span>
+                    </p:outputPanel>
+                    <span class="responsiveSubmit">
+                        <p:commandButton value="#{I18N['menu.data.events.modify']}"
+                                         ajax="false"
+                                         validateClient="true"
+                                         class="ui-button-success"
+                                         action="#{eventsBean.submitFormUpdateEvents()}"/>
+                    </span>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>
