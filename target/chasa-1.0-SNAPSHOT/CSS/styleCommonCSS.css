@@ -256,7 +256,7 @@ a {
     border: var(--border);
     border-radius: 3px;
     padding: 1rem 1.5rem;
-    width: 80%;
+    width: auto;
 }
 
 .form-control select {
@@ -414,4 +414,8 @@ body .ui-selectonemenu .ui-selectonemenu-trigger{
 .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield{
     font-weight: normal;
     width: 350px;
+}
+
+body .ui-input-icon-right>.ui-inputfield{
+    width: 750px;
 }

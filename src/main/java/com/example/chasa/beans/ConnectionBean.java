@@ -55,7 +55,7 @@ public class ConnectionBean extends FilterOfTable<UsersEntity> implements Serial
             this.user = userForm;
             this.messageErrorConnection = "hidden";
             redirect = "/VIEW/home";
-            ProcessUtils.debug(String.valueOf(user.getIdUser()));
+            //ProcessUtils.debug(String.valueOf(user.getIdUser()));
         }
         catch(Exception e)
         {

@@ -14,9 +14,9 @@ import java.util.Collection;
 import java.util.*;
 
 @NamedQueries(value = {
-        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber"),
+        @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber AND u.userStatus = TRUE"),
         @NamedQuery(name = "User.SelectAll", query = "SELECT u FROM UsersEntity u"),
-        @NamedQuery(name = "User.SelectAllMembers", query = "SELECT u FROM UsersEntity u WHERE ((upper(u.roles.roleLabel) NOT LIKE 'ADMINISTRATEUR'))"),
+        @NamedQuery(name = "User.SelectAllMembers", query = "SELECT u FROM UsersEntity u WHERE ((upper(u.roles.roleLabel) LIKE 'MEMBRE'))"),
         @NamedQuery(name = "User.findUserById", query = "SELECT u FROM UsersEntity u WHERE u.idUser = :idUser"),
         @NamedQuery(name = "User.findUserAddressById", query = "SELECT u FROM UsersEntity u JOIN AddressesEntity a ON (u.addresses.idAddress = a.idAddress) WHERE u.idUser = :idUser"),
         @NamedQuery(name = "User.FindUserByCharacteristic", query = "SELECT u from UsersEntity u " +
