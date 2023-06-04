@@ -1,5 +1,6 @@
 package com.example.chasa.beans;
 
+import com.example.chasa.converterCustom.DiveSiteConverter;
 import com.example.chasa.entities.DiveSitesEntity;
 import com.example.chasa.entities.UsersEntity;
 import com.example.chasa.services.DiveSiteCharacteristicService;
@@ -61,6 +62,7 @@ public class DiveSitesBean extends FilterOfTable<DiveSitesEntity> implements Ser
             transaction.begin();
             //Call of the service that will use the NamedQuery of the "DiveSiteCharacteristicService" entity
             diveSites.listOfDiveSiteCharacteristics = diveSiteCharacteristicService.findallDiveSiteCharacteristicsByIdDiveSite(diveSites.getIdDiveSite(), em);
+            //ProcessUtils.debug("DiveSiteCharacteristicService"+diveSites.listOfDiveSiteCharacteristics.size());
             transaction.commit();
         }
         catch(Exception e)

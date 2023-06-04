@@ -33,8 +33,9 @@ public class PermissionRoleService {
      * @param em
      * @return List of role permissions
      */
-    public List<RolePermissionEntity> findAll(EntityManager em) {
+    public List<RolePermissionEntity> findAll(String researchWord,EntityManager em) {
         return em.createNamedQuery("RolePermission.SelectAll", RolePermissionEntity.class)
+                .setParameter("researchWord", researchWord.toLowerCase())
                 .getResultList();
     }
 

@@ -10,7 +10,7 @@
                 </h2>
 
                     <p:outputPanel class="form-control">
-                        <span>
+                        <span class="field col-12 md:col-4">
                             <p:outputLabel for="inputStreet" value="#{I18N['addressPage.street']}"/>
                             <p:inputText id="inputStreet" class="label" value="#{addressesBean.addressCrud.street}"
                                          placeholder="#{I18N['addressPage.street.placeholder']}"
@@ -25,7 +25,7 @@
                                         value="#{I18N['messageErrorStreet']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4">
                             <p:outputLabel for="inputNumber" value="#{I18N['addressPage.number']}"/>
                             <p:inputNumber id="inputNumber" class="label" value="#{addressesBean.addressCrud.number}"
                                          placeholder="#{I18N['addressPage.number.placeholder']}"
@@ -40,14 +40,14 @@
                                         value="#{I18N['messageErrornumber']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4">
                             <p:outputLabel for="inputBox" value="#{I18N['addressPage.box']}"/>
                             <p:inputText id="inputBox" class="label" value="#{addressesBean.addressCrud.box}"
                                            placeholder="#{I18N['addressPage.box.placeholder']}">
 
                             </p:inputText>
                         </span>
-                        <span>
+                        <span class="field col-12 md:col-4">
                                 <p:outputLabel for="inputCity" value="#{I18N['addressPage.city']}"/>
                                 <p:selectOneMenu id="inputCity"
                                                  value="#{addressesBean.addressCrud.idCity}"

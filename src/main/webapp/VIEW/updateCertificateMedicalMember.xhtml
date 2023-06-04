@@ -20,7 +20,7 @@
                 <h:form id="addLMedicalCertificate">
                     <p:outputPanel class="form-control">
 
-                        <span class="p-20-0">
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputUser" value="#{I18N['select.user']}"/>
                             <p:selectOneMenu id="inputUser"
                                              value="#{medicalCertificateBean.medicalCertificates.usersByIdUser}"
@@ -61,7 +61,7 @@
                                 </p:column>
                             </p:selectOneMenu>
                         </span>
-                        <span class="p-20-0">
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputMedicalCertificate" value="#{I18N['User.add.MedicalCertificateType']}"/>
                             <p:selectOneMenu id="inputMedicalCertificate"
                                              value="#{medicalCertificateBean.medicalCertificates.certificateType}"

@@ -103,6 +103,7 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         this.licenseUser.setUsersByIdUser(new UsersEntity());
         this.licenseUser.setLicensesByIdLicense(new LicensesEntity());
         this.licenseUser.setLicensedDate(new Date());
+        this.messageErrorAdmissionDate = "hidden";
     }
 
 

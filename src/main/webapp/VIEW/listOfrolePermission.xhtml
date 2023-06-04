@@ -48,7 +48,7 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
-                            <h:commandButton class="btn btn-dark" value="#{I18N['menu.chasa.rolePermission.modify']}" action="/VIEW/updateRolePermission">
+                            <h:commandButton class="btn btn-dark" value="#{I18N['role.listOfPermissions']}" action="/VIEW/updateRolePermission">
                                 <f:setPropertyActionListener target="#{rolePermissionBean.rolePermissionEntity}" value="#{r}"/>
                             </h:commandButton>
                         </p:column>

@@ -19,7 +19,7 @@
                 </h2>
                 <h:form id="addLicenseUser">
                     <p:outputPanel class="form-control">
-<span>
+<span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputUser" value="#{I18N['select.user']}"/>
                             <p:selectOneMenu id="inputUser"
                                              value="#{licenseUserBean.licenseUser.usersByIdUser}"
@@ -60,7 +60,7 @@
                                 </p:column>
                             </p:selectOneMenu>
                         </span>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputLicense" value="#{I18N['licenseUser.add.license']}"/>
                             <p:selectOneMenu id="inputLicense"
                                              value="#{licenseUserBean.licenseUser.licensesByIdLicense}"
