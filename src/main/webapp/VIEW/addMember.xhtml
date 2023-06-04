@@ -21,7 +21,7 @@
                 </h2>
                 <h:form>
                     <p:outputPanel class="form-control">
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.lastName']}"/>
                             <p:inputText class="label" value="#{usersBean.userCrud.lastName}"
                                          placeholder="#{I18N['userPage.lastName.placeholder']}"
@@ -36,7 +36,7 @@
                                         value="#{I18N['messageErrorLastName']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.firstName']}"/>
                             <p:inputText class="label" value="#{usersBean.userCrud.firstName}"
                                          placeholder="#{I18N['userPage.firstName.placeholder']}"
@@ -62,7 +62,7 @@
                                         value="#{I18N['messageErrorBirthName']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputSexUser" value="#{I18N['userPage.sex']}"/>
                             <p:selectOneMenu id="inputSexUser"
                                              value="#{usersBean.userCrud.sex}"
@@ -80,7 +80,7 @@
                                                itemValue="#{sex}"/>
                             </p:selectOneMenu>
                         </span>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.email']}"/>
                             <p:inputText class="label" value="#{usersBean.userCrud.email}"
                                          placeholder="#{I18N['userPage.email.placeholder']}"
@@ -95,7 +95,7 @@
                                         value="#{I18N['messageErrorEmail']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.phoneNumber']}"/>
                             <p:inputText class="label" value="#{usersBean.userCrud.userPhone}"
                                          placeholder="#{I18N['userPage.phoneNumber.placeholder']}"
@@ -111,7 +111,7 @@
                                         value="#{I18N['messageErrorPhoneNumber']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.LifrasNumber']}"/>
                             <p:inputText class="label" value="#{usersBean.userCrud.lifrasNumber}"
                                          placeholder="#{I18N['userPage.lifrasNumber.placeholder']}"
@@ -127,7 +127,7 @@
                                         value="#{I18N['messageErrorLifrasNumber']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.Password']}"/>
                             <p:password  id="password" class="label" value="#{usersBean.userCrud.password}"
                                          match="rePassword" toggleMask="true"
@@ -145,7 +145,7 @@
                                         value="#{I18N['messageErrorPassword']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="rePassword" value="#{I18N['userPage.Password']}"/>
                             <p:password  id="rePassword" class="label" value="#{usersBean.userCrud.password}"
                                          placeholder="#{I18N['userPage.password.placeholder']}" toggleMask="true"
@@ -161,7 +161,7 @@
                                         value="#{I18N['messageErrorPassword']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputSexUser" value="#{I18N['userPage.status']}"/>
                             <p:selectOneMenu id="inputStatutUser"
                                              value="#{usersBean.userCrud.userStatus}"

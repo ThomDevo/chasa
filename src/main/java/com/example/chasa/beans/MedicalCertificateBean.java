@@ -92,6 +92,9 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
         this.medicalCertificates.setExpiryDate(new Date());
         this.medicalCertificates.setCertificateType(CertificateType.valueOf("ANNUAL"));
         this.medicalCertificates.setUsersByIdUser(new UsersEntity());
+        this.messageErrorIssueDate = "hidden";
+        this.messageErrorExpiryDate = "hidden";
+        this.messageErrorExpiryDatePast = "hidden";
     }
 
     /**

@@ -56,13 +56,13 @@
                         <p:column>
                             <f:facet name="header">#{I18N['ListofUSers.issueDate']}</f:facet>
                             <h:outputText value="#{r.issueDate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                 <f:convertDateTime timeZone="CET" type = "date" pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>
                             <f:facet name="header">#{I18N['ListOfUSers.expiryDate']}</f:facet>
                             <h:outputText value="#{r.expiryDate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                 <f:convertDateTime timeZone="CET" type = "date" pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>

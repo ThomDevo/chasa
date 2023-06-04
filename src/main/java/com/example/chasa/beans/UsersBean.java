@@ -3,6 +3,7 @@ package com.example.chasa.beans;
 import com.example.chasa.converterCustom.RolesConverter;
 import com.example.chasa.converterCustom.UsersConverter;
 import com.example.chasa.entities.*;
+import com.example.chasa.enums.Sex;
 import com.example.chasa.services.AddressService;
 import com.example.chasa.services.LicensesService;
 import com.example.chasa.services.RoleService;
@@ -194,6 +195,8 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
                 em.close();
 
             }
+            initFormUser();
+            addressesBean.resetAddress();
             return redirect;
         }
     }
@@ -248,6 +251,8 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
             em.close();
 
         }
+        initFormUser();
+        addressesBean.resetAddress();
         return redirect;
     }
     }
@@ -303,8 +308,29 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
                 em.close();
 
             }
+            initFormUser();
+            addressesBean.resetAddress();
             return redirect;
         }
+    }
+
+    public void initFormUser(){
+        this.userCrud.setLastName("");
+        this.userCrud.setFirstName("");
+        this.userCrud.setBirthDate(new Date());
+        this.userCrud.setSex(Sex.valueOf("INDETERMINE"));
+        this.userCrud.setEmail("");
+        this.userCrud.setPassword("");
+        this.userCrud.setLifrasNumber(0);
+        this.userCrud.setUserStatus(true);
+        this.userCrud.setUserPhone("");
+        this.messageErrorLastName = "hidden";
+        this.messageErrorFirstName = "hidden";
+        this.messageErrorBirthDate = "hidden";
+        this.messageErrorEmail = "hidden";
+        this.messageErrorPhoneNumber = "hidden";
+        this.messageErrorLifrasNumber = "hidden";
+        this.messageErrorPassword = "hidden";
     }
 
     public void getFilterLicencesByUser(){

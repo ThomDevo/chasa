@@ -2,13 +2,14 @@ package com.example.chasa.mail;
 
 import org.apache.log4j.Logger;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
+
 public class MailSender {
     private static final Logger log	= Logger.getLogger(MailSender.class);
     public static boolean sendMail(Mail mail) throws MessagingException {

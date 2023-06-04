@@ -9,7 +9,7 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/OverallTemplate.xhtml">
     <ui:define name="title">
-        <h:outputText value="#{I18N['userPage.myLicense']}"/>
+        <h:outputText value="#{I18N['menu.data.user.medical.mine']}"/>
     </ui:define>
     <ui:define name="content">
         <f:metadata>
@@ -18,7 +18,7 @@
         <div class="content">
             <div class="block p-20 form-container">
                 <h2>
-                    <h:outputText value="#{I18N['userPage.myLicense']}" />
+                    <h:outputText value="#{I18N['menu.data.user.medical.mine']}" />
                 </h2>
                 <h:form>
                     <p:dataTable var="r" value="#{medicalCertificateBean.allCertificates}"
@@ -46,13 +46,13 @@
                         <p:column>
                             <f:facet name="header">#{I18N['ListofUSers.issueDate']}</f:facet>
                             <h:outputText value="#{r.issueDate}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                 <f:convertDateTime timeZone="CET" type = "date" pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>
                         <f:facet name="header">#{I18N['ListOfUSers.expiryDate']}</f:facet>
                         <h:outputText value="#{r.expiryDate}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                             <f:convertDateTime timeZone="CET" type = "date" pattern="dd/MM/yyyy" />
                         </h:outputText>
                         </p:column>
                         <p:column>

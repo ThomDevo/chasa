@@ -4,9 +4,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui">
-    <f:metadata>
-        <f:event type="preRenderView" listener="#{addressesBean.}"/>
-    </f:metadata>
     <ui:define name="title">
         <h:outputText value="#{I18N['menu.chasa.Addresses.modify']}"/>
     </ui:define>
@@ -14,7 +11,7 @@
                     <h:outputText value="#{I18N['menu.chasa.Addresses.modify']}" />
                 </h2>
                     <p:outputPanel class="form-control">
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputStreetUpdate" value="#{I18N['addressPage.street']}"/>
                             <p:inputText id="inputStreetUpdate" class="label" value="#{usersBean.userCrud.idAdress.street}"
                                          placeholder="#{I18N['addressPage.street.placeholder']}"
@@ -29,7 +26,7 @@
                                         value="#{I18N['messageErrorStreet']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputNumberUpdate" value="#{I18N['addressPage.number']}"/>
                             <p:inputNumber id="inputNumberUpdate" class="label" value="#{usersBean.userCrud.idAdress.number}"
                                            placeholder="#{I18N['addressPage.number.placeholder']}"
@@ -44,14 +41,14 @@
                                         value="#{I18N['messageErrornumber']}"/></span>
                             </div>
                         </div>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="inputBoxUpdate" value="#{I18N['addressPage.box']}"/>
                             <p:inputText id="inputBoxUpdate" class="label" value="#{usersBean.userCrud.idAdress.box}"
                                            placeholder="#{I18N['addressPage.box.placeholder']}">
 
                             </p:inputText>
                         </span>
-                        <span>
+                        <span class="field col-12 md:col-4 p-20-0">
                                 <p:outputLabel for="inputCityUpdate" value="#{I18N['addressPage.city']}"/>
                                 <p:selectOneMenu id="inputCityUpdate"
                                                  value="#{usersBean.userCrud.idAdress.idCity}"

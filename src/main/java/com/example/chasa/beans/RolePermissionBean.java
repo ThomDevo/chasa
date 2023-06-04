@@ -67,7 +67,7 @@ public class RolePermissionBean extends FilterOfTable<RolePermissionEntity> impl
         EntityTransaction transaction = em.getTransaction();
         try{
             transaction.begin();
-            filterOfTable = rolePermissionService.findAll(em);
+            filterOfTable = rolePermissionService.findAll(this.filter,em);
             transaction.commit();
         }catch(Exception e){
             filterOfTable = new ArrayList<>();
