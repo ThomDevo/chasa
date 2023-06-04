@@ -256,8 +256,14 @@ a {
     border: var(--border);
     border-radius: 3px;
     padding: 1rem 1.5rem;
-    width: auto;
+    width: 500px;
 }
+.p-datepicker {
+     position: relative;
+     display: inline-block;
+     width: 750px;
+ }
+
 
 .form-control select {
     border: var(--border);

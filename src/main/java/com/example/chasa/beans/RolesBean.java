@@ -164,6 +164,7 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
 
     public void initFormRole(){
         this.role.setRoleLabel("");
+        this.messageErrorRoleName = "hidden";
     }
 
     /*---Getters and setters---*/

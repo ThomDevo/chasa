@@ -44,6 +44,18 @@
                                 </p:column>
                             </p:selectOneMenu>
                         </span>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{eventsBean.messageErrorEventDiveSite}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorEventDiveSite']}"/></span>
+                            </div>
+                        </div>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{eventsBean.messageErrorEventDiveSiteselect}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorEventDiveSiteselect']}"/></span>
+                            </div>
+                        </div>
                         <div class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel for="input_dateTimeEvent" value="#{I18N['Events.dateTime']}"/>
                             <p:datePicker id="input_dateTimeEvent" value="#{eventsBean.events.dateTimeEvent}" showTime="true" monthNavigator="true" yearNavigator="true" yearRange="1945:2100" required="true"/>
@@ -161,6 +173,18 @@
                                 </p:column>
                             </p:selectOneMenu>
                         </span>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{eventsBean.messageErrorEventDiveSite}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorEventDiveSite']}"/></span>
+                            </div>
+                        </div>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{eventsBean.messageErrorEventDiveSiteselect}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorEventDiveSiteselect']}"/></span>
+                            </div>
+                        </div>
                     </p:outputPanel>
                     <span class="responsiveSubmit">
                         <p:commandButton value="#{I18N['menu.data.events.modify']}"
