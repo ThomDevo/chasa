@@ -14,6 +14,9 @@
     <f:metadata>
     </f:metadata>
     <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{addressesBean.resetAddress()}"/>
+        </f:metadata>
         <div class="content">
             <div class="block p-20 form-container">
                 <h2>
@@ -216,6 +219,8 @@
                                          validateClient="true"
                                          class="ui-button-success"
                                          action="#{usersBean.submitFormAddUser(addressesBean.addressCrud)}"/>
+                        <p:button value="#{I18N['connectionpage.return.button']}" outcome="/VIEW/home"
+                                  class="ui-button-secondary" id="cancelButton"/>
                     </span>
                 </h:form>
             </div>

@@ -172,63 +172,10 @@
                                               itemValue="#{false}"/>
                             </p:selectOneMenu>
                         </span>
-                        <!--<span>
-                            <p:outputLabel for="inputRoleUser" value="#{I18N['userPage.role']}"/>
-                            <p:selectOneMenu id="inputRoleUser"
-                                             value="#{usersBean.userCrud.roles}"
-                                             converter="RolesConverter"
-                                             effect="fade"
-                                             var="e"
-                                             filter="true"
-                                             filterMatchMode="startsWith"
-                                             required="true">
-                                 reload list editor from db.
-                                <f:metadata>
-                                    <f:event type="preRenderView" listener="#{rolesBean.initAllEditor()}"/>
-                                </f:metadata>
-                                <f:selectItem itemLabel="#{I18N['userPage.role.select']}"
-                                              itemValue="#{null}"/>
-                                <f:selectItems value="#{rolesBean.allRole}"
-                                               var="role"
-                                               itemLabel="#{role.roleLabel}"
-                                               itemValue="#{role}"/>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{I18N['userPage.role.select.name']}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{e.roleLabel}"/>
-                                </p:column>
-                            </p:selectOneMenu>
-                        </span> -->
-                        <span class="field col-12 md:col-4 p-20-0">
-                           <p:outputLabel for="inputAddressUser" value="#{I18N['userPage.role']}"/>
-                            <p:selectOneMenu id="inputAddressUser"
-                                             value="#{usersBean.userCrud.idAdress}"
-                                             converter="AddressConverter"
-                                             effect="fade"
-                                             var="e"
-                                             filter="true"
-                                             filterMatchMode="startsWith"
-                                             required="true">
-                                <f:metadata>
-                                    <f:event type="preRenderView" listener="#{addressesBean.initAllAddresses()}"/>
-                                </f:metadata>
-                                <f:selectItem itemLabel="#{I18N['addressPage.city.select']}"
-                                              itemValue="#{null}"/>
-                                <f:selectItems value="#{addressesBean.allAddresses}"
-                                               var="address"
-                                               itemLabel="#{address.street} #{address.number}#{address.box} #{address.idCity.cityLabel}"
-                                               itemValue="#{address}"/>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{I18N['addressPage.city.select']}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{e.street}"/>
-                                </p:column>
-                            </p:selectOneMenu>
-                            <!-- <span>
-                            <ui:include src="/VIEW/addAddress.xhtml"></ui:include>
-                            </span>-->
+                        <span>
+                            <span>
+                            <ui:include src="/VIEW/updateAddress.xhtml"></ui:include>
+                            </span>
                         </span>
                     </p:outputPanel>
                     <span class="responsiveSubmit">
@@ -237,6 +184,8 @@
                                          validateClient="true"
                                          class="ui-button-success"
                                          action="#{usersBean.submitFormUpdateUser(addressesBean.addressCrud)}"/>
+                        <p:commandButton value="#{I18N['connectionpage.return.button']}" action="#{usersBean.cancelForm}"
+                                         class="ui-button-secondary" id="cancelButton"/>
                     </span>
                 </h:form>
             </div>

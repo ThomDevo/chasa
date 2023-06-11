@@ -16,7 +16,7 @@
             <f:event type="preRenderView" listener="#{permissionsBean.initAllPermissions()}"/>
             <f:event type="preRenderView" listener="#{rolePermissionBean.initListOfPermissionsPerRole(rolePermissionBean.rolePermissionEntity.rolesByIdRole)}"/>
         </f:metadata>
-        <div class="card">
+        <div class="content card">
             <div class="block p-20 form-container">
                 <h2>
                     <h:outputText value="#{I18N['update.rolePermission']}" />
@@ -62,6 +62,8 @@
                                          validateClient="true"
                                          class="ui-button-success"
                                          action="#{rolePermissionBean.submitFormUpdateRolePermissions()}"/>
+                        <p:button value="#{I18N['connectionpage.return.button']}" outcome="/VIEW/home"
+                                  class="ui-button-secondary" id="cancelButton"/>
                     </span>
                 </h:form>
             </div>

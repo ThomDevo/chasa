@@ -141,6 +141,8 @@
                                          validateClient="true"
                                          class="ui-button-success"
                                          action="#{usersBean.submitFormUpdateUser(addressesBean.addressCrud)}"/>
+                        <p:commandButton value="#{I18N['connectionpage.return.button']}" action="#{usersBean.cancelForm}"
+                                         class="ui-button-secondary" id="cancelButton"/>
                     </span>
                 </h:form>
             </div>

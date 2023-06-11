@@ -97,6 +97,12 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
         this.messageErrorExpiryDatePast = "hidden";
     }
 
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initFormMedicalCertificates();
+        return redirect;
+    }
+
     /**
      * Method to add a medical certificate for a user
      * @return Medical certificate
