@@ -53,6 +53,8 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     private LicenseUserBean licenseUserBean;
     @Inject
     private LicenseBean licenseBean;
+    @Inject
+    private ConnectionBean connectionBean;
 
     /**
      * Method to find a User based on a filter
@@ -87,6 +89,14 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
 
 
     public void loadUserIdCurrent(UsersEntity userCurrent, AddressesBean address){
+        EntityManager em = EMF.getEM();
+        try{
+            userCurrent = usersService.findUserByLifrasNumber(connectionBean.getUser().getLifrasNumber(),em);
+        }catch(Exception e){
+            ProcessUtils.debug(e.getMessage());
+        }finally {
+            em.close();
+        }
         userCrud = userCurrent;
         address.setAddressCrud(userCrud.getAddresses());
         //ProcessUtils.debug(""+userCrud.getFirstName());
@@ -331,6 +341,12 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         this.messageErrorPhoneNumber = "hidden";
         this.messageErrorLifrasNumber = "hidden";
         this.messageErrorPassword = "hidden";
+    }
+
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initFormUser();
+        return redirect;
     }
 
     public void getFilterLicencesByUser(){

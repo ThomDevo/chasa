@@ -106,6 +106,12 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
         this.messageErrorAdmissionDate = "hidden";
     }
 
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initForm();
+        return redirect;
+    }
+
 
     public String submitFormAddLicenseUser(){
         EntityManager em = EMF.getEM();

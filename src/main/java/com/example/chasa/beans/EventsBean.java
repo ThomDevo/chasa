@@ -107,7 +107,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String filename;
         String source;
 
-        if(resultNow < 1){
+        if(resultNow > 1){
             this.messageErrorDateTimeEvent = "";
             this.messageErrorEventDiveSite = "hidden";
             this.messageErrorEventDiveSiteselect = "hidden";
@@ -330,7 +330,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
 
         String filename;
         String source;
-        if (resultNow < 1) {
+        if (resultNow > 1) {
             this.messageErrorDateTimeEvent = "";
             this.messageErrorEventDiveSite = "hidden";
             this.messageErrorEventDiveSiteselect = "hidden";
@@ -535,6 +535,12 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         this.messageErrorDateTimeEvent = "hidden";
         this.messageErrorEventDiveSite = "hidden";
         this.messageErrorEventDiveSiteselect = "hidden";
+    }
+
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initFormEvent();
+        return redirect;
     }
 
     public void confirmAdd() {

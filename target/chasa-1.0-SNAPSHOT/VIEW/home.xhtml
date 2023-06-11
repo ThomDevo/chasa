@@ -16,14 +16,16 @@
             <!-- execute methode in loading page. -->
             <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}" iconPos="right"/>
         </f:metadata>
+        <div class="content">
+            <div class="block p-20 form-container">
+                <h2>
+                    <h:outputText value="#{I18N['welcomeonyourpage']} #{connectionBean.user.lastName} #{connectionBean.user.firstName}"  />
+                </h2>
 
-        <div class="block p-20 form-container">
-            <h2>
-                <h:outputText value="#{I18N['welcomeonyourpage']} #{connectionBean.user.lastName} #{connectionBean.user.firstName}"  />
-            </h2>
-
-
+            </div>
         </div>
+
+
 
     </ui:define>
 </ui:composition>

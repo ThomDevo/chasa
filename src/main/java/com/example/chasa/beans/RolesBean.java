@@ -167,6 +167,12 @@ public class RolesBean extends FilterOfTable<RolesEntity> implements Serializabl
         this.messageErrorRoleName = "hidden";
     }
 
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initFormRole();
+        return redirect;
+    }
+
     /*---Getters and setters---*/
 
 
