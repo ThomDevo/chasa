@@ -67,7 +67,7 @@
                     </p:submenu>
                     <p:divider layout="vertical"/>
                     <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar">
-                        <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar">
+                        <p:submenu label="#{I18N['menu.events']}" icon="pi pi-fw pi-calendar" rendered="#{connectionBean.verifyPermissionUser('Modifier un événement')}">
                             <p:menuitem value="#{I18N['menu.data.events.add']}" icon="pi pi-fw pi-calendar-plus" action="/VIEW/addEvent.xhtml" rendered="#{connectionBean.verifyPermissionUser('Créer un événement')}"/>
                             <p:menuitem value="#{I18N['menu.data.events.modify']}" icon="pi pi-fw pi-calendar" action="/VIEW/listOfEvents.xhtml" rendered="#{connectionBean.verifyPermissionUser('Modifier un événement')}"/>
                         </p:submenu>

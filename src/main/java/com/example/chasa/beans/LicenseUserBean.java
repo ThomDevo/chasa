@@ -205,6 +205,7 @@ public class LicenseUserBean extends FilterOfTable<LicenseUsersEntity> implement
             licenseUserService.deleteLicenseUser(licenseUser,em);
             transaction.commit();
             confirmDelete();
+            initForm();
         }catch(Exception e){
             redirect = "null";
         }finally{

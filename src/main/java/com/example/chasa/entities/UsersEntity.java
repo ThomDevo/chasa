@@ -15,6 +15,7 @@ import java.util.*;
 
 @NamedQueries(value = {
         @NamedQuery(name = "User.SelectUser", query = "SELECT u FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber AND u.userStatus = TRUE"),
+        @NamedQuery(name = "User.IsUserExist", query = "SELECT COUNT(u) FROM UsersEntity u WHERE u.lifrasNumber = :lifrasNumber"),
         @NamedQuery(name = "User.SelectAll", query = "SELECT u FROM UsersEntity u"),
         @NamedQuery(name = "User.SelectAllMembers", query = "SELECT u FROM UsersEntity u WHERE ((upper(u.roles.roleLabel) LIKE 'MEMBRE'))"),
         @NamedQuery(name = "User.findUserById", query = "SELECT u FROM UsersEntity u WHERE u.idUser = :idUser"),
@@ -77,7 +78,7 @@ public class UsersEntity {
     private String email;
 
     @Basic
-    @Pattern(regexp = "^[0-9+/? ?]{9,17}$")
+    //@Pattern(regexp = "^[0-9+/? ?]{9,17}$")
     @Column(name = "user_phone", nullable = true, length = 17)
     private String userPhone;
 
