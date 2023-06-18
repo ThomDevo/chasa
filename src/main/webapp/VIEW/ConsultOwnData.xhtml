@@ -113,6 +113,13 @@
                                         value="#{I18N['messageErrorPhoneNumber']}"/></span>
                             </div>
                         </div>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorPhoneNumberLenght}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorPhoneNumberLenght']}"/></span>
+                            </div>
+                        </div>
+
                         <span class="field col-12 md:col-4 p-20-0">
                             <p:outputLabel value="#{I18N['userPage.LifrasNumber']}"/>
                             <p:inputText class="label" value="#{usersBean.userCrud.lifrasNumber}"
@@ -127,6 +134,12 @@
                             <div><span class="ui-message-error-icon"> </span>
                                 <span class="ui-message-error-detail"><h:outputText
                                         value="#{I18N['messageErrorLifrasNumber']}"/></span>
+                            </div>
+                        </div>
+                        <div class="ui-message ui-message-error ui-widget ui-corner-all #{usersBean.messageErrorUserExists}">
+                            <div><span class="ui-message-error-icon"> </span>
+                                <span class="ui-message-error-detail"><h:outputText
+                                        value="#{I18N['messageErrorUserExists']}"/></span>
                             </div>
                         </div>
                         <span class="field col-12 md:col-4 p-20-0">

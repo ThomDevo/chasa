@@ -73,7 +73,7 @@
                             <h:outputText value="#{r.eventCategoriesByIdEventCategory.eventCategoryLabel}"></h:outputText>
                         </p:column>
                         <p:column>
-                            <f:facet name="header">#{I18N['menu.data.events.participate']}</f:facet>
+                            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
                             <h:commandLink class="btn btn-dark" value="#{I18N['Add.userEvent']}" action="#{userEventsBean.submitFormAddUserEvents()}">
                                 <f:setPropertyActionListener target="#{userEventsBean.userEvents.eventsByIdEvent}" value="#{r}"/>
                             </h:commandLink>
