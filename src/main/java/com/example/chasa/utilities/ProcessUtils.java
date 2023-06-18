@@ -111,4 +111,49 @@ public class ProcessUtils {
     public static String cryptPassword(String password){
         return BCrypt.withDefaults().hashToString(10,password.toCharArray());
     }
+
+    /**
+     * Méthode booléenne de vérification si valeur est bien un int
+     * @param value
+     * @return true ou false
+     */
+    public static boolean isCheckValueIsint(String value) {
+
+        if (value.matches("\\d+$")) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Méthode booléenne de vérification si c'est null ou vide
+     * @param value
+     * @return true ou false
+     */
+    public static boolean isCheckValueIsEmptyorNull(String value) {
+
+        if (value == null || value.equals("")) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Méthode booléenne de vérification si valeur est bien un numéro de téléphone
+     * @param telephone
+     * @return true ou false
+     */
+    public static boolean isCheckTelephoneFormat(String telephone) {
+
+        if (telephone.matches("^[0-9]{9,17}$")) {
+
+            return true;
+        }
+
+        return false;
+    }
 }

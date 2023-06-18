@@ -12,7 +12,7 @@
         <h:outputText value="#{I18N['listOfMyEvents']}"/>
     </ui:define>
     <ui:define name="content">
-        <div class="card">
+        <div class="content card">
             <div class="block p-20 form-container">
                 <h2>
                     <h:outputText value="#{I18N['listOfMyEvents']}" />
@@ -69,8 +69,8 @@
             <h:outputText value="#{r.eventsByIdEvent.eventCategoriesByIdEventCategory.eventCategoryLabel}"></h:outputText>
         </p:column>
         <p:column>
-            <f:facet name="header">#{I18N['menu.data.events.delete']}</f:facet>
-            <h:commandLink class="btn btn-dark" value="#{I18N['Add.userEvent']}" action="#{userEventsBean.submitFormDeleteUserEvents()}">
+            <f:facet name="header">#{I18N['rolepage.ListOfRoles.action']}</f:facet>
+            <h:commandLink class="btn btn-dark" value="#{I18N['menu.data.events.delete']}" action="#{userEventsBean.submitFormDeleteUserEvents()}">
                 <f:setPropertyActionListener target="#{userEventsBean.userEvents}" value="#{r}"/>
             </h:commandLink>
         </p:column>

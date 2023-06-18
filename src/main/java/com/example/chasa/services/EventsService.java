@@ -1,6 +1,7 @@
 package com.example.chasa.services;
 
 import com.example.chasa.entities.EventsEntity;
+import com.example.chasa.entities.LicenseUsersEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -36,4 +37,13 @@ public class EventsService {
         em.merge(event);
         return event;
     }
+
+    public void deleteEvent(EventsEntity event, EntityManager em){
+        if(!em.contains(event))
+            event = em.merge(event);
+        em.remove(event);
+        em.flush();
+    }
+
+
 }

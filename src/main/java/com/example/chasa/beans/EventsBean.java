@@ -3,10 +3,7 @@ package com.example.chasa.beans;
 import com.example.chasa.entities.*;
 import com.example.chasa.mail.Mail;
 import com.example.chasa.mail.MailSender;
-import com.example.chasa.services.AddressService;
-import com.example.chasa.services.DiveSiteCharacteristicService;
-import com.example.chasa.services.EventsService;
-import com.example.chasa.services.UsersService;
+import com.example.chasa.services.*;
 import com.example.chasa.utilities.EMF;
 import com.example.chasa.utilities.FilterOfTable;
 import com.example.chasa.utilities.ProcessUtils;
@@ -93,7 +90,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
         LocalDate now = LocalDate.now();
         String dateEventPattern = "ddMMyyyy-HHmmss";
-        String isoDatePattern = "dd/MM/yyyy";
+        String isoDatePattern = "yyyy-MM-dd";
         String isoTimePattern = "HH:mm";
         SimpleDateFormat dateEventFormat = new SimpleDateFormat(dateEventPattern);
         String dateTimeEvent = dateEventFormat.format(events.getDateTimeEvent());
@@ -103,11 +100,13 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String dateTime = simpleTimeFormat.format(events.getDateTimeEvent());
         int resultNow = String.valueOf(now).compareTo(dateEvent);
         ProcessUtils.debug("Ctrl date " + resultNow);
+        ProcessUtils.debug("Ctrl date " + now);
+        ProcessUtils.debug("Ctrl date " + dateEvent);
 
         String filename;
         String source;
 
-        if(resultNow < 1){
+        if(resultNow >= 1){
             this.messageErrorDateTimeEvent = "";
             this.messageErrorEventDiveSite = "hidden";
             this.messageErrorEventDiveSiteselect = "hidden";
@@ -316,7 +315,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
         LocalDate now = LocalDate.now();
         String dateEventPattern = "ddMMyyyy-HHmmss";
-        String isoDatePattern = "dd/MM/yyyy";
+        String isoDatePattern = "yyyy-MM-dd";
         String isoTimePattern = "HH:mm";
         SimpleDateFormat dateEventFormat = new SimpleDateFormat(dateEventPattern);
         String dateTimeEvent = dateEventFormat.format(events.getDateTimeEvent());
@@ -330,7 +329,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
 
         String filename;
         String source;
-        if (resultNow < 1) {
+        if (resultNow >= 1) {
             this.messageErrorDateTimeEvent = "";
             this.messageErrorEventDiveSite = "hidden";
             this.messageErrorEventDiveSiteselect = "hidden";
@@ -390,8 +389,6 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
             LocalDateTime nowMail = LocalDateTime.now();
             filename = "Reservation" + "_" +events.getEventCategoriesByIdEventCategory().getEventCategoryLabel()+dateTimeEvent +dtf.format(nowMail)+ ".pdf";
             source = "C:\\Users\\devog\\IdeaProjects\\chasa\\src\\main\\webapp\\PDF\\" + filename;
-            //allCharacteristics=diveSiteCharacteristicService.findallDiveSiteCharacteristicsByIdDiveSite(events.getDiveSitesByIdDiveSite().getIdDiveSite(),em);
-            //ProcessUtils.debug(""+allCharacteristics.size());
             try {
 
                 PdfWriter.getInstance(doc, new FileOutputStream(source));
@@ -501,11 +498,11 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 e.printStackTrace();
             }
         }
-        String membre = bundle.getString("membre");
+        String membreupdate = bundle.getString("membreupdate");
         String at = bundle.getString("at");
         String subject = bundle.getString("subject");
         email.setFrom("teamchasa@outlook.com");
-        email.setMsgBody(membre + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
+        email.setMsgBody(membreupdate + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
         email.setSubject(subject + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
         email.setNick("Chasa");
         email.setReplyTo("teamchasa@outlook.com");
@@ -524,6 +521,9 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
     }
 
 
+
+
+
     public void initFormEvent(){
         this.events.setEventCategoriesByIdEventCategory(new EventCategoriesEntity());
         this.events.setDateTimeEvent(new Date());
@@ -535,6 +535,12 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         this.messageErrorDateTimeEvent = "hidden";
         this.messageErrorEventDiveSite = "hidden";
         this.messageErrorEventDiveSiteselect = "hidden";
+    }
+
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initFormEvent();
+        return redirect;
     }
 
     public void confirmAdd() {
@@ -561,6 +567,15 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String pageTitle2 = bundle.getString("category");
         String pageTitle3 = bundle.getString("update");
         addMessage(pageTitle + " "+dateEvent+" "+ pageTitle2+" "+events.getEventCategoriesByIdEventCategory().getEventCategoryLabel()+" "+pageTitle3,"Confirmation");
+    }
+
+    public void confirmDelete() {
+        ResourceBundle bundle = ResourceBundle.getBundle("language.messages",
+                FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        //ProcessUtils.debug(""+ bundle);
+        String pageTitle = bundle.getString("event.Event");
+        String pageTitle3 = bundle.getString("delete");
+        addMessage(pageTitle+" "+ events.getDateTimeEvent()+ " "+ pageTitle3 ,"Confirmation");
     }
 
     public void addMessage(String summary, String detail) {

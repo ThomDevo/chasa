@@ -97,7 +97,7 @@ public class AddressesEntity {
     }
 
     public void setIdCityX(CitiesEntity idCity) {
-        ProcessUtils.debug("Adrien is here "+ idCity);
+        //ProcessUtils.debug(""+ idCity);
         this.idCity = idCity;
     }
     public CitiesEntity getIdCity() {
@@ -105,7 +105,7 @@ public class AddressesEntity {
     }
 
     public void setIdCity(CitiesEntity idCity) {
-        ProcessUtils.debug("Adrien is here "+ idCity);
+        //ProcessUtils.debug(" "+ idCity);
         this.idCity = idCity;
     }
 

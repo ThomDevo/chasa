@@ -45,14 +45,18 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
     private String messageErrorBirthDate = "hidden";
     private String messageErrorEmail = "hidden";
     private String messageErrorPhoneNumber = "hidden";
+    private String messageErrorPhoneNumberLenght = "hidden";
     private String messageErrorLifrasNumber = "hidden";
     private String messageErrorPassword = "hidden";
+    private String messageErrorUserExists = "hidden";
     @Inject
     private AddressesBean addressesBean;
     @Inject
     private LicenseUserBean licenseUserBean;
     @Inject
     private LicenseBean licenseBean;
+    @Inject
+    private ConnectionBean connectionBean;
 
     /**
      * Method to find a User based on a filter
@@ -87,6 +91,14 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
 
 
     public void loadUserIdCurrent(UsersEntity userCurrent, AddressesBean address){
+        EntityManager em = EMF.getEM();
+        try{
+            userCurrent = usersService.findUserByLifrasNumber(connectionBean.getUser().getLifrasNumber(),em);
+        }catch(Exception e){
+            ProcessUtils.debug(e.getMessage());
+        }finally {
+            em.close();
+        }
         userCrud = userCurrent;
         address.setAddressCrud(userCrud.getAddresses());
         //ProcessUtils.debug(""+userCrud.getFirstName());
@@ -165,13 +177,68 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         int resultMin8Years = dateString.compareTo(String.valueOf(nowMin8Years));
         //ProcessUtils.debug("-8 "+String.valueOf(resultMin8Years));
 
-        if(resultNow > 0)
+        if(usersService.isUserExist(userCrud.getLifrasNumber(),em)){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "";
+            redirect = "null";
+            return redirect;
+        }
+        else if(resultNow > 0)
         {
-            this.messageErrorBirthDate="";
+
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultMin8Years >= 0){
-            this.messageErrorBirthDate="";
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
+            redirect = "null";
+            return redirect;
+
+        }else if(!ProcessUtils.isCheckValueIsEmptyorNull(userCrud.getUserPhone()) && !ProcessUtils.isCheckValueIsint(userCrud.getUserPhone())){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
+            redirect = "null";
+            return redirect;
+        }else if(!ProcessUtils.isCheckValueIsEmptyorNull(userCrud.getUserPhone()) && !ProcessUtils.isCheckTelephoneFormat(userCrud.getUserPhone())){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
             redirect = "null";
             return redirect;
         }else{
@@ -223,14 +290,57 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
 
         if(resultNow > 0)
         {
-            this.messageErrorBirthDate="";
+
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultMin8Years >= 0){
-            this.messageErrorBirthDate="";
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
             redirect = "null";
             return redirect;
-        }else{
+
+        }else if(!ProcessUtils.isCheckValueIsEmptyorNull(userCrud.getUserPhone()) && !ProcessUtils.isCheckValueIsint(userCrud.getUserPhone())){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
+            redirect = "null";
+            return redirect;
+        }else if(!ProcessUtils.isCheckValueIsEmptyorNull(userCrud.getUserPhone()) && !ProcessUtils.isCheckTelephoneFormat(userCrud.getUserPhone())){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
+            redirect = "null";
+            return redirect;
+        }
+        else{
         try{
             transaction.begin();
             //userCrud.setPassword(ProcessUtils.cryptPassword(userCrud.getPassword()));
@@ -277,13 +387,68 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         int resultMin8Years = dateString.compareTo(String.valueOf(nowMin8Years));
         //ProcessUtils.debug("-8 "+String.valueOf(resultMin8Years));
 
-        if(resultNow > 0)
+        if(usersService.isUserExist(userCrud.getLifrasNumber(),em)){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "";
+            redirect = "null";
+            return redirect;
+        }
+        else if(resultNow > 0)
         {
-            this.messageErrorBirthDate="";
+
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultMin8Years >= 0){
-            this.messageErrorBirthDate="";
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
+            redirect = "null";
+            return redirect;
+
+        }else if(!ProcessUtils.isCheckValueIsEmptyorNull(userCrud.getUserPhone()) && !ProcessUtils.isCheckValueIsint(userCrud.getUserPhone())){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "";
+            this.messageErrorPhoneNumberLenght = "hidden";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
+            redirect = "null";
+            return redirect;
+        }else if(!ProcessUtils.isCheckValueIsEmptyorNull(userCrud.getUserPhone()) && !ProcessUtils.isCheckTelephoneFormat(userCrud.getUserPhone())){
+            this.messageErrorLastName = "hidden";
+            this.messageErrorFirstName = "hidden";
+            this.messageErrorBirthDate = "hidden";
+            this.messageErrorEmail = "hidden";
+            this.messageErrorPhoneNumber = "hidden";
+            this.messageErrorPhoneNumberLenght = "";
+            this.messageErrorLifrasNumber = "hidden";
+            this.messageErrorPassword = "hidden";
+            this.messageErrorUserExists = "hidden";
             redirect = "null";
             return redirect;
         }else{
@@ -329,8 +494,16 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         this.messageErrorBirthDate = "hidden";
         this.messageErrorEmail = "hidden";
         this.messageErrorPhoneNumber = "hidden";
+        this.messageErrorPhoneNumberLenght = "hidden";
         this.messageErrorLifrasNumber = "hidden";
         this.messageErrorPassword = "hidden";
+        this.messageErrorUserExists = "hidden";
+    }
+
+    public String cancelForm(){
+        String redirect = "/VIEW/home";
+        initFormUser();
+        return redirect;
     }
 
     public void getFilterLicencesByUser(){
@@ -479,6 +652,19 @@ public class UsersBean extends FilterOfTable<UsersEntity> implements Serializabl
         this.messageErrorPassword = messageErrorPassword;
     }
 
+    public String getMessageErrorPhoneNumberLenght() {
+        return messageErrorPhoneNumberLenght;
+    }
 
+    public void setMessageErrorPhoneNumberLenght(String messageErrorPhoneNumberLenght) {
+        this.messageErrorPhoneNumberLenght = messageErrorPhoneNumberLenght;
+    }
 
+    public String getMessageErrorUserExists() {
+        return messageErrorUserExists;
+    }
+
+    public void setMessageErrorUserExists(String messageErrorUserExists) {
+        this.messageErrorUserExists = messageErrorUserExists;
+    }
 }

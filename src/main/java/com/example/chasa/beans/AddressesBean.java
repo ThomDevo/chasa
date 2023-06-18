@@ -154,6 +154,13 @@ public class AddressesBean extends FilterOfTable<AddressesEntity> implements Ser
         return redirect;
     }
 
+    public void initFormAddAddress(){
+        this.addressCrud.setStreet("");
+        this.addressCrud.setNumber(0);
+        this.addressCrud.setBox("");
+        this.addressCrud.setIdCity(null);
+    }
+
     /*---Getters and setters---*/
     public AddressesEntity getAddressCrud() {
         return addressCrud;

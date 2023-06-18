@@ -4,6 +4,7 @@ import com.example.chasa.entities.AddressesEntity;
 import com.example.chasa.entities.UsersEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 
@@ -68,22 +69,12 @@ public class UsersService {
                 .getResultList();
     }
 
-    /**
-     * Method to find User ALL based on a status
-     * @param
-     * @param em
-     * @return List<UsersEntity>
-     */
-    /*public List<UsersEntity> findUserByStatus(boolean userStatus, EntityManager em){
-        return em.createNamedQuery("User.FindUserByStatus", UsersEntity.class)
-                .setParameter("userStatus", userStatus)
-                .getResultList();
-    }*/
+    public boolean isUserExist(int lifrasNumber, EntityManager em){
+        Query query =em.createNamedQuery("User.IsUserExist", UsersEntity.class);
+                query.setParameter("lifrasNumber", lifrasNumber);
 
-    public AddressesEntity findUserAddresswithIdUser(int id, EntityManager em) {
-        return em.createNamedQuery("User.findUserAddressById",AddressesEntity.class)
-                .setParameter("idUser", id)
-                .getSingleResult();
+        int count =((Number)query.getSingleResult()).intValue();
+        return count > 0;
     }
 
     /**
