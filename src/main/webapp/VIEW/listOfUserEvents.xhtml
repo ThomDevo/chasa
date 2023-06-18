@@ -16,10 +16,10 @@
             <div class="block p-20 form-container">
                 <h2>
                     <h:outputText value="#{I18N['listOfEvents']}" />
-                </h2>
+                </h2>²
                 <h:form>
                     <f:metadata>
-                        <f:event type="preRenderView" listener="#{userEventsBean.ResearchMyFilter()}"/>
+                        <f:event type="preRenderView" listener="#{userEventsBean.ResearchFilter()}"/>
                     </f:metadata>
                     <p:dataTable var="r" value="#{userEventsBean.entityFiltered}"
                                  resizableColumns="true"

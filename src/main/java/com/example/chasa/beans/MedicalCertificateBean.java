@@ -34,6 +34,7 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
     private String messageErrorIssueDate = "hidden";
     private String messageErrorExpiryDate = "hidden";
     private String messageErrorExpiryDatePast = "hidden";
+    private String messageErrorExists = "hidden";
 
 
     public void initListOfMedicalCertificates(UsersEntity user){
@@ -95,6 +96,7 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
         this.messageErrorIssueDate = "hidden";
         this.messageErrorExpiryDate = "hidden";
         this.messageErrorExpiryDatePast = "hidden";
+        this.messageErrorExists = "hidden";
     }
 
     public String cancelForm(){
@@ -125,18 +127,28 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
             this.messageErrorIssueDate="";
             this.messageErrorExpiryDatePast="hidden";
             this.messageErrorExpiryDate="hidden";
+            this.messageErrorExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultExpiryDate < 0){
             this.messageErrorIssueDate="hidden";
             this.messageErrorExpiryDatePast = "";
             this.messageErrorExpiryDate="hidden";
+            this.messageErrorExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultIssueExpiryDate > 0){
             this.messageErrorIssueDate="hidden";
             this.messageErrorExpiryDatePast="hidden";
             this.messageErrorExpiryDate = "";
+            this.messageErrorExists = "hidden";
+            redirect = "null";
+            return redirect;
+        }else if(medicalCertificateService.isMedicalCertificatesExist(medicalCertificates.getIssueDate(),medicalCertificates.getExpiryDate(),medicalCertificates.getCertificateType(), medicalCertificates.getUsersByIdUser().getIdUser(),em)){
+            this.messageErrorIssueDate="hidden";
+            this.messageErrorExpiryDatePast="hidden";
+            this.messageErrorExpiryDate = "hidden";
+            this.messageErrorExists = "";
             redirect = "null";
             return redirect;
         }else{
@@ -184,18 +196,28 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
             this.messageErrorIssueDate="";
             this.messageErrorExpiryDatePast="hidden";
             this.messageErrorExpiryDate="hidden";
+            this.messageErrorExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultExpiryDate < 0){
             this.messageErrorIssueDate="hidden";
             this.messageErrorExpiryDatePast = "";
             this.messageErrorExpiryDate="hidden";
+            this.messageErrorExists = "hidden";
             redirect = "null";
             return redirect;
         }else if(resultIssueExpiryDate > 0){
             this.messageErrorIssueDate="hidden";
             this.messageErrorExpiryDatePast="hidden";
             this.messageErrorExpiryDate = "";
+            this.messageErrorExists = "hidden";
+            redirect = "null";
+            return redirect;
+        }else if(medicalCertificateService.isMedicalCertificatesExist(medicalCertificates.getIssueDate(),medicalCertificates.getExpiryDate(),medicalCertificates.getCertificateType(), medicalCertificates.getUsersByIdUser().getIdUser(),em)){
+            this.messageErrorIssueDate="hidden";
+            this.messageErrorExpiryDatePast="hidden";
+            this.messageErrorExpiryDate = "hidden";
+            this.messageErrorExists = "";
             redirect = "null";
             return redirect;
         }else{
@@ -300,5 +322,13 @@ public class MedicalCertificateBean extends FilterOfTable<MedicalCertificatesEnt
 
     public void setAllCertificates(List<MedicalCertificatesEntity> allCertificates) {
         this.allCertificates = allCertificates;
+    }
+
+    public String getMessageErrorExists() {
+        return messageErrorExists;
+    }
+
+    public void setMessageErrorExists(String messageErrorExists) {
+        this.messageErrorExists = messageErrorExists;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.*;
 
 @NamedQueries({
-        @NamedQuery(name="MedicalCertificates.isMedicalCertificatesExist", query="SELECT COUNT(mc) FROM MedicalCertificatesEntity mc WHERE mc.issueDate = :issueDate AND mc.expiryDate = :expiryDate AND mc.certificateType = :certificateType AND mc.usersByIdUser = :usersByIdUser"),
+        @NamedQuery(name="MedicalCertificates.isMedicalCertificatesExist", query="SELECT COUNT(mc) FROM MedicalCertificatesEntity mc WHERE mc.issueDate = :issueDate AND mc.expiryDate = :expiryDate AND mc.certificateType = :certificateType AND mc.usersByIdUser.idUser = :usersByIdUser"),
         @NamedQuery(name="MedicalCertificates.SelectAll", query="SELECT mc FROM MedicalCertificatesEntity mc"),
         @NamedQuery(name="MedicalCertificates.SelectById", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.idMedicalCertificate = :idMedicalCertificate"),
         @NamedQuery(name="MedicalCertificates.SelectAllByUser", query="SELECT mc FROM MedicalCertificatesEntity mc WHERE mc.usersByIdUser.idUser = :idUser GROUP BY mc.certificateType ORDER BY mc.expiryDate desc"),

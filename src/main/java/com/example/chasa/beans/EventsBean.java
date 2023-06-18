@@ -91,6 +91,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         LocalDate now = LocalDate.now();
         String dateEventPattern = "ddMMyyyy-HHmmss";
         String isoDatePattern = "yyyy-MM-dd";
+        String isoMailPattern = "dd/MM/yyyy";
         String isoTimePattern = "HH:mm";
         SimpleDateFormat dateEventFormat = new SimpleDateFormat(dateEventPattern);
         String dateTimeEvent = dateEventFormat.format(events.getDateTimeEvent());
@@ -98,10 +99,12 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String dateEvent = simpleDateFormat.format(events.getDateTimeEvent());
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(isoTimePattern);
         String dateTime = simpleTimeFormat.format(events.getDateTimeEvent());
+        SimpleDateFormat simpleDateFormatEu = new SimpleDateFormat(isoMailPattern);
+        String isoMailPatternString = simpleDateFormatEu.format(events.getDateTimeEvent());
         int resultNow = String.valueOf(now).compareTo(dateEvent);
-        ProcessUtils.debug("Ctrl date " + resultNow);
-        ProcessUtils.debug("Ctrl date " + now);
-        ProcessUtils.debug("Ctrl date " + dateEvent);
+        //ProcessUtils.debug("Ctrl date " + resultNow);
+        //ProcessUtils.debug("Ctrl date " + now);
+        //ProcessUtils.debug("Ctrl date " + dateEvent);
 
         String filename;
         String source;
@@ -191,7 +194,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 f.setSize(16);
                 f.setStyle(Paragraph.ALIGN_MIDDLE);
                 f.isUnderlined();
-                doc.add(new Paragraph(summary+ dateEvent + " " + at + " " + dateTime, f));
+                doc.add(new Paragraph(summary+ isoMailPatternString + " " + at + " " + dateTime, f));
                 p.add(category+" : " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel()
                         +"\n "+ addressmeet+" : " + events.getAddressesByIdAddress().getStreet()+" "+ events.getAddressesByIdAddress().getNumber()+ " "+ events.getAddressesByIdAddress().getBox()+" "+events.getAddressesByIdAddress().getIdCity().getPostalCode()+" "+ events.getAddressesByIdAddress().getIdCity().getCityLabel()
                         +"\n "+ price+" : " + events.getPrice()+"€"
@@ -280,8 +283,8 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String at = bundle.getString("at");
         String subject = bundle.getString("subject");
         email.setFrom("teamchasa@outlook.com");
-        email.setMsgBody(membre + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
-        email.setSubject(subject + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
+        email.setMsgBody(membre + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + isoMailPatternString + " " + at + " " + dateTime);
+        email.setSubject(subject + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + isoMailPatternString + " " + at + " " + dateTime);
         email.setNick("Chasa");
         email.setReplyTo("teamchasa@outlook.com");
         email.setListTo(listEMail);
@@ -316,6 +319,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         LocalDate now = LocalDate.now();
         String dateEventPattern = "ddMMyyyy-HHmmss";
         String isoDatePattern = "yyyy-MM-dd";
+        String isoMailPattern = "dd/MM/yyyy";
         String isoTimePattern = "HH:mm";
         SimpleDateFormat dateEventFormat = new SimpleDateFormat(dateEventPattern);
         String dateTimeEvent = dateEventFormat.format(events.getDateTimeEvent());
@@ -323,8 +327,12 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String dateEvent = simpleDateFormat.format(events.getDateTimeEvent());
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(isoTimePattern);
         String dateTime = simpleTimeFormat.format(events.getDateTimeEvent());
+        SimpleDateFormat simpleDateFormatEu = new SimpleDateFormat(isoMailPattern);
+        String isoMailPatternString = simpleDateFormatEu.format(events.getDateTimeEvent());
         int resultNow = String.valueOf(now).compareTo(dateEvent);
         //ProcessUtils.debug("Ctrl date " + resultNow);
+        //ProcessUtils.debug("Ctrl date " + now);
+        //ProcessUtils.debug("Ctrl date " + dateEvent);
         String myP="";
 
         String filename;
@@ -414,7 +422,7 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
                 f.setSize(16);
                 f.setStyle(Paragraph.ALIGN_MIDDLE);
                 f.isUnderlined();
-                doc.add(new Paragraph(summary+ dateEvent + " " + at + " " + dateTime, f));
+                doc.add(new Paragraph(summary+ isoMailPatternString + " " + at + " " + dateTime, f));
                 p.add( category+" : " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel()
                      +"\n "+ addressmeet+" : " + events.getAddressesByIdAddress().getStreet()+" "+ events.getAddressesByIdAddress().getNumber()+ " "+ events.getAddressesByIdAddress().getBox()+" "+events.getAddressesByIdAddress().getIdCity().getPostalCode()+" "+ events.getAddressesByIdAddress().getIdCity().getCityLabel()
                      +"\n "+ price+" : " + events.getPrice()+"€"
@@ -502,8 +510,8 @@ public class EventsBean extends FilterOfTable<EventsEntity> implements Serializa
         String at = bundle.getString("at");
         String subject = bundle.getString("subject");
         email.setFrom("teamchasa@outlook.com");
-        email.setMsgBody(membreupdate + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
-        email.setSubject(subject + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + dateEvent + " " + at + " " + dateTime);
+        email.setMsgBody(membreupdate + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + isoMailPatternString + " " + at + " " + dateTime);
+        email.setSubject(subject + " " + events.getEventCategoriesByIdEventCategory().getEventCategoryLabel() + " " + isoMailPatternString + " " + at + " " + dateTime);
         email.setNick("Chasa");
         email.setReplyTo("teamchasa@outlook.com");
         email.setListTo(listEMail);

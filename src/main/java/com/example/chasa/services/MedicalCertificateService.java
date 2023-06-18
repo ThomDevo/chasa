@@ -31,7 +31,7 @@ public class MedicalCertificateService {
      * @param em
      * @return boolean
      */
-    public boolean isMedicalCertificatesExist(Date issuedDate, Date expiryDate, CertificateType certificateType, UsersEntity user,EntityManager em) {
+    public boolean isMedicalCertificatesExist(Date issuedDate, Date expiryDate, CertificateType certificateType, int user,EntityManager em) {
         Query query = em.createNamedQuery("MedicalCertificates.isMedicalCertificatesExist",MedicalCertificatesEntity.class)
                         .setParameter("issueDate", issuedDate)
                         .setParameter("expiryDate",expiryDate)
